@@ -5,12 +5,12 @@ import com.example.backend.Game.ResponseStatus;
 @SuppressWarnings("unused")
 public class ResponseContent
 {
-   private BoardContainer m_boardContainer;
+   private BoardContainer boardContainer;
    private ResponseStatus responseStatus;
 
    public ResponseContent(BoardContainer boardContainer, ResponseStatus responseStatus)
    {
-      this.m_boardContainer = boardContainer;
+      this.boardContainer = boardContainer;
       this.responseStatus = responseStatus;
    }
 
@@ -26,11 +26,11 @@ public class ResponseContent
 
    public BoardContainer getBoardContainer()
    {
-      return m_boardContainer;
+      return boardContainer;
    }
 
    public void setBoardContainer(BoardContainer boardContainer)
    {
-      this.m_boardContainer = boardContainer;
+      this.boardContainer = boardContainer;
    }
 }
