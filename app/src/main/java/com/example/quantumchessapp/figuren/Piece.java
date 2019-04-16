@@ -5,15 +5,14 @@ import com.example.quantumchessapp.spiel.Position;
 
 public abstract class Piece
 {
-   public final double MAX_STATUS;
-
    private Position position;
    private Player owner;
    private double status;
 
-   public Piece(Position position, double maxStatus)
+   public Piece(Position position, Player owner, double status)
    {
       this.position = position;
-      this.MAX_STATUS = maxStatus;
+      this.owner = owner;
+      this.status = status;
    }
 }
