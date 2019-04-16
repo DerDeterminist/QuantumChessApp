@@ -1,5 +1,6 @@
 package com.example.quantumchessapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -16,7 +17,7 @@ public class MainMenuActivity extends AppCompatActivity
    {
       super.onCreate(savedInstanceState);
 
-      setContentView(R.layout.main_menu_fullscreen);
+      setContentView(R.layout.main_menu);
 
       offlineGame = findViewById(R.id.offlineGame);
       onlineGame = findViewById(R.id.onlineGame);
@@ -27,12 +28,13 @@ public class MainMenuActivity extends AppCompatActivity
 
    private void initListener()
    {
+      final Intent intent = new Intent(this, GameActivity.class);
       offlineGame.setOnClickListener(new View.OnClickListener()
       {
          @Override
          public void onClick(View v)
          {
-
+            startActivity(intent);
          }
       });
 
@@ -50,7 +52,7 @@ public class MainMenuActivity extends AppCompatActivity
          @Override
          public void onClick(View v)
          {
-            System.exit(0);
+            System.exit(0); // TODO: 16.04.2019 richtig beenden
          }
       });
    }
