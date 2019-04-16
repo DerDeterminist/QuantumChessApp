@@ -6,4 +6,6 @@
     <string name="offline_game">Offline Game</string>
     <string name="online_game">Online Game</string>
     <string name="beenden">Beenden</string>
+
+    <string name="title_activity_game">GameActivity</string>
 </resources>
