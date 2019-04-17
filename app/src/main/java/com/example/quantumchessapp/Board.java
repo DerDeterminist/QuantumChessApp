@@ -1,64 +1,50 @@
 package com.example.quantumchessapp;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
+import com.example.quantumchessapp.spiel.Position;
 
 public class Board extends View
 {
+   private int tilesInALine;
 
-   Paint black = new Paint();
-   Paint wight = new Paint();
-
-   public Board(Context context, int wight, int hight)
+   public Board(Context context, int tilesInALine)
    {
       super(context);
       initUI();
    }
 
-   public Board(Context context, AttributeSet attrs, int wight, int hight)
+   public Board(Context context, AttributeSet attrs, int tilesInALine)
    {
       super(context, attrs);
+      this.tilesInALine = tilesInALine;
       initUI();
    }
 
-   public Board(Context context, AttributeSet attrs, int defStyleAttr, int wight, int hight)
+   public Board(Context context, AttributeSet attrs, int defStyleAttr, int tilesInALine)
    {
       super(context, attrs, defStyleAttr);
       initUI();
    }
 
-   public Board(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, int wight, int hight)
+   public Board(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes, int tilesInALine)
    {
       super(context, attrs, defStyleAttr, defStyleRes);
       initUI();
    }
 
-   @Override
-   protected void onDraw(Canvas canvas)
-   {
-      super.onDraw(canvas);
-      canvas.drawRect(0, 0, 50, 50, wight);// TODO: 16.04.2019 Schachbrett
-   }
-
    private void initUI()
    {
-      black.setColor(Color.BLACK);
-      black.setAntiAlias(true);
-      wight.setColor(Color.WHITE);
-      wight.setAntiAlias(true);
    }
 
-   @Override
-   public boolean onTouchEvent(MotionEvent event)
+   public void addView(View view, Position position)
    {
-      boolean touchEvent = super.onTouchEvent(event);
+      addView(view, position.getX(), position.getY());
+   }
 
-      invalidate();
-      return true;
+   public void addView(View view, int x, int y)
+   {
+
    }
 }
