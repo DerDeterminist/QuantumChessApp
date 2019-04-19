@@ -1,5 +1,7 @@
 package com.example.quantumchessapp.figuren;
 
+import android.content.Context;
+import com.example.quantumchessapp.R;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -7,8 +9,15 @@ import com.example.quantumchessapp.spiel.Position;
 public class King extends Piece
 {
 
-   public King(Position position, Player owner, double status)
+   public King(Context context, Position position, Player owner, double status,
+               PieceColor color)
    {
-      super(position, owner, status);
+      super(context, position, owner, status, color);
+   }
+
+   @Override
+   protected int getImageResource()
+   {
+      return color.equals(PieceColor.BLACK) ? R.drawable.blackking : R.drawable.whiteking;
    }
 }
