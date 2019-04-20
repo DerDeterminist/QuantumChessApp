@@ -51,4 +51,24 @@ public class GameManager
       lastMoveWasValid = responseStatus.isLastMoveWasValid();
       winner = players.stream().filter(player -> player.getId() == responseStatus.getWinner()).findAny().orElse(null);
    }
+
+   public static List<Player> getPlayers()
+   {
+      return players;
+   }
+
+   public static boolean isGameWon()
+   {
+      return isGameWon;
+   }
+
+   public static boolean isLastMoveValid()
+   {
+      return lastMoveWasValid;
+   }
+
+   public static Player getWinner()
+   {
+      return winner;
+   }
 }
