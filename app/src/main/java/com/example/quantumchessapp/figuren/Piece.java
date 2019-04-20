@@ -29,4 +29,14 @@ public abstract class Piece extends android.support.v7.widget.AppCompatImageView
       WHITE,
       BLACK
    }
+
+   public Position getPosition()
+   {
+      return position;
+   }
+
+   public void setPosition(Position position)
+   {
+      this.position = position;
+   }
 }

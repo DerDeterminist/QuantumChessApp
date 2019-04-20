@@ -11,6 +11,11 @@ public class Player
 
    private int id;
 
+   public int getId()
+   {
+      return id;
+   }
+
    @Override
    public boolean equals(Object o)
    {

@@ -2,10 +2,10 @@ package com.example.api;
 
 import com.example.api.Containter.BoardContainer;
 import com.example.api.Containter.ResponseContent;
+import com.example.api.Containter.ResponseStatus;
 import com.example.api.Containter.ResponseTiles;
 import com.example.api.Containter.TileContainer;
 import com.example.backend.Game.Board;
-import com.example.backend.Game.ResponseStatus;
 import com.example.backend.Game.Tile;
 import com.example.backend.GameManager;
 import com.example.backend.Pieces.Piece;
@@ -25,12 +25,12 @@ public class Api
    public ResponseTiles getPosibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
    {
       Set<Tile> possibleMoves = gameManager.getPossibleMoves(gameID, xFrom, yFrom, qMove);
-      return new ResponseTiles(tileToTileEntity(possibleMoves), gameManager.getStatus(gameID));
+      return new ResponseTiles(tileToTileEntity(possibleMoves), new ResponseStatus(gameManager.getStatus(gameID)));
    }
 
    public ResponseStatus movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
-      return gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove);
+      return new ResponseStatus(gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove));
    }
 
    public ResponseContent getCompleteBord(String gameID)
