@@ -8,4 +8,5 @@
     <string name="beenden">Beenden</string>
 
     <string name="title_activity_game">GameActivity</string>
+    <string name="board">board</string>
 </resources>

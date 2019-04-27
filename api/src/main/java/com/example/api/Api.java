@@ -22,7 +22,7 @@ public class Api
       return gameManager.startGame();
    }
 
-   public ResponseTiles getPosibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
+   public ResponseTiles getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
    {
       Set<Tile> possibleMoves = gameManager.getPossibleMoves(gameID, xFrom, yFrom, qMove);
       return new ResponseTiles(tileToTileEntity(possibleMoves), new ResponseStatus(gameManager.getStatus(gameID)));

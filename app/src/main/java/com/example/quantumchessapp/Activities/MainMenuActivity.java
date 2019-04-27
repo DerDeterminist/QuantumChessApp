@@ -1,10 +1,11 @@
-package com.example.quantumchessapp;
+package com.example.quantumchessapp.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import com.example.quantumchessapp.R;
 
 public class MainMenuActivity extends AppCompatActivity
 {
@@ -29,31 +30,14 @@ public class MainMenuActivity extends AppCompatActivity
    private void initListener()
    {
       final Intent intent = new Intent(this, GameActivity.class);
-      offlineGame.setOnClickListener(new View.OnClickListener()
-      {
-         @Override
-         public void onClick(View v)
-         {
-            startActivity(intent);
-         }
+      offlineGame.setOnClickListener(v -> startActivity(intent));
+
+      onlineGame.setOnClickListener(v -> {
+
       });
 
-      onlineGame.setOnClickListener(new View.OnClickListener()
-      {
-         @Override
-         public void onClick(View v)
-         {
-
-         }
-      });
-
-      brenden.setOnClickListener(new View.OnClickListener()
-      {
-         @Override
-         public void onClick(View v)
-         {
-            System.exit(0); // TODO: 16.04.2019 richtig beenden
-         }
+      brenden.setOnClickListener(v -> {
+         System.exit(0); // TODO: 16.04.2019 richtig beenden
       });
    }
 

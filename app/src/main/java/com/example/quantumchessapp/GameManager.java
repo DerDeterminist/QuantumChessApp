@@ -1,6 +1,7 @@
 package com.example.quantumchessapp;
 
 import com.example.api.Api;
+import com.example.api.Containter.BoardContainer;
 import com.example.api.Containter.ResponseStatus;
 import com.example.api.Containter.ResponseTiles;
 import com.example.quantumchessapp.figuren.Piece;
@@ -22,18 +23,27 @@ public class GameManager
    private static boolean lastMoveWasValid;
    private static Player winner;
 
+   private static int wight;
+   private static int height;
+   private static double maxPieceStatus;
+
    public static void newGame(Player player, Player player1)
    {
       gameID = api.startGame();
       players = new ArrayList<>();
       players.add(player);
       players.add(player1);
+
+      BoardContainer boardContainer = api.getCompleteBord(gameID).getBoardContainer();
+      height = boardContainer.getHeight();
+      wight = boardContainer.getWith();
+      maxPieceStatus = boardContainer.getMaxPieceStatus();
    }
 
-   public static List<Position> getPosibleMoves(Piece piece, boolean qMove)
+   public static List<Position> getPossibleMoves(Piece piece, boolean qMove)
    {
       Position startPosition = piece.getPosition();
-      ResponseTiles possibleMoves = api.getPosibleMoves(gameID, startPosition.getX(), startPosition.getY(), qMove);
+      ResponseTiles possibleMoves = api.getPossibleMoves(gameID, startPosition.getX(), startPosition.getY(), qMove);
       convertStatus(possibleMoves.getStatus());
       return possibleMoves.getTiles().stream().map(tileContainer -> new Position(tileContainer.getX(), tileContainer.getY()))
             .collect(Collectors.toList());
@@ -70,5 +80,20 @@ public class GameManager
    public static Player getWinner()
    {
       return winner;
+   }
+
+   public static int getWight()
+   {
+      return wight;
+   }
+
+   public static int getHeight()
+   {
+      return height;
+   }
+
+   public static double getMaxPieceStatus()
+   {
+      return maxPieceStatus;
    }
 }
