@@ -40,13 +40,17 @@ public class GameManager
       maxPieceStatus = boardContainer.getMaxPieceStatus();
    }
 
-   public static List<Position> getPossibleMoves(Piece piece, boolean qMove)
+   public static List<Position> getPossibleMoves(int startX, int startY, boolean qMove)
    {
-      Position startPosition = piece.getPosition();
-      ResponseTiles possibleMoves = api.getPossibleMoves(gameID, startPosition.getX(), startPosition.getY(), qMove);
+      ResponseTiles possibleMoves = api.getPossibleMoves(gameID, startX, startY, qMove);
       convertStatus(possibleMoves.getStatus());
       return possibleMoves.getTiles().stream().map(tileContainer -> new Position(tileContainer.getX(), tileContainer.getY()))
             .collect(Collectors.toList());
+   }
+
+   public static List<Position> getPossibleMoves(Position startPosition, boolean qMove)
+   {
+      return getPossibleMoves(startPosition.getX(), startPosition.getY(), qMove);
    }
 
    public static void movePiece(Piece piece, Position toMoveTo, boolean qMove)

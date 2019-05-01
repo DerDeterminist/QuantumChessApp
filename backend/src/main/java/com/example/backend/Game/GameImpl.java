@@ -24,7 +24,7 @@ public abstract class GameImpl implements Game
     * @see BordBuilder
     * @see Piece
     */
-   public GameImpl(int boardWith, int boardHeight)
+   GameImpl(int boardWith, int boardHeight)
    {
       this.board = new Board(boardWith, boardHeight);
    }
@@ -52,6 +52,7 @@ public abstract class GameImpl implements Game
       {
          return Collections.emptySet();
       }
+      lastResponseStatus = createStatus();
       Optional<Piece> piece = board.getTileAt(xFrom, yFrom).getPiece();
       return piece.isPresent() ? piece.get().getValidTiles(qMove) : Collections.emptySet();
    }
