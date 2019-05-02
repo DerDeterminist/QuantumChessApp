@@ -1,5 +1,6 @@
 package com.example.quantumchessapp.Activities;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -12,16 +13,19 @@ import com.example.quantumchessapp.R;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class GameActivity extends AppCompatActivity
 {
    private LinearLayout board;
    private ConstraintLayout background;
-   private Optional<ImageButton> activePiece = Optional.empty();
+
+   private ImageButton activePiece = null;
+   private Position activePosition;
    private List<Position> possiblePositions;
 
+   @SuppressLint("ResourceType")
    @Override
    protected void onCreate(@Nullable Bundle savedInstanceState)
    {
@@ -38,7 +42,7 @@ public class GameActivity extends AppCompatActivity
 
    private void initListener()
    {
-      background.setOnClickListener(v -> activePiece = Optional.empty());
+      background.setOnClickListener(v -> deSelect());
       for (int y = 0; y < board.getChildCount(); y++)
       {
          LinearLayout row = (LinearLayout) board.getChildAt(y);
@@ -47,23 +51,41 @@ public class GameActivity extends AppCompatActivity
             ImageButton tile = (ImageButton) row.getChildAt(x);
             Position position = new Position(x, y);
             tile.setOnClickListener(v -> {
-               if (activePiece.isPresent())
+               if (activePiece != null)
                {
-                  if (possiblePositions.contains(position))
+                  GameManager.movePiece(activePosition, position, false);
+                  if (GameManager.isLastMoveValid())
                   {
-                     // TODO: 01.05.2019 Image animation
-
-                     activePiece = Optional.empty();
+                     v.setBackground(activePiece.getBackground());
+                     activePiece.setBackgroundResource(R.drawable.transparent);
                   }
+                  deSelect();
                }
                else
                {
-                  activePiece = Optional.of(tile);
+                  activePiece = tile;
+                  activePosition = position;
                   possiblePositions = GameManager.getPossibleMoves(position, false);
+                  possiblePositions.stream()
+                        .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
+                              .getChildAt(position1.getY()))
+                        .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
                }
+               board.invalidate();
             });
          }
       }
+   }
+
+   private void deSelect()
+   {
+      activePiece = null;
+      activePosition = null;
+      possiblePositions.stream()
+            .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
+                  .getChildAt(position1.getY()))
+            .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.transparent));
+      possiblePositions = Collections.emptyList();
    }
 
    @Override

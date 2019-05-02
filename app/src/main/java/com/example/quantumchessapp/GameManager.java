@@ -4,7 +4,6 @@ import com.example.api.Api;
 import com.example.api.Containter.BoardContainer;
 import com.example.api.Containter.ResponseStatus;
 import com.example.api.Containter.ResponseTiles;
-import com.example.quantumchessapp.figuren.Piece;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -53,10 +52,9 @@ public class GameManager
       return getPossibleMoves(startPosition.getX(), startPosition.getY(), qMove);
    }
 
-   public static void movePiece(Piece piece, Position toMoveTo, boolean qMove)
+   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
-      Position startPosition = piece.getPosition();
-      convertStatus(api.movePiece(gameID, startPosition.getX(), startPosition.getY(), toMoveTo.getX(), toMoveTo.getY(), qMove));
+      convertStatus(api.movePiece(gameID, startPosition.getX(), startPosition.getY(), toMoveToPosition.getX(), toMoveToPosition.getY(), qMove));
    }
 
    private static void convertStatus(final ResponseStatus responseStatus)
