@@ -23,7 +23,7 @@ public class GameActivity extends AppCompatActivity
 
    private ImageButton activePiece = null;
    private Position activePosition;
-   private List<Position> possiblePositions;
+   private List<Position> possiblePositions = Collections.emptyList();
 
    @SuppressLint("ResourceType")
    @Override
@@ -68,7 +68,7 @@ public class GameActivity extends AppCompatActivity
                   possiblePositions = GameManager.getPossibleMoves(position, false);
                   possiblePositions.stream()
                         .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
-                              .getChildAt(position1.getY()))
+                              .getChildAt(position1.getX()))
                         .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
                }
                board.invalidate();
@@ -83,7 +83,7 @@ public class GameActivity extends AppCompatActivity
       activePosition = null;
       possiblePositions.stream()
             .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
-                  .getChildAt(position1.getY()))
+                  .getChildAt(position1.getX()))
             .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.transparent));
       possiblePositions = Collections.emptyList();
    }
