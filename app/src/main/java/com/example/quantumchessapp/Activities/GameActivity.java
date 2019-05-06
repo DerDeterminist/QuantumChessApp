@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 import com.example.quantumchessapp.GameManager;
 import com.example.quantumchessapp.R;
 import com.example.quantumchessapp.spiel.Player;
@@ -58,20 +60,32 @@ public class GameActivity extends AppCompatActivity
                   {
                      v.setBackground(activePiece.getBackground());
                      activePiece.setBackgroundResource(R.drawable.transparent);
+                     ((ImageButton) v).setImageDrawable(activePiece.getDrawable());
+                     activePiece.setImageDrawable(null);
+
+                     Toast next_player = Toast.makeText(this, "next Player", Toast.LENGTH_SHORT);
+                     next_player.setGravity(Gravity.CENTER, 0, 0);
+                     next_player.show();
                   }
                   deSelect();
                }
                else
                {
-                  activePiece = tile;
-                  activePosition = position;
-                  possiblePositions = GameManager.getPossibleMoves(position, false);
-                  possiblePositions.stream()
-                        .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
-                              .getChildAt(position1.getX()))
-                        .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
+                  if (GameManager.isPieceOfActivePlayer(position))
+                  {
+                     activePiece = tile;
+                     activePosition = position;
+                     possiblePositions = GameManager.getPossibleMoves(position, false);
+                     possiblePositions.stream()
+                           .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
+                                 .getChildAt(position1.getX()))
+                           .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
+                  }
+                  else
+                  {
+                     deSelect();
+                  }
                }
-               board.invalidate();
             });
          }
       }

@@ -39,22 +39,25 @@ public class GameManager
       maxPieceStatus = boardContainer.getMaxPieceStatus();
    }
 
-   public static List<Position> getPossibleMoves(int startX, int startY, boolean qMove)
-   {
-      ResponseTiles possibleMoves = api.getPossibleMoves(gameID, startX, startY, qMove);
-      convertStatus(possibleMoves.getStatus());
-      return possibleMoves.getTiles().stream().map(tileContainer -> new Position(tileContainer.getX(), tileContainer.getY()))
-            .collect(Collectors.toList());
-   }
-
    public static List<Position> getPossibleMoves(Position startPosition, boolean qMove)
    {
-      return getPossibleMoves(startPosition.getX(), startPosition.getY(), qMove);
+      ResponseTiles possibleMoves =
+            api.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition), qMove);
+      convertStatus(possibleMoves.getStatus());
+      return possibleMoves.getTiles().stream().map(tileContainer -> convertXYToPosition(tileContainer.getX(), tileContainer.getY()))
+            .collect(Collectors.toList());
    }
 
    public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
-      convertStatus(api.movePiece(gameID, startPosition.getX(), startPosition.getY(), toMoveToPosition.getX(), toMoveToPosition.getY(), qMove));
+      convertStatus(
+            api.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove));
+   }
+
+   public static boolean isPieceOfActivePlayer(Position position)
+   {
+      return api.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position));
    }
 
    private static void convertStatus(final ResponseStatus responseStatus)
@@ -62,6 +65,21 @@ public class GameManager
       isGameWon = responseStatus.isGameWon();
       lastMoveWasValid = responseStatus.isLastMoveWasValid();
       winner = players.stream().filter(player -> player.getId() == responseStatus.getWinner()).findAny().orElse(null);
+   }
+
+   private static Position convertXYToPosition(int x, int y)
+   {
+      return new Position(x, height - 1 - y);
+   }
+
+   private static int convertPositionHeight(Position position)
+   {
+      return height - 1 - position.getY();
+   }
+
+   private static int convertPositionWight(Position position)
+   {
+      return position.getX();
    }
 
    public static List<Player> getPlayers()

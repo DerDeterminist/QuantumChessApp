@@ -14,7 +14,7 @@ public class DefaultGameImpl extends GameImpl
     */
    public DefaultGameImpl(Player playerWhite, Player playerBlack)
    {
-      super(8, 8);
+      super(8, 8, playerWhite, playerBlack);
 
       Board board = getBoard();
 
@@ -36,7 +36,6 @@ public class DefaultGameImpl extends GameImpl
             board.instantiatePiece(playerWhite, 5, 0, "Bishop"),
             board.instantiatePiece(playerWhite, 6, 0, "Knight"),
             board.instantiatePiece(playerWhite, 7, 0, "Rook")));
-      addPlayer(playerWhite);
 
       playerBlack.setPieces(Arrays.asList(
             board.instantiatePiece(playerBlack, 0, 6, "Pawn"),
@@ -56,7 +55,6 @@ public class DefaultGameImpl extends GameImpl
             board.instantiatePiece(playerBlack, 5, 7, "Bishop"),
             board.instantiatePiece(playerBlack, 6, 7, "Knight"),
             board.instantiatePiece(playerBlack, 7, 7, "Rook")));
-      addPlayer(playerBlack);
 
       try
       {

@@ -8,16 +8,17 @@ public class ResponseStatus
    private boolean lastMoveWasValid = false;
    private boolean isGameWon;
    private int winner;
+   private int activePlayer;
    private List<Integer> loser;
 
    /**
     * State of the game. Winner will be -1 if the game is not won jet.
-    *
-    * @param isGameWon is the game won?
+    *  @param isGameWon is the game won?
     * @param winner    id of the winner
     * @param loser     ids of the losers
+    * @param activePlayer id of the active player
     */
-   public ResponseStatus(boolean isGameWon, int winner, List<Integer> loser)
+   ResponseStatus(boolean isGameWon, int winner, List<Integer> loser, int activePlayer)
    {
       this.isGameWon = isGameWon;
       this.winner = winner;
@@ -62,5 +63,15 @@ public class ResponseStatus
    public void setWinner(int winner)
    {
       this.winner = winner;
+   }
+
+   public int getActivePlayer()
+   {
+      return activePlayer;
+   }
+
+   public void setActivePlayer(int activePlayer)
+   {
+      this.activePlayer = activePlayer;
    }
 }

@@ -11,4 +11,6 @@ public interface Game
    Board getCompleteBord();
 
    ResponseStatus getStatus();
+
+   boolean isPieceOfActivePlayer(int x, int y);
 }

@@ -40,6 +40,11 @@ public class Api
             gameManager.getStatus(gameID));
    }
 
+   public boolean isPieceOfActivePlayer(String gameID, int x, int y)
+   {
+      return gameManager.isPieceOfActivePlayer(gameID, x, y);
+   }
+
    private Set<TileContainer> tileToTileEntity(Set<Tile> tiles)
    {
       return tiles.stream().map(tile -> new TileContainer(tile.getX(), tile.getY())).collect(Collectors.toSet());

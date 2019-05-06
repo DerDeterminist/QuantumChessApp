@@ -47,4 +47,9 @@ public class GameManager
    {
       return games.get(gameID).getCompleteBord();
    }
+
+   public boolean isPieceOfActivePlayer(String gameID, int x, int y)
+   {
+      return games.get(gameID).isPieceOfActivePlayer(x, y);
+   }
 }

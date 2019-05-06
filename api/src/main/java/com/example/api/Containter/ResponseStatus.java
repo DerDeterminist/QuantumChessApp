@@ -6,15 +6,18 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class ResponseStatus
 {
-   private boolean lastMoveWasValid = false;
+   private boolean lastMoveWasValid;
    private boolean isGameWon;
    private int winner;
+   private int activePlayer;
    private List<Integer> loser;
 
    public ResponseStatus(com.example.backend.Game.ResponseStatus responseStatus)
    {
       isGameWon = responseStatus.isGameWon();
       winner = responseStatus.getWinner();
+      lastMoveWasValid = responseStatus.isLastMoveWasValid();
+      activePlayer = responseStatus.getActivePlayer();
       loser = new ArrayList<>(responseStatus.getLoser());
    }
 
@@ -56,5 +59,15 @@ public class ResponseStatus
    public void setWinner(int winner)
    {
       this.winner = winner;
+   }
+
+   public int getActivePlayer()
+   {
+      return activePlayer;
+   }
+
+   public void setActivePlayer(int activePlayer)
+   {
+      this.activePlayer = activePlayer;
    }
 }

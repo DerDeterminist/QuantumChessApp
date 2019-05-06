@@ -3,6 +3,7 @@ package com.example.backend.Game;
 import com.example.backend.Pieces.Piece;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +16,7 @@ public abstract class GameImpl implements Game
    private List<Player> players = new ArrayList<>();
    private String pieceToWin = "King";
    private ResponseStatus lastResponseStatus = null;
+   private Player activePlayer;
 
    /**
     * If you extend this you need to instantiate the {@code Piece}s and build the Bord
@@ -24,25 +26,20 @@ public abstract class GameImpl implements Game
     * @see BordBuilder
     * @see Piece
     */
-   GameImpl(int boardWith, int boardHeight)
+   GameImpl(int boardWith, int boardHeight, Player... players)
    {
+      if (players.length < 1)
+      {
+         throw new RuntimeException("A Game must at least have one Player");
+      }
+      this.players.addAll(Arrays.asList(players));
+      activePlayer = players[0];
       this.board = new Board(boardWith, boardHeight);
    }
 
    public Board getBoard()
    {
       return board;
-   }
-
-   public List<Player> getPlayers()
-   {
-      return players;
-   }
-
-   @SuppressWarnings("WeakerAccess")
-   public void addPlayer(Player player)
-   {
-      players.add(player);
    }
 
    @Override
@@ -66,6 +63,10 @@ public abstract class GameImpl implements Game
          lastResponseStatus.setLastMoveWasValid(false);
       }
       boolean lastMoveWasValid = board.movePiece(xFrom, yFrom, xTo, yTo, qMove);
+      if (lastMoveWasValid)
+      {
+         updateActivePlayer();
+      }
       lastResponseStatus = createStatus();
       lastResponseStatus.setLastMoveWasValid(lastMoveWasValid);
    }
@@ -89,7 +90,20 @@ public abstract class GameImpl implements Game
          winner = players.indexOf(leftPlayers.get(0));
       }
       return new ResponseStatus(anzPiecesToWin == 1, winner, players.stream().filter(player -> !leftPlayers.contains(player)).map(
-            player -> players.indexOf(player)).collect(Collectors.toList()));
+            player -> players.indexOf(player)).collect(Collectors.toList()), players.indexOf(activePlayer));
+   }
+
+   @Override
+   public boolean isPieceOfActivePlayer(int x, int y)
+   {
+      return activePlayer.getPieces().stream().anyMatch(
+            piece -> piece.getCurrentTile().getX() == x && piece.getCurrentTile().getY() == y);
+   }
+
+   private void updateActivePlayer()
+   {
+      int indexActivePlayer = players.indexOf(activePlayer);
+      activePlayer = players.get(indexActivePlayer < players.size() - 1 ? ++indexActivePlayer : 0);
    }
 
    @Override
