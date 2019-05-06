@@ -63,7 +63,7 @@ public class GameActivity extends AppCompatActivity
                      ((ImageButton) v).setImageDrawable(activePiece.getDrawable());
                      activePiece.setImageDrawable(null);
 
-                     Toast next_player = Toast.makeText(this, "next Player", Toast.LENGTH_SHORT);
+                     Toast next_player = Toast.makeText(this, getString(R.string.nextPlayer), Toast.LENGTH_SHORT);
                      next_player.setGravity(Gravity.CENTER, 0, 0);
                      next_player.show();
                   }

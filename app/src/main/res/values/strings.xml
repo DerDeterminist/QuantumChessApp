@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">QuantumChessApp</string>
 
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="offline_game">Offline Game</string>
     <string name="online_game">Online Game</string>
-    <string name="beenden">Beenden</string>
+    <string name="exit">exit</string>
 
     <string name="title_activity_game">GameActivity</string>
     <string name="board">board</string>
+    <string name="nextPlayer">next Player</string>
 </resources>
