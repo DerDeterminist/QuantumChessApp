@@ -8,13 +8,23 @@ import com.example.backend.Game.ResponseStatus;
 import com.example.backend.Game.Tile;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class GameManager
 {
-   private volatile static HashMap<String, Game> games = new HashMap<>();
+   private volatile static ConcurrentHashMap<String, Game> games = new ConcurrentHashMap<>();
+   private final static GameManager gameManager = new GameManager();
+
+   private GameManager()
+   {
+   }
+
+   public static GameManager getInstance()
+   {
+      return gameManager;
+   }
 
    public String startGame()
    {

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 public class Api
 {
-   private static volatile GameManager gameManager = new GameManager();
+   private static volatile GameManager gameManager = GameManager.getInstance();
 
    public String startGame()
    {

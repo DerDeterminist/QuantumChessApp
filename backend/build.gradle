@@ -2,7 +2,16 @@ apply plugin: 'java-library'
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.4.2'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.4.2'
+    testCompile("junit:junit:4.12")
 }
+
+test{
+    useJUnitPlatform()
+}
+
 
 sourceCompatibility = "8"
 targetCompatibility = "8"

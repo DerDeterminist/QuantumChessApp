@@ -43,7 +43,7 @@ public final class Board
       return optionalPiece.isPresent() && optionalPiece.get().move(getTileAt(xTo, yTo), qMove);
    }
 
-   public void setTiles(List<Tile> tiles)
+   void setTiles(List<Tile> tiles)
    {
       this.tiles = tiles;
    }
