@@ -13,6 +13,8 @@ public class Player
 {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
-   private int id;
-   private int elo;
+   private String userID;
+   private String userName;
+   private int elo = 1200;
+   private boolean showUserNameOnline;
 }

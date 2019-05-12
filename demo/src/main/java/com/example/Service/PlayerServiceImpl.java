@@ -20,7 +20,7 @@ class PlayerServiceImpl implements PlayerService
    @Override
    public Player findPlayerByID(Integer id)
    {
-      return playerRepository.findById(id).get();
+      return playerRepository.findById(id).orElse(null);
    }
 
    @Override
