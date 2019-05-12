@@ -36,7 +36,7 @@ public class GameActivity extends AppCompatActivity
    {
       super.onCreate(savedInstanceState);
 
-      setContentView(R.layout.activity_game);
+      setContentView(R.layout.game_activity);
       board = findViewById(R.id.board);
       background = findViewById(R.id.background_game);
 

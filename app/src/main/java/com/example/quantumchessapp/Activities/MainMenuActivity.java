@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import com.example.quantumchessapp.Account;
 import com.example.quantumchessapp.R;
 
 public class MainMenuActivity extends AppCompatActivity
@@ -29,11 +30,21 @@ public class MainMenuActivity extends AppCompatActivity
 
    private void initListener()
    {
-      final Intent intent = new Intent(this, GameActivity.class);
-      offlineGame.setOnClickListener(v -> startActivity(intent));
+      final Intent gameActivity = new Intent(this, GameActivity.class);
+      offlineGame.setOnClickListener(v -> startActivity(gameActivity));
 
+      final Intent registerActivity = new Intent(this, RegisterActivity.class);
+      Account account = new Account(this);
       onlineGame.setOnClickListener(v -> {
-
+         if (account.hasAccount())
+         {
+            account.loadAccountData();
+            // TODO: 12.05.2019 start offline game
+         }
+         else
+         {
+            startActivity(registerActivity);
+         }
       });
 
       brenden.setOnClickListener(v -> {

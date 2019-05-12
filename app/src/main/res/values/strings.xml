@@ -8,4 +8,7 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="board">board</string>
     <string name="nextPlayer">next Player</string>
+    <string name="username">username</string>
+    <string name="show_username_online">show username online</string>
+    <string name="confirm">confirm</string>
 </resources>
