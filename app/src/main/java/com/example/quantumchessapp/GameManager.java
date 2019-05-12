@@ -4,6 +4,7 @@ import com.example.api.Api;
 import com.example.api.Containter.BoardContainer;
 import com.example.api.Containter.ResponseStatus;
 import com.example.api.Containter.ResponseTiles;
+import com.example.api.GameVariant;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -15,7 +16,7 @@ import java.util.stream.Collectors;
 public class GameManager
 {
    private static String gameID;
-   private static Api api = new Api();
+   private static Api api;
 
    private static List<Player> players;
    private static boolean isGameWon;
@@ -26,8 +27,9 @@ public class GameManager
    private static int height;
    private static double maxPieceStatus;
 
-   public static void newGame(Player player, Player player1)
+   public static void newGame(Player player, Player player1, GameVariant variance)
    {
+      api = Api.getInstance(variance);
       gameID = api.startGame();
       players = new ArrayList<>();
       players.add(player);
