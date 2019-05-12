@@ -1,7 +1,5 @@
 package com.example.quantumchessapp.Activities;
 
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -39,9 +37,6 @@ public class GameActivity extends AppCompatActivity
       setContentView(R.layout.game_activity);
       board = findViewById(R.id.board);
       background = findViewById(R.id.background_game);
-
-      AccountManager accountManager = AccountManager.get(this);
-      Account[] accountsByType = accountManager.getAccountsByType("com.google");
 
       GameManager.newGame(new Player(), new Player(), GameVariant.OFFLINE);
 
