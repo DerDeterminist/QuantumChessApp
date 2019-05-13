@@ -13,6 +13,7 @@ public class Player
 {
    @Id
    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   private int id;
    private String userID;
    private String userName;
    private int elo = 1200;

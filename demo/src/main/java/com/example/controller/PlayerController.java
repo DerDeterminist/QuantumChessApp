@@ -27,7 +27,7 @@ public class PlayerController
    }
 
    @GetMapping
-   List<Player> getAllPlayers()
+   public List<Player> getAllPlayers()
    {
       return playerService.findAllPlayers();
    }
@@ -43,5 +43,11 @@ public class PlayerController
    public Player savePlayer(@RequestBody Player player)
    {
       return playerService.savePlayer(player);
+   }
+
+   @GetMapping("/userID/{userID}")
+   public Player getPlayerByUserID(@PathVariable String userID)
+   {
+      return playerService.findPlayerByUserID(userID);
    }
 }

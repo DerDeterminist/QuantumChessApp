@@ -11,4 +11,6 @@ public interface PlayerService
    List<Player> findAllPlayers();
 
    Player savePlayer(Player player);
+
+   Player findPlayerByUserID(String id);
 }
