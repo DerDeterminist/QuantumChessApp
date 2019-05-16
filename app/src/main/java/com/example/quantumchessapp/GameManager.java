@@ -1,10 +1,10 @@
 package com.example.quantumchessapp;
 
 import com.example.api.Api;
-import com.example.api.Containter.BoardContainer;
-import com.example.api.Containter.ResponseStatus;
-import com.example.api.Containter.ResponseTiles;
 import com.example.api.GameVariant;
+import com.example.api.containter.BoardContainer;
+import com.example.api.containter.ResponseStatus;
+import com.example.api.containter.ResponseTiles;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 

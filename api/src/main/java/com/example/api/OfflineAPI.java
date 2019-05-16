@@ -1,10 +1,10 @@
 package com.example.api;
 
-import com.example.api.Containter.BoardContainer;
-import com.example.api.Containter.ResponseContent;
-import com.example.api.Containter.ResponseStatus;
-import com.example.api.Containter.ResponseTiles;
-import com.example.api.Containter.TileContainer;
+import com.example.api.containter.BoardContainer;
+import com.example.api.containter.ResponseContent;
+import com.example.api.containter.ResponseStatus;
+import com.example.api.containter.ResponseTiles;
+import com.example.api.containter.TileContainer;
 import com.example.backend.Game.Board;
 import com.example.backend.Game.Tile;
 import com.example.backend.GameManager;

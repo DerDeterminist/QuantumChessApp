@@ -3,6 +3,8 @@ apply plugin: 'java'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':backend')
+    implementation 'org.glassfish.jersey.core:jersey-client:2.28'
+    implementation 'org.projectlombok:lombok:1.18.8'
 }
 
 sourceCompatibility = "8"

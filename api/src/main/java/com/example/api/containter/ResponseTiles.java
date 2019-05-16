@@ -1,8 +1,10 @@
-package com.example.api.Containter;
+package com.example.api.containter;
+
+import lombok.Data;
 
 import java.util.Set;
 
-@SuppressWarnings("unused")
+@Data
 public class ResponseTiles
 {
    private Set<TileContainer> tiles;
@@ -17,20 +19,5 @@ public class ResponseTiles
    public Set<TileContainer> getTiles()
    {
       return tiles;
-   }
-
-   public void setTiles(Set<TileContainer> tiles)
-   {
-      this.tiles = tiles;
-   }
-
-   public ResponseStatus getStatus()
-   {
-      return status;
-   }
-
-   public void setStatus(ResponseStatus status)
-   {
-      this.status = status;
    }
 }

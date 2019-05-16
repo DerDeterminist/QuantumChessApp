@@ -1,8 +1,8 @@
 package com.example.api;
 
-import com.example.api.Containter.ResponseContent;
-import com.example.api.Containter.ResponseStatus;
-import com.example.api.Containter.ResponseTiles;
+import com.example.api.containter.ResponseContent;
+import com.example.api.containter.ResponseStatus;
+import com.example.api.containter.ResponseTiles;
 
 public interface Api
 {
