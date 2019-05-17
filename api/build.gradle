@@ -7,7 +7,6 @@ configurations {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(path: ':backend')
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 }
