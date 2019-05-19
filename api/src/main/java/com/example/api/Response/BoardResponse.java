@@ -1,5 +1,7 @@
-package com.example.api.containter;
+package com.example.api.Response;
 
+import com.example.api.containter.BoardCont;
+import com.example.api.containter.StatusCont;
 import com.example.backend.Game.ResponseStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,12 +10,12 @@ import lombok.EqualsAndHashCode;
 @Data
 public class BoardResponse extends AbstractResponse
 {
-   private BoardCont m_boardCont;
+   private BoardCont boardCont;
    private ResponseStatus responseStatus;
 
    public BoardResponse(BoardCont boardCont, ResponseStatus responseStatus)
    {
-      this.m_boardCont = boardCont;
+      this.boardCont = boardCont;
       setStatus(new StatusCont(responseStatus));
    }
 }

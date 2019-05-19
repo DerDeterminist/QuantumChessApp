@@ -1,8 +1,9 @@
 package com.example.api;
 
-import com.example.api.containter.BoardResponse;
-import com.example.api.containter.StatusResponse;
-import com.example.api.containter.TileResponse;
+import com.example.api.Response.BoardResponse;
+import com.example.api.Response.PieceOfActivePlayerResponse;
+import com.example.api.Response.StatusResponse;
+import com.example.api.Response.TileResponse;
 
 public interface Api
 {
@@ -27,5 +28,5 @@ public interface Api
 
    BoardResponse getCompleteBord(String gameID);
 
-   boolean isPieceOfActivePlayer(String gameID, int x, int y);
+   PieceOfActivePlayerResponse isPieceOfActivePlayer(String gameID, int x, int y);
 }

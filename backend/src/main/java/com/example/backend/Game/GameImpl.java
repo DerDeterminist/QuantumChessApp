@@ -74,23 +74,8 @@ public abstract class GameImpl implements Game
    @Override
    public Board getCompleteBord()
    {
+      lastResponseStatus = createStatus();
       return board;
-   }
-
-   private ResponseStatus createStatus()
-   {
-      long anzPiecesToWin = players.stream().flatMap(player -> player.getPieces().stream()).filter(
-            piece -> piece.getClass().getSimpleName().equals(pieceToWin)).count();
-      int winner = -1;
-      List<Player> leftPlayers = players.stream().filter(
-            player -> player.getPieces().stream().anyMatch(piece -> piece.getClass().getSimpleName().equals(pieceToWin)))
-            .collect(Collectors.toList());
-      if (leftPlayers.size() == 1)
-      {
-         winner = players.indexOf(leftPlayers.get(0));
-      }
-      return new ResponseStatus(anzPiecesToWin == 1, winner, players.stream().filter(player -> !leftPlayers.contains(player)).map(
-            player -> players.indexOf(player)).collect(Collectors.toList()), players.indexOf(activePlayer));
    }
 
    @Override
@@ -110,5 +95,21 @@ public abstract class GameImpl implements Game
    public ResponseStatus getStatus()
    {
       return lastResponseStatus;
+   }
+
+   private ResponseStatus createStatus()
+   {
+      long anzPiecesToWin = players.stream().flatMap(player -> player.getPieces().stream()).filter(
+            piece -> piece.getClass().getSimpleName().equals(pieceToWin)).count();
+      int winner = -1;
+      List<Player> leftPlayers = players.stream().filter(
+            player -> player.getPieces().stream().anyMatch(piece -> piece.getClass().getSimpleName().equals(pieceToWin)))
+            .collect(Collectors.toList());
+      if (leftPlayers.size() == 1)
+      {
+         winner = players.indexOf(leftPlayers.get(0));
+      }
+      return new ResponseStatus(anzPiecesToWin == 1, winner, players.stream().filter(player -> !leftPlayers.contains(player)).map(
+            player -> players.indexOf(player)).collect(Collectors.toList()), players.indexOf(activePlayer));
    }
 }

@@ -1,5 +1,6 @@
-package com.example.api.containter;
+package com.example.api.Response;
 
+import com.example.api.containter.StatusCont;
 import lombok.Data;
 
 @Data

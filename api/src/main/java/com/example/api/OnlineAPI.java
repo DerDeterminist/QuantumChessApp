@@ -1,8 +1,9 @@
 package com.example.api;
 
-import com.example.api.containter.BoardResponse;
-import com.example.api.containter.StatusResponse;
-import com.example.api.containter.TileResponse;
+import com.example.api.Response.BoardResponse;
+import com.example.api.Response.PieceOfActivePlayerResponse;
+import com.example.api.Response.StatusResponse;
+import com.example.api.Response.TileResponse;
 
 class OnlineAPI implements Api
 {
@@ -31,8 +32,8 @@ class OnlineAPI implements Api
    }
 
    @Override
-   public boolean isPieceOfActivePlayer(String gameID, int x, int y)
+   public PieceOfActivePlayerResponse isPieceOfActivePlayer(String gameID, int x, int y)
    {
-      return false;
+      return null;
    }
 }

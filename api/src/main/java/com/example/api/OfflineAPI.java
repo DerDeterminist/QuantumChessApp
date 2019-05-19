@@ -1,11 +1,12 @@
 package com.example.api;
 
+import com.example.api.Response.BoardResponse;
+import com.example.api.Response.PieceOfActivePlayerResponse;
+import com.example.api.Response.StatusResponse;
+import com.example.api.Response.TileResponse;
 import com.example.api.containter.BoardCont;
-import com.example.api.containter.BoardResponse;
 import com.example.api.containter.StatusCont;
-import com.example.api.containter.StatusResponse;
 import com.example.api.containter.TileCont;
-import com.example.api.containter.TileResponse;
 import com.example.backend.Game.Board;
 import com.example.backend.Game.Tile;
 import com.example.backend.GameManager;
@@ -50,9 +51,9 @@ class OfflineAPI implements Api
    }
 
    @Override
-   public boolean isPieceOfActivePlayer(String gameID, int x, int y)
+   public PieceOfActivePlayerResponse isPieceOfActivePlayer(String gameID, int x, int y)
    {
-      return gameManager.isPieceOfActivePlayer(gameID, x, y);
+      return new PieceOfActivePlayerResponse(gameManager.isPieceOfActivePlayer(gameID, x, y));
    }
 
    private Set<TileCont> tileToTileEntity(Set<Tile> tiles)
