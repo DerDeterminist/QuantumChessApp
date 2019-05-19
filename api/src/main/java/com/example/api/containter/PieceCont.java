@@ -3,7 +3,7 @@ package com.example.api.containter;
 import lombok.Data;
 
 @Data
-public class PieceContainer
+public class PieceCont
 {
    private String type;
    private int owner;
@@ -11,7 +11,7 @@ public class PieceContainer
    private int x;
    private int y;
 
-   public PieceContainer(String type, int owner, double status, int x, int y)
+   public PieceCont(String type, int owner, double status, int x, int y)
    {
       this.type = type;
       this.owner = owner;

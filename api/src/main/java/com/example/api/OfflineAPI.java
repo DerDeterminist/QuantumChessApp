@@ -1,10 +1,11 @@
 package com.example.api;
 
-import com.example.api.containter.BoardContainer;
-import com.example.api.containter.ResponseContent;
-import com.example.api.containter.ResponseStatus;
-import com.example.api.containter.ResponseTiles;
-import com.example.api.containter.TileContainer;
+import com.example.api.containter.BoardCont;
+import com.example.api.containter.BoardResponse;
+import com.example.api.containter.StatusCont;
+import com.example.api.containter.StatusResponse;
+import com.example.api.containter.TileCont;
+import com.example.api.containter.TileResponse;
 import com.example.backend.Game.Board;
 import com.example.backend.Game.Tile;
 import com.example.backend.GameManager;
@@ -28,23 +29,23 @@ class OfflineAPI implements Api
    }
 
    @Override
-   public ResponseTiles getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
+   public TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
    {
       Set<Tile> possibleMoves = gameManager.getPossibleMoves(gameID, xFrom, yFrom, qMove);
-      return new ResponseTiles(tileToTileEntity(possibleMoves), new ResponseStatus(gameManager.getStatus(gameID)));
+      return new TileResponse(tileToTileEntity(possibleMoves), new StatusCont(gameManager.getStatus(gameID)));
    }
 
    @Override
-   public ResponseStatus movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public StatusResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
-      return new ResponseStatus(gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove));
+      return new StatusResponse(new StatusCont(gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove)));
    }
 
    @Override
-   public ResponseContent getCompleteBord(String gameID)
+   public BoardResponse getCompleteBord(String gameID)
    {
       Board board = gameManager.getBoard(gameID);
-      return new ResponseContent(new BoardContainer(board.getWith(), board.getHeight(), Piece.MAX_STATUS),
+      return new BoardResponse(new BoardCont(board.getWith(), board.getHeight(), Piece.MAX_STATUS),
             gameManager.getStatus(gameID));
    }
 
@@ -54,8 +55,8 @@ class OfflineAPI implements Api
       return gameManager.isPieceOfActivePlayer(gameID, x, y);
    }
 
-   private Set<TileContainer> tileToTileEntity(Set<Tile> tiles)
+   private Set<TileCont> tileToTileEntity(Set<Tile> tiles)
    {
-      return tiles.stream().map(tile -> new TileContainer(tile.getX(), tile.getY())).collect(Collectors.toSet());
+      return tiles.stream().map(tile -> new TileCont(tile.getX(), tile.getY())).collect(Collectors.toSet());
    }
 }

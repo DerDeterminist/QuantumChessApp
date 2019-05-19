@@ -1,7 +1,8 @@
 package com.example.controller;
 
 import com.example.Service.PlayerService;
-import com.example.api.containter.PlayerContainer;
+import com.example.api.containter.PlayerCont;
+import com.example.api.containter.PlayerResponse;
 import com.example.domain.Player;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,43 +30,48 @@ public class PlayerController
    }
 
    @GetMapping
-   public List<PlayerContainer> getAllPlayers()
+   public List<PlayerResponse> getAllPlayers()
    {
       return playerService.findAllPlayers().stream().map(this::playerToPlayerContainer).collect(Collectors.toList());
    }
 
    @GetMapping("/{id}")
-   public PlayerContainer getPlayerById(@PathVariable Integer id)
+   public PlayerResponse getPlayerById(@PathVariable Integer id)
    {
       return playerToPlayerContainer(playerService.findPlayerByID(id));
    }
 
    @PostMapping
    @ResponseStatus(HttpStatus.CREATED)
-   public PlayerContainer savePlayer(@RequestBody PlayerContainer cont)
+   public PlayerResponse savePlayer(@RequestBody PlayerResponse cont)
    {
-      return playerToPlayerContainer(playerService.savePlayer(playercontToPlayer(cont)));
+      return playerToPlayerContainer(playerService.savePlayer(playerContToPlayer(cont)));
    }
 
    @GetMapping("/userID/{userID}")
-   public PlayerContainer getPlayerByUserID(@PathVariable String userID)
+   public PlayerResponse getPlayerByUserID(@PathVariable String userID)
    {
       return playerToPlayerContainer(playerService.findPlayerByUserID(userID));
    }
 
-   private PlayerContainer playerToPlayerContainer(Player player)
+   private PlayerResponse playerToPlayerContainer(Player player)
    {
-      PlayerContainer cont = new PlayerContainer();
+      PlayerCont cont = new PlayerCont();
       cont.setId(player.getId());
       cont.setUserID(player.getUserID());
       cont.setElo(player.getElo());
       cont.setUserName(player.getUserName());
       cont.setShowUserNameOnline(player.isShowUserNameOnline());
-      return cont;
+
+      PlayerResponse response = new PlayerResponse();
+      response.setPlayerCont(cont);
+      return response;
    }
 
-   private Player playercontToPlayer(PlayerContainer cont)
+   private Player playerContToPlayer(PlayerResponse response)
    {
+      PlayerCont cont = response.getPlayerCont();
+
       Player player = new Player();
       player.setId(cont.getId());
       player.setUserID(cont.getUserID());

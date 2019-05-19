@@ -1,8 +1,8 @@
 package com.example.api;
 
-import com.example.api.containter.ResponseContent;
-import com.example.api.containter.ResponseStatus;
-import com.example.api.containter.ResponseTiles;
+import com.example.api.containter.BoardResponse;
+import com.example.api.containter.StatusResponse;
+import com.example.api.containter.TileResponse;
 
 class OnlineAPI implements Api
 {
@@ -13,19 +13,19 @@ class OnlineAPI implements Api
    }
 
    @Override
-   public ResponseTiles getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
+   public TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
    {
       return null;
    }
 
    @Override
-   public ResponseStatus movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public StatusResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
       return null;
    }
 
    @Override
-   public ResponseContent getCompleteBord(String gameID)
+   public BoardResponse getCompleteBord(String gameID)
    {
       return null;
    }

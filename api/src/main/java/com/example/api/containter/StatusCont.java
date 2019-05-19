@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-public class ResponseStatus
+public class StatusCont
 {
    private boolean lastMoveWasValid;
    private boolean isGameWon;
@@ -14,7 +14,7 @@ public class ResponseStatus
    private int activePlayer;
    private List<Integer> loser;
 
-   public ResponseStatus(com.example.backend.Game.ResponseStatus responseStatus)
+   public StatusCont(com.example.backend.Game.ResponseStatus responseStatus)
    {
       isGameWon = responseStatus.isGameWon();
       winner = responseStatus.getWinner();

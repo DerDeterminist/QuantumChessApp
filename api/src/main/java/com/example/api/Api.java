@@ -1,8 +1,8 @@
 package com.example.api;
 
-import com.example.api.containter.ResponseContent;
-import com.example.api.containter.ResponseStatus;
-import com.example.api.containter.ResponseTiles;
+import com.example.api.containter.BoardResponse;
+import com.example.api.containter.StatusResponse;
+import com.example.api.containter.TileResponse;
 
 public interface Api
 {
@@ -21,11 +21,11 @@ public interface Api
 
    String startGame();
 
-   ResponseTiles getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove);
+   TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove);
 
-   ResponseStatus movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove);
+   StatusResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove);
 
-   ResponseContent getCompleteBord(String gameID);
+   BoardResponse getCompleteBord(String gameID);
 
    boolean isPieceOfActivePlayer(String gameID, int x, int y);
 }

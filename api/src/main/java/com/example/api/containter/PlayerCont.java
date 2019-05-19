@@ -3,7 +3,7 @@ package com.example.api.containter;
 import lombok.Data;
 
 @Data
-public class PlayerContainer
+public class PlayerCont
 {
       private int id;
       private String userID;

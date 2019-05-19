@@ -6,14 +6,14 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Data
-public class BoardContainer
+public class BoardCont
 {
    private int with;
    private int height;
    private double maxPieceStatus;
-   private Set<PieceContainer> pieces;
+   private Set<PieceCont> pieces;
 
-   public BoardContainer(int with, int height, double maxPieceStatus)
+   public BoardCont(int with, int height, double maxPieceStatus)
    {
       this.with = with;
       this.height = height;

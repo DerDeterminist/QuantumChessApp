@@ -2,9 +2,9 @@ package com.example.quantumchessapp;
 
 import com.example.api.Api;
 import com.example.api.GameVariant;
-import com.example.api.containter.BoardContainer;
-import com.example.api.containter.ResponseStatus;
-import com.example.api.containter.ResponseTiles;
+import com.example.api.containter.BoardCont;
+import com.example.api.containter.StatusCont;
+import com.example.api.containter.TileResponse;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -35,15 +35,15 @@ public class GameManager
       players.add(player);
       players.add(player1);
 
-      BoardContainer boardContainer = api.getCompleteBord(gameID).getBoardContainer();
-      height = boardContainer.getHeight();
-      wight = boardContainer.getWith();
-      maxPieceStatus = boardContainer.getMaxPieceStatus();
+      BoardCont boardCont = api.getCompleteBord(gameID).getM_boardCont();
+      height = boardCont.getHeight();
+      wight = boardCont.getWith();
+      maxPieceStatus = boardCont.getMaxPieceStatus();
    }
 
    public static List<Position> getPossibleMoves(Position startPosition, boolean qMove)
    {
-      ResponseTiles possibleMoves =
+      TileResponse possibleMoves =
             api.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition), qMove);
       convertStatus(possibleMoves.getStatus());
       return possibleMoves.getTiles().stream().map(tileContainer -> convertXYToPosition(tileContainer.getX(), tileContainer.getY()))
@@ -54,7 +54,7 @@ public class GameManager
    {
       convertStatus(
             api.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
-                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove));
+                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove).getStatus());
    }
 
    public static boolean isPieceOfActivePlayer(Position position)
@@ -62,11 +62,11 @@ public class GameManager
       return api.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position));
    }
 
-   private static void convertStatus(final ResponseStatus responseStatus)
+   private static void convertStatus(final StatusCont statusCont)
    {
-      isGameWon = responseStatus.isGameWon();
-      lastMoveWasValid = responseStatus.isLastMoveWasValid();
-      winner = players.stream().filter(player -> player.getId() == responseStatus.getWinner()).findAny().orElse(null);
+      isGameWon = statusCont.isGameWon();
+      lastMoveWasValid = statusCont.isLastMoveWasValid();
+      winner = players.stream().filter(player -> player.getId() == statusCont.getWinner()).findAny().orElse(null);
    }
 
    private static Position convertXYToPosition(int x, int y)
