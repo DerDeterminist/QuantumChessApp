@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.Service.PlayerService;
+import com.example.api.Request.PlayerRequest;
 import com.example.api.Response.PlayerResponse;
 import com.example.api.containter.PlayerCont;
 import com.example.domain.Player;
@@ -32,29 +33,29 @@ public class PlayerController
    @GetMapping
    public List<PlayerResponse> getAllPlayers()
    {
-      return playerService.findAllPlayers().stream().map(this::playerToPlayerContainer).collect(Collectors.toList());
+      return playerService.findAllPlayers().stream().map(this::playerToPlayerResponse).collect(Collectors.toList());
    }
 
    @GetMapping("/{id}")
    public PlayerResponse getPlayerById(@PathVariable Integer id)
    {
-      return playerToPlayerContainer(playerService.findPlayerByID(id));
+      return playerToPlayerResponse(playerService.findPlayerByID(id));
    }
 
    @PostMapping
    @ResponseStatus(HttpStatus.CREATED)
-   public PlayerResponse savePlayer(@RequestBody PlayerResponse cont)
+   public PlayerResponse savePlayer(@RequestBody PlayerRequest request)
    {
-      return playerToPlayerContainer(playerService.savePlayer(playerContToPlayer(cont)));
+      return playerToPlayerResponse(playerService.savePlayer(playerContToPlayer(request.getPlayerCont())));
    }
 
    @GetMapping("/userID/{userID}")
    public PlayerResponse getPlayerByUserID(@PathVariable String userID)
    {
-      return playerToPlayerContainer(playerService.findPlayerByUserID(userID));
+      return playerToPlayerResponse(playerService.findPlayerByUserID(userID));
    }
 
-   private PlayerResponse playerToPlayerContainer(Player player)
+   private PlayerResponse playerToPlayerResponse(Player player)
    {
       PlayerCont cont = new PlayerCont();
       cont.setId(player.getId());
@@ -68,10 +69,8 @@ public class PlayerController
       return response;
    }
 
-   private Player playerContToPlayer(PlayerResponse response)
+   private Player playerContToPlayer(PlayerCont cont)
    {
-      PlayerCont cont = response.getPlayerCont();
-
       Player player = new Player();
       player.setId(cont.getId());
       player.setUserID(cont.getUserID());
