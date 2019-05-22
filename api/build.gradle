@@ -9,8 +9,6 @@ configurations {
 dependencies {
     implementation project(path: ':backend')
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    // https://mvnrepository.com/artifact/com.sun.jersey/jersey-client
-    implementation group: 'com.sun.jersey', name: 'jersey-client', version: '1.19.4'
 
 }
 
