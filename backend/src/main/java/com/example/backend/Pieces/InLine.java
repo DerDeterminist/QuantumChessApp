@@ -74,12 +74,17 @@ abstract class InLine extends Piece
    {
       return directions.stream().map(tile::getIterator).flatMap(iterator -> {
          List<Tile> tiles = new ArrayList<>();
+         boolean freeToGoOn = true;
          while (iterator.hasNext())
          {
             Tile next = (Tile) iterator.next();
-            if (qMove ? getQPredicate().test(next) : getNPredicate().test(next))
+            if (qMove ? getQPredicate().test(next) : getNPredicate().test(next) && freeToGoOn)
             {
                tiles.add(next);
+               if (next.getPiece().isPresent())
+               {
+                  freeToGoOn = false;
+               }
             }
             else
             {
