@@ -7,6 +7,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -51,9 +52,9 @@ public class GameActivity extends AppCompatActivity
          LinearLayout row = (LinearLayout) board.getChildAt(y);
          for (int x = 0; x < row.getChildCount(); x++)
          {
-            ImageButton tile = (ImageButton) row.getChildAt(x);
             Position position = new Position(x, y);
-            tile.setOnClickListener(v -> {
+            ImageButton piece = getImageButtonAt(position);
+            piece.setOnClickListener(v -> {
                if (activePiece != null)
                {
                   GameManager.movePiece(activePosition, position, false);
@@ -74,12 +75,11 @@ public class GameActivity extends AppCompatActivity
                {
                   if (GameManager.isPieceOfActivePlayer(position))
                   {
-                     activePiece = tile;
+                     activePiece = piece;
                      activePosition = position;
                      possiblePositions = GameManager.getPossibleMoves(position, false);
                      possiblePositions.stream()
-                           .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
-                                 .getChildAt(position1.getX()))
+                           .map(this::getImageButtonAt)
                            .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
                   }
                   else
@@ -97,10 +97,17 @@ public class GameActivity extends AppCompatActivity
       activePiece = null;
       activePosition = null;
       possiblePositions.stream()
-            .map(position1 -> (ImageButton) ((LinearLayout) board.getChildAt(position1.getY()))
-                  .getChildAt(position1.getX()))
+            .map(this::getImageButtonAt)
             .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.transparent));
       possiblePositions = Collections.emptyList();
+   }
+
+   private ImageButton getImageButtonAt(Position position)
+   {
+      return (ImageButton) ((FrameLayout) ((LinearLayout)
+            board.getChildAt(position.getY()))
+            .getChildAt(position.getX()))
+            .getChildAt(0);
    }
 
    @Override
