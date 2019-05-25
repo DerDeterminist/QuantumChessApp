@@ -173,7 +173,7 @@ public abstract class Piece implements Cloneable
       owner.removePiece(this);
    }
 
-   double getStatus()
+   public double getStatus()
    {
       return status;
    }

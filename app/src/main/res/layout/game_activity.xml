@@ -4,7 +4,7 @@
                                              xmlns:tools="http://schemas.android.com/tools"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             android:background="#FFFFFF"
+                                             android:background="@android:color/darker_gray"
                                              android:id="@+id/background_game"
                                              tools:context=".Activities.GameActivity"
 >
@@ -25,7 +25,7 @@
             android:visibility="visible"
             android:contentDescription="@string/board"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintVertical_bias="0.5" android:paddingTop="10dp"/>
+            app:layout_constraintVertical_bias="0.5" android:padding="8dp"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="0dp"
@@ -35,12 +35,12 @@
             app:layout_constraintBottom_toBottomOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="@+id/imageView"
             android:id="@+id/board"
-            android:paddingTop="40dp"
-            android:paddingBottom="31dp">
+            android:paddingTop="52dp"
+            android:paddingBottom="52dp">
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row8"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row8"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -126,7 +126,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row7"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row7"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -212,7 +212,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row6"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row6"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -306,7 +306,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row5"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row5"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -400,7 +400,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row4"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row4"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -494,7 +494,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row3"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row3"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -588,7 +588,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row2"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row2"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"
@@ -674,7 +674,7 @@
         <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" android:paddingStart="32dp" android:paddingEnd="32dp" android:id="@+id/row1"
+                android:layout_height="match_parent" android:paddingStart="25dp" android:paddingEnd="25dp" android:id="@+id/row1"
                 android:layout_weight="1" android:baselineAligned="false">
             <FrameLayout
                     android:layout_width="match_parent"

@@ -1,8 +1,8 @@
 package com.example.api;
 
 import com.example.api.Response.BoardResponse;
+import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StatusResponse;
 import com.example.api.Response.TileResponse;
 
 public interface Api
@@ -24,7 +24,7 @@ public interface Api
 
    TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove);
 
-   StatusResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove);
+   ChangeResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove);
 
    BoardResponse getCompleteBord(String gameID);
 

@@ -1,8 +1,8 @@
 package com.example.api;
 
 import com.example.api.Response.BoardResponse;
+import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StatusResponse;
 import com.example.api.Response.TileResponse;
 
 class OnlineAPI implements Api
@@ -20,7 +20,7 @@ class OnlineAPI implements Api
    }
 
    @Override
-   public StatusResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public ChangeResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
       return null;
    }

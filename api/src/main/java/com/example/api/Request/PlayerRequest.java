@@ -1,6 +1,6 @@
 package com.example.api.Request;
 
-import com.example.api.containter.PlayerCont;
+import com.example.api.Containter.PlayerCont;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 

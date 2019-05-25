@@ -1,13 +1,15 @@
 package com.example.api;
 
+import com.example.api.Containter.BoardCont;
+import com.example.api.Containter.ChangeCont;
+import com.example.api.Containter.StatusCont;
+import com.example.api.Containter.TileCont;
 import com.example.api.Response.BoardResponse;
+import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StatusResponse;
 import com.example.api.Response.TileResponse;
-import com.example.api.containter.BoardCont;
-import com.example.api.containter.StatusCont;
-import com.example.api.containter.TileCont;
 import com.example.backend.Game.Board;
+import com.example.backend.Game.Change;
 import com.example.backend.Game.Tile;
 import com.example.backend.GameManager;
 import com.example.backend.Pieces.Piece;
@@ -33,27 +35,42 @@ class OfflineAPI implements Api
    public TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
    {
       Set<Tile> possibleMoves = gameManager.getPossibleMoves(gameID, xFrom, yFrom, qMove);
-      return new TileResponse(tileToTileEntity(possibleMoves), new StatusCont(gameManager.getStatus(gameID)));
+      TileResponse tileResponse = new TileResponse();
+      tileResponse.setTiles(tileToTileEntity(possibleMoves));
+      tileResponse.setStatus(new StatusCont(gameManager.getStatus(gameID)));
+      return tileResponse;
    }
 
    @Override
-   public StatusResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public ChangeResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
-      return new StatusResponse(new StatusCont(gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove)));
+      gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove);
+      StatusCont statusCont = new StatusCont(gameManager.getStatus(gameID));
+      Change change = gameManager.getChange(gameID);
+
+      ChangeResponse changeResponse = new ChangeResponse();
+      changeResponse.setChangeCont(new ChangeCont(change));
+      changeResponse.setStatus(statusCont);
+      return changeResponse;
    }
 
    @Override
    public BoardResponse getCompleteBord(String gameID)
    {
       Board board = gameManager.getBoard(gameID);
-      return new BoardResponse(new BoardCont(board.getWith(), board.getHeight(), Piece.MAX_STATUS),
-            gameManager.getStatus(gameID));
+      BoardResponse boardResponse = new BoardResponse();
+      boardResponse.setBoardCont(new BoardCont(board.getWith(), board.getHeight(), Piece.MAX_STATUS));
+      boardResponse.setStatus(new StatusCont(gameManager.getStatus(gameID)));
+      return boardResponse;
    }
 
    @Override
    public PieceOfActivePlayerResponse isPieceOfActivePlayer(String gameID, int x, int y)
    {
-      return new PieceOfActivePlayerResponse(gameManager.isPieceOfActivePlayer(gameID, x, y));
+      PieceOfActivePlayerResponse pieceOfActivePlayerResponse = new PieceOfActivePlayerResponse();
+      pieceOfActivePlayerResponse.setPieceOfActivePlayer(gameManager.isPieceOfActivePlayer(gameID, x, y));
+      pieceOfActivePlayerResponse.setStatus(new StatusCont(gameManager.getStatus(gameID)));
+      return pieceOfActivePlayerResponse;
    }
 
    private Set<TileCont> tileToTileEntity(Set<Tile> tiles)

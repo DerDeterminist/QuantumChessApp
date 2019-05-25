@@ -13,7 +13,7 @@ public class ResponseStatus
 
    /**
     * State of the game. Winner will be -1 if the game is not won jet.
-    *  @param isGameWon is the game won?
+    * @param isGameWon is the game won?
     * @param winner    id of the winner
     * @param loser     ids of the losers
     * @param activePlayer id of the active player

@@ -3,6 +3,7 @@ package com.example.backend.Game;
 import com.example.backend.Pieces.Piece;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -14,11 +15,20 @@ public final class Board
    private List<Tile> tiles;
    private int with;
    private int height;
+   private Change change;
+   private List<Tile> last;
 
    public Board(int with, int height)
    {
       this.with = with;
       this.height = height;
+      change = new Change();
+      last = new ArrayList<>();
+   }
+
+   Change getChange()
+   {
+      return change;
    }
 
    public int getWith()
@@ -40,7 +50,45 @@ public final class Board
    boolean movePiece(int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
       Optional<Piece> optionalPiece = getTileAt(xFrom, yFrom).getPiece();
-      return optionalPiece.isPresent() && optionalPiece.get().move(getTileAt(xTo, yTo), qMove);
+      boolean b = optionalPiece.isPresent() && optionalPiece.get().move(getTileAt(xTo, yTo), qMove);
+      computeChanges();
+      return b;
+   }
+
+   private void computeChanges()
+   {
+      change.clear();
+      tiles.stream()
+            .filter(tile -> tile.getPiece().isPresent())
+            .forEach(tile -> {
+               Tile any = last.stream().filter(tile1 -> tile1.equals(tile)).findAny().orElse(null);
+               Piece piece = tile.getPiece().get();
+               if (any != null && any.getPiece().isPresent())
+               {
+                  Piece anyPiece = any.getPiece().get();
+                  if (piece.getStatus() != anyPiece.getStatus())
+                  {
+                     change.addChanged(piece);
+                  }
+               }
+               else
+               {
+                  change.addAdded(piece);
+               }
+            });
+
+      last.stream()
+            .filter(tile -> tile.getPiece().isPresent())
+            .forEach(tile -> {
+               Piece piece = tile.getPiece().get();
+               Tile any = tiles.stream().filter(tile1 -> tile1.equals(tile)).findAny().orElse(null);
+               if (any != null && !any.getPiece().isPresent())
+               {
+                  change.addRemoved(piece);
+               }
+            });
+
+      last = tiles;
    }
 
    void setTiles(List<Tile> tiles)

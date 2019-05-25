@@ -1,6 +1,7 @@
 package com.example.backend;
 
 import com.example.backend.Game.Board;
+import com.example.backend.Game.Change;
 import com.example.backend.Game.DefaultGameImpl;
 import com.example.backend.Game.Game;
 import com.example.backend.Game.Player;
@@ -38,12 +39,12 @@ public class GameManager
       return games.containsKey(gameID) ? games.get(gameID).getPossibleMoves(xFrom, yFrom, qMove) : Collections.emptySet();
    }
 
-   public ResponseStatus movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public Change movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
       if (gameID != null && games.containsKey(gameID) && games.get(gameID) != null)
       {
          games.get(gameID).movePiece(xFrom, yFrom, xTo, yTo, qMove);
-         return games.get(gameID).getStatus();
+         return games.get(gameID).getChange();
       }
       return null;
    }
@@ -61,5 +62,10 @@ public class GameManager
    public boolean isPieceOfActivePlayer(String gameID, int x, int y)
    {
       return games.get(gameID).isPieceOfActivePlayer(x, y);
+   }
+
+   public Change getChange(String gameID)
+   {
+      return games.get(gameID).getChange();
    }
 }

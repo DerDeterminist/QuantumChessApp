@@ -112,4 +112,11 @@ public abstract class GameImpl implements Game
       return new ResponseStatus(anzPiecesToWin == 1, winner, players.stream().filter(player -> !leftPlayers.contains(player)).map(
             player -> players.indexOf(player)).collect(Collectors.toList()), players.indexOf(activePlayer));
    }
+
+   @Override
+   public Change getChange()
+   {
+      createStatus();
+      return board.getChange();
+   }
 }

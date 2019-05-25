@@ -13,4 +13,6 @@ public interface Game
    ResponseStatus getStatus();
 
    boolean isPieceOfActivePlayer(int x, int y);
+
+   Change getChange();
 }

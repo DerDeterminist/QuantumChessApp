@@ -1,14 +1,14 @@
 package com.example.quantumchessapp;
 
 import com.example.api.Api;
+import com.example.api.Containter.BoardCont;
+import com.example.api.Containter.StatusCont;
 import com.example.api.GameVariant;
 import com.example.api.Request.AbstractRequest;
 import com.example.api.Response.AbstractResponse;
 import com.example.api.Response.BoardResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
 import com.example.api.Response.TileResponse;
-import com.example.api.containter.BoardCont;
-import com.example.api.containter.StatusCont;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -89,7 +89,7 @@ public class GameManager
       }
    }
 
-   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
+   public static void movePPiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
       ClientProxy clientProxy = new ClientProxy()
       {

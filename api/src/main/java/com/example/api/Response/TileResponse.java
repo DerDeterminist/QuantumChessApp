@@ -1,7 +1,6 @@
 package com.example.api.Response;
 
-import com.example.api.containter.StatusCont;
-import com.example.api.containter.TileCont;
+import com.example.api.Containter.TileCont;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -12,10 +11,4 @@ import java.util.Set;
 public class TileResponse extends AbstractResponse
 {
    private Set<TileCont> tiles;
-
-   public TileResponse(Set<TileCont> tiles, StatusCont status)
-   {
-      this.tiles = tiles;
-      setStatus(status);
-   }
 }
