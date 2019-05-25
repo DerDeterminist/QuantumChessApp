@@ -20,17 +20,17 @@ public class Change
 
    public void addRemoved(Piece piece)
    {
-      removed.add(piece);
+      removed.add(piece.clone());
    }
 
    public void addAdded(Piece piece)
    {
-      added.add(piece);
+      added.add(piece.clone());
    }
 
    public void addChanged(Piece piece)
    {
-      changed.add(piece);
+      changed.add(piece.clone());
    }
 
    public void clear()

@@ -30,10 +30,17 @@ public class Tile
 
    public void setPiece(Piece piece)
    {
+      if (this.piece != null || piece == null)
+      {
+         board.getChange().addRemoved(this.piece);
+      }
+      else
+      {
+         board.getChange().addAdded(piece);
+      }
       this.piece = piece;
    }
 
-   @SuppressWarnings("WeakerAccess")
    public int getX()
    {
       return x;
@@ -59,5 +66,10 @@ public class Tile
    public Iterator getIterator(Direction direction)
    {
       return new Itr(this, direction);
+   }
+
+   public void reportStatusChange()
+   {
+      board.getChange().addChanged(piece);
    }
 }

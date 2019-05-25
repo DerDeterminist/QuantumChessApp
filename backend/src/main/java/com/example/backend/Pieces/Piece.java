@@ -101,8 +101,8 @@ public abstract class Piece implements Cloneable
          {
             newTile.getPiece().ifPresent(Piece::removeFromOwner);
             this.tile.setPiece(null);
-            newTile.setPiece(this);
             this.tile = newTile;
+            newTile.setPiece(this);
          }
          return true;
       }
@@ -111,13 +111,13 @@ public abstract class Piece implements Cloneable
 
    private void splitInstance(Tile newTile, double newStatus)
    {
-      Piece clonedPiece = this.clone();
+      Piece clonedPiece = duplicate();
       this.instances.add(clonedPiece);
       clonedPiece.instances.add(this);
       newTile.setPiece(clonedPiece);
       clonedPiece.tile = newTile;
-      clonedPiece.status = newStatus;
-      this.status = MAX_STATUS - clonedPiece.status;
+      clonedPiece.setStatus(newStatus);
+      this.setStatus(MAX_STATUS - clonedPiece.getStatus());
 //            clonedPiece.entangledPieces.addAll(entangledPieces);
    }
 
@@ -127,7 +127,7 @@ public abstract class Piece implements Cloneable
       {
          for (Piece instance : instances)
          {
-            instance.status = instance.getStatus() + this.status / instances.size();
+            instance.setStatus(instance.getStatus() + this.status / instances.size());
             instance.instances.remove(this);
          }
          this.tile.setPiece(null);
@@ -173,6 +173,12 @@ public abstract class Piece implements Cloneable
       owner.removePiece(this);
    }
 
+   private void setStatus(double status)
+   {
+      tile.reportStatusChange();
+      this.status = status;
+   }
+
    public double getStatus()
    {
       return status;
@@ -199,22 +205,25 @@ public abstract class Piece implements Cloneable
       return nPredicate;
    }
 
+   private Piece duplicate()
+   {
+      Piece duplicate = clone();
+      duplicate.instances = new ArrayList<>(this.instances);
+      owner.addPiece(duplicate);
+      return duplicate;
+   }
+
    @Override
    public Piece clone()
    {
-      Piece clone = null;
       try
       {
-         clone = (Piece) super.clone();
-         clone.instances = new ArrayList<>(this.instances);
-//         clone.entangledPieces = new ArrayList<>(this.entangledPieces);
-         owner.addPiece(clone);
+         return (Piece) super.clone();
       }
       catch (CloneNotSupportedException e)
       {
          e.printStackTrace();
-         System.out.println("Error while cloning a Piece");
       }
-      return clone;
+      return null;
    }
 }

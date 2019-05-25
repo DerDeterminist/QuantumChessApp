@@ -16,12 +16,12 @@ public class ChangeCont
 
    public ChangeCont(Change change)
    {
-      this.removed = playerToCont(change.getRemoved());
-      this.added = playerToCont(change.getAdded());
-      this.changed = playerToCont(change.getChanged());
+      this.removed = pieceToCont(change.getRemoved());
+      this.added = pieceToCont(change.getAdded());
+      this.changed = pieceToCont(change.getChanged());
    }
 
-   private List<PieceCont> playerToCont(List<Piece> list)
+   private List<PieceCont> pieceToCont(List<Piece> list)
    {
       return list.stream().map(PieceCont::new).collect(Collectors.toList());
    }
