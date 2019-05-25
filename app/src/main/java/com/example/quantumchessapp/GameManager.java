@@ -89,7 +89,7 @@ public class GameManager
       }
    }
 
-   public static void movePPiece(Position startPosition, Position toMoveToPosition, boolean qMove)
+   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
       ClientProxy clientProxy = new ClientProxy()
       {

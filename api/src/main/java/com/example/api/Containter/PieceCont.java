@@ -13,7 +13,7 @@ public class PieceCont
 
    public PieceCont(Piece piece)
    {
-      this.type = PieceType.valueOf(piece.getClass().getName());
+      this.type = PieceType.valueOf(piece.getClass().getSimpleName().toUpperCase());
       this.status = piece.getStatus();
       this.x = piece.getCurrentTile().getX();
       this.y = piece.getCurrentTile().getY();
