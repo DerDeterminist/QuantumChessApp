@@ -30,7 +30,7 @@ public class GameManager
    public String startGame()
    {
       String gameID = UUID.randomUUID().toString();
-      games.put(gameID, new DefaultGameImpl(new Player(), new Player()));
+      games.put(gameID, new DefaultGameImpl(new Player(0), new Player(1)));
       return gameID;
    }
 

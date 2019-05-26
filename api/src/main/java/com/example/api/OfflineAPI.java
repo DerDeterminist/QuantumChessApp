@@ -2,6 +2,9 @@ package com.example.api;
 
 import com.example.api.Containter.BoardCont;
 import com.example.api.Containter.ChangeCont;
+import com.example.api.Containter.PieceColor;
+import com.example.api.Containter.PieceCont;
+import com.example.api.Containter.PieceType;
 import com.example.api.Containter.StatusCont;
 import com.example.api.Containter.TileCont;
 import com.example.api.Response.BoardResponse;
@@ -14,6 +17,7 @@ import com.example.backend.Game.Tile;
 import com.example.backend.GameManager;
 import com.example.backend.Pieces.Piece;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -49,7 +53,11 @@ class OfflineAPI implements Api
       Change change = gameManager.getChange(gameID);
 
       ChangeResponse changeResponse = new ChangeResponse();
-      changeResponse.setChangeCont(new ChangeCont(change));
+      ChangeCont changeCont = new ChangeCont();
+      changeCont.setAdded(pieceToCont(change.getAdded()));
+      changeCont.setRemoved(pieceToCont(change.getRemoved()));
+      changeCont.setChanged(pieceToCont(change.getRemoved()));
+      changeResponse.setChangeCont(changeCont);
       changeResponse.setStatus(statusCont);
       return changeResponse;
    }
@@ -71,6 +79,27 @@ class OfflineAPI implements Api
       pieceOfActivePlayerResponse.setPieceOfActivePlayer(gameManager.isPieceOfActivePlayer(gameID, x, y));
       pieceOfActivePlayerResponse.setStatus(new StatusCont(gameManager.getStatus(gameID)));
       return pieceOfActivePlayerResponse;
+   }
+
+   private List<PieceCont> pieceToCont(List<Piece> pieces)
+   {
+      return pieces.stream().map(piece -> {
+         PieceCont pieceCont = new PieceCont();
+         pieceCont.setType(PieceType.valueOf(piece.getClass().getSimpleName().toUpperCase()));
+         pieceCont.setStatus(piece.getStatus());
+         pieceCont.setX(piece.getCurrentTile().getX());
+         pieceCont.setY(piece.getCurrentTile().getY());
+         switch (piece.getOwner().getId())
+         {
+            case 0:
+               pieceCont.setColor(PieceColor.WHITE);
+               break;
+            case 1:
+               pieceCont.setColor(PieceColor.BLACK);
+               break;
+         }
+         return pieceCont;
+      }).collect(Collectors.toList());
    }
 
    private Set<TileCont> tileToTileEntity(Set<Tile> tiles)

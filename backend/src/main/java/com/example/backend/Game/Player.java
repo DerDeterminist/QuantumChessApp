@@ -7,7 +7,13 @@ import java.util.List;
 
 public class Player
 {
+   private int id;
    private List<Piece> pieces;
+
+   public Player(int id)
+   {
+      this.id = id;
+   }
 
    void setPieces(List<Piece> pieces)
    {
@@ -19,7 +25,6 @@ public class Player
       return pieces;
    }
 
-   @SuppressWarnings("UnusedReturnValue")
    public boolean removePiece(Piece piece)
    {
       return pieces.remove(piece);
@@ -28,5 +33,10 @@ public class Player
    public void addPiece(Piece piece)
    {
       pieces.add(piece);
+   }
+
+   public int getId()
+   {
+      return id;
    }
 }

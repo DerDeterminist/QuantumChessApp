@@ -2,11 +2,13 @@ package com.example.quantumchessapp;
 
 import com.example.api.Api;
 import com.example.api.Containter.BoardCont;
+import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.StatusCont;
 import com.example.api.GameVariant;
 import com.example.api.Request.AbstractRequest;
 import com.example.api.Response.AbstractResponse;
 import com.example.api.Response.BoardResponse;
+import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
 import com.example.api.Response.TileResponse;
 import com.example.quantumchessapp.spiel.Player;
@@ -78,7 +80,7 @@ public class GameManager
       clientProxy.execute();
       try
       {
-         return  ((TileResponse) clientProxy.get()).getTiles().stream()
+         return ((TileResponse) clientProxy.get()).getTiles().stream()
                .map(tileContainer -> convertXYToPosition(tileContainer.getX(), tileContainer.getY()))
                .collect(Collectors.toList());
       }
@@ -89,7 +91,7 @@ public class GameManager
       }
    }
 
-   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
+   public static ChangeCont movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
       ClientProxy clientProxy = new ClientProxy()
       {
@@ -103,11 +105,18 @@ public class GameManager
       clientProxy.execute();
       try
       {
-         convertStatus(clientProxy.get().getStatus());
+         ChangeResponse changeResponse = (ChangeResponse) clientProxy.get();
+         convertStatus(changeResponse.getStatus());
+         ChangeCont changeCont = changeResponse.getChangeCont();
+         changeCont.getAdded().forEach(cont -> cont.setY(height - 1 - cont.getY()));
+         changeCont.getRemoved().forEach(cont -> cont.setY(height - 1 - cont.getY()));
+         changeCont.getChanged().forEach(cont -> cont.setY(height - 1 - cont.getY()));
+         return changeCont;
       }
       catch (ExecutionException | InterruptedException e)
       {
          e.printStackTrace();
+         throw new RuntimeException(e);
       }
    }
 

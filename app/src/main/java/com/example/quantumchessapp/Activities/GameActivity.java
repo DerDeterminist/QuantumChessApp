@@ -11,8 +11,11 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.Toast;
+import com.example.api.Containter.ChangeCont;
+import com.example.api.Containter.PieceCont;
 import com.example.api.GameVariant;
 import com.example.quantumchessapp.GameManager;
+import com.example.quantumchessapp.PieceRenderer;
 import com.example.quantumchessapp.R;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
@@ -57,13 +60,12 @@ public class GameActivity extends AppCompatActivity
             piece.setOnClickListener(v -> {
                if (activePiece != null)
                {
-                  GameManager.movePiece(activePosition, position, false);
+                  ChangeCont changeCont = GameManager.movePiece(activePosition, position, false);
                   if (GameManager.isLastMoveValid())
                   {
-                     v.setBackground(activePiece.getBackground());
-                     activePiece.setBackgroundResource(R.drawable.transparent);
-                     ((ImageButton) v).setImageDrawable(activePiece.getDrawable());
-                     activePiece.setImageDrawable(null);
+                     changeCont.getAdded().forEach(this::add);
+                     changeCont.getChanged().forEach(this::changed);
+                     changeCont.getRemoved().forEach(this::removed);
 
                      Toast next_player = Toast.makeText(this, getString(R.string.nextPlayer), Toast.LENGTH_SHORT);
                      next_player.setGravity(Gravity.CENTER, 0, 0);
@@ -92,6 +94,24 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+
+   private void add(PieceCont cont)
+   {
+      ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
+      imageButton.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
+   }
+
+   private void removed(PieceCont cont)
+   {
+      ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
+      imageButton.setImageDrawable(null);
+   }
+
+   private void changed(PieceCont cont)
+   {
+      // TODO: 26.05.2019
+   }
+
    private void deSelect()
    {
       activePiece = null;
@@ -100,6 +120,11 @@ public class GameActivity extends AppCompatActivity
             .map(this::getImageButtonAt)
             .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.transparent));
       possiblePositions = Collections.emptyList();
+   }
+
+   private ImageButton getImageButtonAt(int x, int y)
+   {
+      return getImageButtonAt(new Position(x, y));
    }
 
    private ImageButton getImageButtonAt(Position position)
