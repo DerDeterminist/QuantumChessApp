@@ -59,7 +59,11 @@ public class Pawn extends Piece
       hit.add(tile.getCloseOne(topOrDown, Direction.RIGHT));
       if (tile.getY() == initialY)
       {
-         move.add(tile.getCloseOne(topOrDown, topOrDown));
+         Tile closeOne = tile.getCloseOne(topOrDown);
+         if (!closeOne.getPiece().isPresent())
+         {
+            move.add(closeOne.getCloseOne(topOrDown));
+         }
       }
       Set<Tile> ret =
             hit.stream().filter(tile1 -> !qMove && nHit.test(tile1)).collect(Collectors.toSet());
