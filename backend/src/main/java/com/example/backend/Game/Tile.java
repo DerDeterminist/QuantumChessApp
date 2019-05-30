@@ -32,7 +32,10 @@ public class Tile
    {
       if (piece == null)
       {
-         board.getChange().addRemoved(this.piece);
+         if (this.piece != null)
+         {
+            board.getChange().addRemoved(this.piece);
+         }
       }
       else
       {

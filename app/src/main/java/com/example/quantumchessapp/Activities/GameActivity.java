@@ -33,8 +33,8 @@ public class GameActivity extends AppCompatActivity
    private Position activePosition;
    private List<Position> possiblePositions = Collections.emptyList();
 
-   private LinearLayout blackCapituredPieces;
-   private LinearLayout whiteCapituredPieces;
+   private LinearLayout blackCapturedPieces;
+   private LinearLayout whiteCapturedPieces;
 
    private ChangeCont change;
 
@@ -47,8 +47,8 @@ public class GameActivity extends AppCompatActivity
       setContentView(R.layout.game_activity);
       board = findViewById(R.id.board);
       background = findViewById(R.id.background_game);
-      blackCapituredPieces = findViewById(R.id.blackCapituredPieces);
-      whiteCapituredPieces = findViewById(R.id.whiteCapituredPieces);
+      blackCapturedPieces = findViewById(R.id.blackCapturedPieces);
+      whiteCapturedPieces = findViewById(R.id.whiteCapturedPieces);
 
       GameManager.newGame(new Player(), new Player(), GameVariant.OFFLINE);
 
@@ -106,13 +106,18 @@ public class GameActivity extends AppCompatActivity
    {
       ImageView imageView = new ImageView(this);
       imageView.setImageDrawable(PieceRenderer.getPieceDrawable(piece, this));
+      LinearLayout.LayoutParams layoutParams =
+            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                  LinearLayout.LayoutParams.MATCH_PARENT,
+                  1);
+      imageView.setLayoutParams(layoutParams);
       switch (piece.getColor())
       {
          case WHITE:
-            blackCapituredPieces.addView(imageView);
+            blackCapturedPieces.addView(imageView);
             break;
          case BLACK:
-            whiteCapituredPieces.addView(imageView);
+            whiteCapturedPieces.addView(imageView);
             break;
       }
    }

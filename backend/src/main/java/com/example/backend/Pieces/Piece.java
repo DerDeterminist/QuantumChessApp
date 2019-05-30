@@ -105,6 +105,7 @@ public abstract class Piece implements Cloneable
             newTile.getPiece().ifPresent(Piece::removeFromOwner);
             this.tile.setPiece(null);
             this.tile = newTile;
+            newTile.setPiece(null);
             newTile.setPiece(this);
          }
          return true;
