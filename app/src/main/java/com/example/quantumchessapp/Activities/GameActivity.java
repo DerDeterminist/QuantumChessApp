@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.PieceCont;
 import com.example.api.GameVariant;
@@ -38,11 +39,14 @@ public class GameActivity extends AppCompatActivity
    private LinearLayout blackCapturedPieces;
    private LinearLayout whiteCapturedPieces;
 
-   private ProgressBar activeColor;
+   private ProgressBar activeColorIndicator;
 
    private ChangeCont change;
 
-   volatile AtomicBoolean blackActive = new AtomicBoolean();
+   private volatile AtomicBoolean blackActive = new AtomicBoolean();
+
+   private ImageButton lastOrigin;
+   private ImageButton lastNewSpot;
 
    @SuppressLint("ResourceType")
    @Override
@@ -51,17 +55,22 @@ public class GameActivity extends AppCompatActivity
       super.onCreate(savedInstanceState);
 
       setContentView(R.layout.game_activity);
-      board = findViewById(R.id.board);
-      background = findViewById(R.id.background_game);
-      blackCapturedPieces = findViewById(R.id.blackCapturedPieces);
-      whiteCapturedPieces = findViewById(R.id.whiteCapturedPieces);
-      activeColor = findViewById(R.id.activecolor);
+      findViews();
 
-      activeColor.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+      activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
       GameManager.newGame(new Player(), new Player(), GameVariant.OFFLINE);
 
       initListener();
+   }
+
+   private void findViews()
+   {
+      board = findViewById(R.id.board);
+      background = findViewById(R.id.background_game);
+      blackCapturedPieces = findViewById(R.id.blackCapturedPieces);
+      whiteCapturedPieces = findViewById(R.id.whiteCapturedPieces);
+      activeColorIndicator = findViewById(R.id.activecolor);
    }
 
    private void initListener()
@@ -76,45 +85,38 @@ public class GameActivity extends AppCompatActivity
             ImageButton piece = getImageButtonAt(position);
 
             piece.setOnClickListener(v -> {
-               if (activePiece != null)
+               if (!GameManager.isGameWon())
                {
-                  change = GameManager.movePiece(activePosition, position, false);
-                  if (GameManager.isLastMoveValid())
+                  if (activePiece != null)
                   {
-                     change.getRemoved().forEach(this::remove);
-                     change.getAdded().forEach(this::add);
-                     change.getChanged().forEach(this::change);
+                     change = GameManager.movePiece(activePosition, position, false);
+                     if (GameManager.isLastMoveValid())
+                     {
+                        removeLastMoveIndicator();
 
-                     System.out.println(blackActive.toString());
-                     if (blackActive.get())
-                     {
-                        blackActive.set(false);
-                        activeColor.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
-                        activeColor.invalidate();
+                        change.getRemoved().forEach(this::remove);
+                        change.getAdded().forEach(this::add);
+                        change.getChanged().forEach(this::change);
+
+                        if (GameManager.isGameWon())
+                        {
+                           showWinner();
+                           return;
+                        }
+                        updateActivePlayerIndicator();
                      }
-                     else
-                     {
-                        blackActive.set(true);
-                        activeColor.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
-                        activeColor.invalidate();
-                     }
-                  }
-                  deSelect();
-               }
-               else
-               {
-                  if (GameManager.isPieceOfActivePlayer(position))
-                  {
-                     activePiece = piece;
-                     activePosition = position;
-                     possiblePositions = GameManager.getPossibleMoves(position, false);
-                     possiblePositions.stream()
-                           .map(this::getImageButtonAt)
-                           .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
+                     deSelect();
                   }
                   else
                   {
-                     deSelect();
+                     if (GameManager.isPieceOfActivePlayer(position))
+                     {
+                        setActivePiece(position, piece);
+                     }
+                     else
+                     {
+                        deSelect();
+                     }
                   }
                }
             });
@@ -122,7 +124,48 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
-   private void addToCapituredPieces(PieceCont piece)
+   private void removeLastMoveIndicator()
+   {
+      if (lastOrigin != null && lastNewSpot != null)
+      {
+         lastOrigin.setBackgroundResource(R.drawable.transparent);
+         lastNewSpot.setBackgroundResource(R.drawable.transparent);
+      }
+   }
+
+   private void setActivePiece(Position position, ImageButton piece)
+   {
+      activePiece = piece;
+      activePosition = position;
+      possiblePositions = GameManager.getPossibleMoves(position, false);
+      possiblePositions.stream()
+            .map(this::getImageButtonAt)
+            .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
+   }
+
+   private void showWinner()
+   {
+      Toast toast = Toast.makeText(this, "Game Over", Toast.LENGTH_LONG);
+      toast.show();
+   }
+
+   private void updateActivePlayerIndicator()
+   {
+      if (blackActive.get())
+      {
+         blackActive.set(false);
+         activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+         activeColorIndicator.invalidate();
+      }
+      else
+      {
+         blackActive.set(true);
+         activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+         activeColorIndicator.invalidate();
+      }
+   }
+
+   private void addToCapturedPieces(PieceCont piece)
    {
       ImageView imageView = new ImageView(this);
       imageView.setImageDrawable(PieceRenderer.getPieceDrawable(piece, this));
@@ -144,8 +187,18 @@ public class GameActivity extends AppCompatActivity
 
    private void add(PieceCont cont)
    {
-      ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
-      imageButton.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
+      ImageButton newSpot = getImageButtonAt(cont.getX(), cont.getY());
+      newSpot.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
+      change.getRemoved().stream()
+            .filter(cont::equals)
+            .findAny()
+            .ifPresent(cont1 -> {
+               ImageButton origin = getImageButtonAt(cont1.getX(), cont1.getY());
+               origin.setBackgroundResource(R.drawable.origin);
+               lastOrigin = origin;
+               newSpot.setBackgroundResource(R.drawable.origin);
+               lastNewSpot = newSpot;
+            });
    }
 
    private void remove(PieceCont cont)
@@ -154,7 +207,7 @@ public class GameActivity extends AppCompatActivity
       imageButton.setImageDrawable(null);
       if (!change.getAdded().contains(cont))
       {
-         addToCapituredPieces(cont);
+         addToCapturedPieces(cont);
       }
    }
 
@@ -169,6 +222,7 @@ public class GameActivity extends AppCompatActivity
       activePosition = null;
       possiblePositions.stream()
             .map(this::getImageButtonAt)
+            .filter(imageButton -> !imageButton.equals(lastNewSpot))
             .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.transparent));
       possiblePositions = Collections.emptyList();
    }
