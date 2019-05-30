@@ -1,17 +1,18 @@
 package com.example.quantumchessapp.Activities;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.PieceCont;
 import com.example.api.GameVariant;
@@ -23,6 +24,7 @@ import com.example.quantumchessapp.spiel.Position;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameActivity extends AppCompatActivity
 {
@@ -36,7 +38,11 @@ public class GameActivity extends AppCompatActivity
    private LinearLayout blackCapturedPieces;
    private LinearLayout whiteCapturedPieces;
 
+   private ProgressBar activeColor;
+
    private ChangeCont change;
+
+   volatile AtomicBoolean blackActive = new AtomicBoolean();
 
    @SuppressLint("ResourceType")
    @Override
@@ -49,6 +55,9 @@ public class GameActivity extends AppCompatActivity
       background = findViewById(R.id.background_game);
       blackCapturedPieces = findViewById(R.id.blackCapturedPieces);
       whiteCapturedPieces = findViewById(R.id.whiteCapturedPieces);
+      activeColor = findViewById(R.id.activecolor);
+
+      activeColor.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
       GameManager.newGame(new Player(), new Player(), GameVariant.OFFLINE);
 
@@ -65,6 +74,7 @@ public class GameActivity extends AppCompatActivity
          {
             Position position = new Position(x, y);
             ImageButton piece = getImageButtonAt(position);
+
             piece.setOnClickListener(v -> {
                if (activePiece != null)
                {
@@ -75,9 +85,19 @@ public class GameActivity extends AppCompatActivity
                      change.getAdded().forEach(this::add);
                      change.getChanged().forEach(this::change);
 
-                     Toast next_player = Toast.makeText(this, getString(R.string.nextPlayer), Toast.LENGTH_SHORT);
-                     next_player.setGravity(Gravity.CENTER, 0, 0);
-                     next_player.show();
+                     System.out.println(blackActive.toString());
+                     if (blackActive.get())
+                     {
+                        blackActive.set(false);
+                        activeColor.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
+                        activeColor.invalidate();
+                     }
+                     else
+                     {
+                        blackActive.set(true);
+                        activeColor.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
+                        activeColor.invalidate();
+                     }
                   }
                   deSelect();
                }
