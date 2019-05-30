@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -15,6 +16,7 @@ public abstract class Piece implements Cloneable
 {
    public final static double MAX_STATUS = 1000000;
 
+   private String id;
    protected Tile tile;
    private Player owner;
    private double status;
@@ -39,6 +41,7 @@ public abstract class Piece implements Cloneable
       status = MAX_STATUS;
 //      entangledPieces = new ArrayList<>();
       instances = new ArrayList<>();
+      id = UUID.randomUUID().toString();
 
       qPredicate = tile1 -> {
          if (tile1 == null)
@@ -203,6 +206,16 @@ public abstract class Piece implements Cloneable
    Predicate<Tile> getNPredicate()
    {
       return nPredicate;
+   }
+
+   public String getId()
+   {
+      return id;
+   }
+
+   public void setId(String id)
+   {
+      this.id = id;
    }
 
    private Piece duplicate()

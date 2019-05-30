@@ -56,7 +56,7 @@ class OfflineAPI implements Api
       ChangeCont changeCont = new ChangeCont();
       changeCont.setAdded(pieceToCont(change.getAdded()));
       changeCont.setRemoved(pieceToCont(change.getRemoved()));
-      changeCont.setChanged(pieceToCont(change.getRemoved()));
+      changeCont.setChanged(pieceToCont(change.getChanged()));
       changeResponse.setChangeCont(changeCont);
       changeResponse.setStatus(statusCont);
       return changeResponse;
@@ -89,6 +89,7 @@ class OfflineAPI implements Api
          pieceCont.setStatus(piece.getStatus());
          pieceCont.setX(piece.getCurrentTile().getX());
          pieceCont.setY(piece.getCurrentTile().getY());
+         pieceCont.setId(piece.getId());
          switch (piece.getOwner().getId())
          {
             case 0:

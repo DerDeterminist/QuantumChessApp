@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 import com.example.api.Containter.ChangeCont;
@@ -32,6 +33,11 @@ public class GameActivity extends AppCompatActivity
    private Position activePosition;
    private List<Position> possiblePositions = Collections.emptyList();
 
+   private LinearLayout blackCapituredPieces;
+   private LinearLayout whiteCapituredPieces;
+
+   private ChangeCont change;
+
    @SuppressLint("ResourceType")
    @Override
    protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -41,6 +47,8 @@ public class GameActivity extends AppCompatActivity
       setContentView(R.layout.game_activity);
       board = findViewById(R.id.board);
       background = findViewById(R.id.background_game);
+      blackCapituredPieces = findViewById(R.id.blackCapituredPieces);
+      whiteCapituredPieces = findViewById(R.id.whiteCapituredPieces);
 
       GameManager.newGame(new Player(), new Player(), GameVariant.OFFLINE);
 
@@ -60,12 +68,12 @@ public class GameActivity extends AppCompatActivity
             piece.setOnClickListener(v -> {
                if (activePiece != null)
                {
-                  ChangeCont changeCont = GameManager.movePiece(activePosition, position, false);
+                  change = GameManager.movePiece(activePosition, position, false);
                   if (GameManager.isLastMoveValid())
                   {
-                     changeCont.getAdded().forEach(this::add);
-                     changeCont.getChanged().forEach(this::changed);
-                     changeCont.getRemoved().forEach(this::removed);
+                     change.getRemoved().forEach(this::remove);
+                     change.getAdded().forEach(this::add);
+                     change.getChanged().forEach(this::change);
 
                      Toast next_player = Toast.makeText(this, getString(R.string.nextPlayer), Toast.LENGTH_SHORT);
                      next_player.setGravity(Gravity.CENTER, 0, 0);
@@ -94,6 +102,20 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+   private void addToCapituredPieces(PieceCont piece)
+   {
+      ImageView imageView = new ImageView(this);
+      imageView.setImageDrawable(PieceRenderer.getPieceDrawable(piece, this));
+      switch (piece.getColor())
+      {
+         case WHITE:
+            blackCapituredPieces.addView(imageView);
+            break;
+         case BLACK:
+            whiteCapituredPieces.addView(imageView);
+            break;
+      }
+   }
 
    private void add(PieceCont cont)
    {
@@ -101,13 +123,17 @@ public class GameActivity extends AppCompatActivity
       imageButton.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
    }
 
-   private void removed(PieceCont cont)
+   private void remove(PieceCont cont)
    {
       ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
       imageButton.setImageDrawable(null);
+      if (!change.getAdded().contains(cont))
+      {
+         addToCapituredPieces(cont);
+      }
    }
 
-   private void changed(PieceCont cont)
+   private void change(PieceCont cont)
    {
       // TODO: 26.05.2019
    }

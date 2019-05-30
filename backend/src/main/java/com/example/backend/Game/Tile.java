@@ -30,7 +30,7 @@ public class Tile
 
    public void setPiece(Piece piece)
    {
-      if (this.piece != null || piece == null)
+      if (piece == null)
       {
          board.getChange().addRemoved(this.piece);
       }
