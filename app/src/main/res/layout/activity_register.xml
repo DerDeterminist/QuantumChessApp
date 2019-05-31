@@ -5,12 +5,12 @@
     <ImageView
             android:layout_width="130dp"
             android:layout_height="123dp" app:srcCompat="@drawable/logo" app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="32dp" android:id="@+id/imageView3" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="32dp" android:id="@+id/logo" app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginEnd="8dp" android:layout_marginBottom="8dp" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
             app:layout_constraintHorizontal_bias="0.498" app:layout_constraintVertical_bias="0.796"
             android:clickable="false" android:scaleType="centerInside" android:soundEffectsEnabled="false"
-            android:tint="#00AA6666"/>
+            android:tint="#00AA6666" android:contentDescription="@string/logo"/>
     <LinearLayout
             android:orientation="vertical"
             android:layout_width="180dp"

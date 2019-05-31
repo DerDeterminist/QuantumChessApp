@@ -26,7 +26,7 @@ public class RegisterActivity extends AppCompatActivity
    protected void onCreate(@Nullable Bundle savedInstanceState)
    {
       super.onCreate(savedInstanceState);
-      setContentView(R.layout.register_activity);
+      setContentView(R.layout.activity_register);
 
       confirm = findViewById(R.id.confirm);
       accName = findViewById(R.id.accName);
@@ -48,9 +48,9 @@ public class RegisterActivity extends AppCompatActivity
    }
 
    @Override
-   protected void onPostResume()
+   protected void onResume()
    {
-      super.onPostResume();
+      super.onResume();
       hideSystemUI();
    }
 
@@ -60,7 +60,6 @@ public class RegisterActivity extends AppCompatActivity
       decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
             | View.SYSTEM_UI_FLAG_FULLSCREEN
             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
    }

@@ -11,4 +11,7 @@
     <string name="username">username</string>
     <string name="show_username_online">show username online</string>
     <string name="confirm">confirm</string>
+    <string name="quantum">quantum</string>
+    <string name="normal">normal</string>
+    <string name="logo">logo</string>
 </resources>

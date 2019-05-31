@@ -1,6 +1,7 @@
 package com.example.quantumchessapp.Activities;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import com.example.api.GameVariant;
 import com.example.quantumchessapp.GameManager;
 import com.example.quantumchessapp.PieceRenderer;
 import com.example.quantumchessapp.R;
+import com.example.quantumchessapp.StatusIndicator;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -29,24 +31,34 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 public class GameActivity extends AppCompatActivity
 {
+   //if quantum moves are allowed. get set as a extra before starting this activity
+   boolean allowQMove;
+
+   //layouts
    private LinearLayout board;
    private ConstraintLayout background;
 
+   //the selected piece and additional information
    private ImageButton activePiece = null;
    private Position activePosition;
    private List<Position> possiblePositions = Collections.emptyList();
+   private boolean qMove;
 
+   //layout for the captured pieces.
    private LinearLayout blackCapturedPieces;
    private LinearLayout whiteCapturedPieces;
 
-   private ProgressBar activeColorIndicator;
-
-   private ChangeCont change;
-
+   //indicates the active Player by changing its color
+   private volatile ProgressBar activeColorIndicator;
    private volatile AtomicBoolean blackActive = new AtomicBoolean();
 
+   //represents the changes to pieces in the last move
+   private ChangeCont change;
+
+   //helps to indicate the last move
    private ImageButton lastOrigin;
    private ImageButton lastNewSpot;
+
 
    @SuppressLint("ResourceType")
    @Override
@@ -54,7 +66,11 @@ public class GameActivity extends AppCompatActivity
    {
       super.onCreate(savedInstanceState);
 
-      setContentView(R.layout.game_activity);
+      setContentView(R.layout.activity_game);
+
+      Intent gameActivityIntent = getIntent();
+      allowQMove = gameActivityIntent.getBooleanExtra("allowQMove", false);
+
       findViews();
 
       activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
@@ -85,12 +101,19 @@ public class GameActivity extends AppCompatActivity
             ImageButton piece = getImageButtonAt(position);
 
             piece.setOnLongClickListener(v -> {
-               pieceOnClick(position, piece, true);
+               pieceOnClick(position, piece, allowQMove);
                return true;
             });
             piece.setOnClickListener(v -> pieceOnClick(position, piece, false));
          }
       }
+   }
+
+   private void addStatusIndicator(ImageButton piece)
+   {
+      StatusIndicator statusIndicator = new StatusIndicator(this);
+      FrameLayout parent = (FrameLayout) piece.getParent();
+      parent.addView(statusIndicator, 1);
    }
 
    private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
@@ -99,7 +122,7 @@ public class GameActivity extends AppCompatActivity
       {
          if (activePiece != null)
          {
-            change = GameManager.movePiece(activePosition, position, qMove);
+            change = GameManager.movePiece(activePosition, position, this.qMove);
             if (GameManager.isLastMoveValid())
             {
                removeLastMoveIndicator();
@@ -142,6 +165,7 @@ public class GameActivity extends AppCompatActivity
 
    private void setActivePiece(Position position, ImageButton piece, boolean qMove)
    {
+      this.qMove = qMove;
       activePiece = piece;
       activePosition = position;
       possiblePositions = GameManager.getPossibleMoves(position, qMove);
@@ -201,11 +225,15 @@ public class GameActivity extends AppCompatActivity
             .findAny()
             .ifPresent(cont1 -> {
                ImageButton origin = getImageButtonAt(cont1.getX(), cont1.getY());
-               origin.setBackgroundResource(R.drawable.origin);
+               origin.setBackgroundResource(R.drawable.lastmove);
                lastOrigin = origin;
-               newSpot.setBackgroundResource(R.drawable.origin);
+               newSpot.setBackgroundResource(R.drawable.lastmove);
                lastNewSpot = newSpot;
             });
+      if (allowQMove)
+      {
+         addStatusIndicator(newSpot);
+      }
    }
 
    private void remove(PieceCont cont)
@@ -220,6 +248,7 @@ public class GameActivity extends AppCompatActivity
 
    private void change(PieceCont cont)
    {
+      addStatusIndicator(getImageButtonAt(cont.getX(), cont.getY()));
       // TODO: 26.05.2019
    }
 

@@ -19,7 +19,7 @@ public class MainMenuActivity extends AppCompatActivity
    {
       super.onCreate(savedInstanceState);
 
-      setContentView(R.layout.main_menu);
+      setContentView(R.layout.activity_main_menu);
 
       offlineGame = findViewById(R.id.offlineGame);
       onlineGame = findViewById(R.id.onlineGame);
@@ -30,8 +30,8 @@ public class MainMenuActivity extends AppCompatActivity
 
    private void initListener()
    {
-      final Intent gameActivity = new Intent(this, GameActivity.class);
-      offlineGame.setOnClickListener(v -> startActivity(gameActivity));
+      final Intent gameModeActivity = new Intent(this, GameModeActivity.class);
+      offlineGame.setOnClickListener(v -> startActivity(gameModeActivity));
 
       final Intent registerActivity = new Intent(this, RegisterActivity.class);
       Account account = new Account(this);
