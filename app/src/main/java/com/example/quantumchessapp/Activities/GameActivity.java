@@ -84,42 +84,49 @@ public class GameActivity extends AppCompatActivity
             Position position = new Position(x, y);
             ImageButton piece = getImageButtonAt(position);
 
-            piece.setOnClickListener(v -> {
-               if (!GameManager.isGameWon())
-               {
-                  if (activePiece != null)
-                  {
-                     change = GameManager.movePiece(activePosition, position, false);
-                     if (GameManager.isLastMoveValid())
-                     {
-                        removeLastMoveIndicator();
-
-                        change.getRemoved().forEach(this::remove);
-                        change.getAdded().forEach(this::add);
-                        change.getChanged().forEach(this::change);
-
-                        if (GameManager.isGameWon())
-                        {
-                           showWinner();
-                           return;
-                        }
-                        updateActivePlayerIndicator();
-                     }
-                     deSelect();
-                  }
-                  else
-                  {
-                     if (GameManager.isPieceOfActivePlayer(position))
-                     {
-                        setActivePiece(position, piece);
-                     }
-                     else
-                     {
-                        deSelect();
-                     }
-                  }
-               }
+            piece.setOnLongClickListener(v -> {
+               pieceOnClick(position, piece, true);
+               return true;
             });
+            piece.setOnClickListener(v -> pieceOnClick(position, piece, false));
+         }
+      }
+   }
+
+   private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
+   {
+      if (!GameManager.isGameWon())
+      {
+         if (activePiece != null)
+         {
+            change = GameManager.movePiece(activePosition, position, qMove);
+            if (GameManager.isLastMoveValid())
+            {
+               removeLastMoveIndicator();
+
+               change.getRemoved().forEach(this::remove);
+               change.getAdded().forEach(this::add);
+               change.getChanged().forEach(this::change);
+
+               if (GameManager.isGameWon())
+               {
+                  showWinner();
+                  return;
+               }
+               updateActivePlayerIndicator();
+            }
+            deSelect();
+         }
+         else
+         {
+            if (GameManager.isPieceOfActivePlayer(position))
+            {
+               setActivePiece(position, piece, qMove);
+            }
+            else
+            {
+               deSelect();
+            }
          }
       }
    }
@@ -133,11 +140,11 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
-   private void setActivePiece(Position position, ImageButton piece)
+   private void setActivePiece(Position position, ImageButton piece, boolean qMove)
    {
       activePiece = piece;
       activePosition = position;
-      possiblePositions = GameManager.getPossibleMoves(position, false);
+      possiblePositions = GameManager.getPossibleMoves(position, qMove);
       possiblePositions.stream()
             .map(this::getImageButtonAt)
             .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));

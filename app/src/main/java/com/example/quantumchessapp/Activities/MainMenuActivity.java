@@ -39,7 +39,7 @@ public class MainMenuActivity extends AppCompatActivity
          if (account.hasAccount())
          {
             account.loadAccountData();
-            // TODO: 12.05.2019 start offline game
+            // TODO: 12.05.2019 start online game
          }
          else
          {
