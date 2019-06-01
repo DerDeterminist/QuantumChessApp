@@ -10,66 +10,77 @@
 >
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="382dp"
-        android:layout_height="447dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/board"
-        android:cropToPadding="true"
-        android:padding="8dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/board"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.5" />
+            android:id="@+id/imageView"
+            android:layout_width="382dp"
+            android:layout_height="447dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/board"
+            android:cropToPadding="true"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/board"
+            android:visibility="visible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.5"/>
 
     <LinearLayout
-        android:id="@+id/board"
-        android:layout_width="378dp"
-        android:layout_height="429dp"
-        android:orientation="vertical"
-        android:paddingTop="52dp"
-        android:paddingBottom="52dp"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView"
-        app:layout_constraintEnd_toEndOf="@+id/imageView"
-        app:layout_constraintStart_toStartOf="@+id/imageView"
-        app:layout_constraintTop_toTopOf="@+id/imageView">
+            android:id="@+id/board"
+            android:layout_width="378dp"
+            android:layout_height="429dp"
+            android:orientation="vertical"
+            android:paddingTop="52dp"
+            android:paddingBottom="52dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/imageView">
 
         <LinearLayout
-            android:id="@+id/row8"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
+                android:id="@+id/row8"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
                 <ImageButton
-                    android:id="@+id/_81"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackrook" />
+                        android:id="@+id/_81"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackrook"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator81"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
                         android:id="@+id/_82"
@@ -79,12 +90,23 @@
                         android:paddingHorizontal="0px"
                         android:paddingVertical="0px"
                         app:srcCompat="@drawable/blackknight"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator82"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
                         android:id="@+id/_83"
@@ -94,956 +116,1608 @@
                         android:paddingHorizontal="0px"
                         android:paddingVertical="0px"
                         app:srcCompat="@drawable/blackbishop"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator83"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_84"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackqueen" />
+                        android:id="@+id/_84"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackqueen"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator84"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_85"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    app:srcCompat="@drawable/blackking" />
+                        android:id="@+id/_85"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        app:srcCompat="@drawable/blackking"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator85"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_86"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    app:srcCompat="@drawable/blackbishop" />
+                        android:id="@+id/_86"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        app:srcCompat="@drawable/blackbishop"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator86"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_87"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackknight" />
+                        android:id="@+id/_87"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackknight"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator87"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_88"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackrook" />
+                        android:id="@+id/_88"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackrook"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator88"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row7"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
+                android:id="@+id/row7"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_71"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_71"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator71"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_72"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_72"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator72"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_73"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_73"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator73"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_74"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_74"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator74"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_75"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_75"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator75"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_76"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_76"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator76"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_77"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
+                        android:id="@+id/_77"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator77"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_78"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/blackpawn" />
-            </FrameLayout>
-        </LinearLayout>
+                        android:id="@+id/_78"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/blackpawn"/>
 
-        <LinearLayout
-            android:id="@+id/row6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_61"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_62"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_63"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_64"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_65"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_66"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_67"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_68"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                <ProgressBar
+                        android:id="@+id/statusIndicator78"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row5"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
+                android:id="@+id/row6"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_51"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_61"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator61"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_52"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_62"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator62"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_53"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_63"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator63"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_54"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_64"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator64"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_55"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_65"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator65"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_56"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_66"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator66"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_57"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_67"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator67"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_58"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-        </LinearLayout>
+                        android:id="@+id/_68"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
 
-        <LinearLayout
-            android:id="@+id/row4"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_41"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_42"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_43"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_44"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_45"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_46"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_47"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_48"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                <ProgressBar
+                        android:id="@+id/statusIndicator68"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
+                android:id="@+id/row5"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_31"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_51"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator51"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_32"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_52"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator52"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_33"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_53"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator53"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_34"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_54"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator54"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_35"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_55"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator55"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_36"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_56"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator56"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_37"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
+                        android:id="@+id/_57"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator57"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_38"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    android:src="@drawable/transparent" />
-            </FrameLayout>
-        </LinearLayout>
+                        android:id="@+id/_58"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
 
-        <LinearLayout
-            android:id="@+id/row2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_21"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_22"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_23"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_24"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_25"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_26"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_27"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/_28"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitepawn" />
+                <ProgressBar
+                        android:id="@+id/statusIndicator58"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/row1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:baselineAligned="false"
-            android:orientation="horizontal"
-            android:paddingStart="25dp"
-            android:paddingEnd="25dp">
-
-            <FrameLayout
+                android:id="@+id/row4"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_11"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whiterook" />
+                        android:id="@+id/_41"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator41"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_12"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whiteknight" />
+                        android:id="@+id/_42"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator42"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_13"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#000000FE"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitebishop" />
+                        android:id="@+id/_43"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator43"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_14"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whitequeen" />
+                        android:id="@+id/_44"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator44"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whiteking" />
+                        android:id="@+id/_45"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator45"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_46"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator46"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_47"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator47"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_48"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator48"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/row3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_weight="1">
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_31"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator31"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_32"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator32"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_33"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator33"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_34"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator34"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_35"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator35"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+
+
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_36"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator36"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_37"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator37"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_38"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        android:src="@drawable/transparent"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator38"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/row2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_21"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator21"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_22"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator22"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_23"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator23"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_24"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator24"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_25"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator25"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_26"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator26"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_27"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator27"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_28"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitepawn"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator28"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:id="@+id/row1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:baselineAligned="false"
+                android:orientation="horizontal"
+                android:paddingStart="25dp"
+                android:paddingEnd="25dp">
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_11"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whiterook"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator11"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whiteknight"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator12"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_13"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#000000FE"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitebishop"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator13"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_14"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whitequeen"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator14"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                <ImageButton
+                        android:id="@+id/_15"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whiteking"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator15"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
+            </FrameLayout>
+
+            <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
                         android:id="@+id/_16"
@@ -1053,36 +1727,69 @@
                         android:paddingHorizontal="0px"
                         android:paddingVertical="0px"
                         app:srcCompat="@drawable/whitebishop"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator16"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_17"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whiteknight" />
+                        android:id="@+id/_17"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whiteknight"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator1"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
 
             <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
 
                 <ImageButton
-                    android:id="@+id/_18"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="#00FFFFFF"
-                    android:paddingHorizontal="0px"
-                    android:paddingVertical="0px"
-                    app:srcCompat="@drawable/whiterook" />
+                        android:id="@+id/_18"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:paddingHorizontal="0px"
+                        android:paddingVertical="0px"
+                        app:srcCompat="@drawable/whiterook"/>
+
+                <ProgressBar
+                        android:id="@+id/statusIndicator18"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:indeterminate="false"
+                        android:max="100"
+                        android:progress="0"
+                        android:progressDrawable="@drawable/statusindicator"
+                        android:visibility="invisible"/>
             </FrameLayout>
         </LinearLayout>
     </LinearLayout>

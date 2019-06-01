@@ -54,7 +54,7 @@ public abstract class Piece implements Cloneable
          }
          else
          {
-            return tile1.getPiece().get().status < MAX_STATUS;
+            return tile1.getPiece().get().getStatus() < MAX_STATUS;
          }
       };
 
@@ -83,8 +83,8 @@ public abstract class Piece implements Cloneable
             List<Tile> entangledTiles = getEntangledTiles(newTile);
             List<Piece> entangledPieces = entangledTiles.stream().map(Tile::getPiece).filter(Optional::isPresent).map(Optional::get)
                   .collect(Collectors.toList());
-            double newStatus = this.status * 0.5 *
-                  entangledPieces.stream().mapToDouble(piece -> piece.status / MAX_STATUS).reduce(1, (left, right) -> right * left);
+            double newStatus = this.getStatus() * 0.5 *
+                  entangledPieces.stream().mapToDouble(piece -> piece.getStatus() / MAX_STATUS).reduce(1, (left, right) -> right * left);
             if (newTile.getPiece().isPresent())
             {
                if (newStatus > Math.random() * MAX_STATUS)
@@ -131,7 +131,7 @@ public abstract class Piece implements Cloneable
       {
          for (Piece instance : instances)
          {
-            instance.setStatus(instance.getStatus() + this.status / instances.size());
+            instance.setStatus(instance.getStatus() + this.getStatus() / instances.size());
             instance.instances.remove(this);
          }
          this.tile.setPiece(null);
@@ -148,10 +148,10 @@ public abstract class Piece implements Cloneable
       for (Tile tile1 : firstMove)
       {
          if (oneMove(tile1, true).contains(newTile) && tile1.getPiece().isPresent() &&
-               !tile1.getPiece().get().owner.equals(this.owner) && tile1.getPiece().get().status < entangledValue)
+               !tile1.getPiece().get().owner.equals(this.owner) && tile1.getPiece().get().getStatus() < entangledValue)
          {
             entangledTile = tile1;
-            entangledValue = tile1.getPiece().get().status;
+            entangledValue = tile1.getPiece().get().getStatus();
          }
       }
       if (entangledTile != null)
@@ -179,8 +179,8 @@ public abstract class Piece implements Cloneable
 
    private void setStatus(double status)
    {
-      tile.reportStatusChange();
       this.status = status;
+      tile.reportStatusChange();
    }
 
    public double getStatus()
@@ -193,7 +193,6 @@ public abstract class Piece implements Cloneable
       return tile;
    }
 
-   @SuppressWarnings("WeakerAccess")
    public Player getOwner()
    {
       return owner;

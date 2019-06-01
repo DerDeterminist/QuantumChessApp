@@ -21,7 +21,6 @@ import com.example.api.GameVariant;
 import com.example.quantumchessapp.GameManager;
 import com.example.quantumchessapp.PieceRenderer;
 import com.example.quantumchessapp.R;
-import com.example.quantumchessapp.StatusIndicator;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
@@ -58,7 +57,6 @@ public class GameActivity extends AppCompatActivity
    //helps to indicate the last move
    private ImageButton lastOrigin;
    private ImageButton lastNewSpot;
-
 
    @SuppressLint("ResourceType")
    @Override
@@ -109,11 +107,13 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
-   private void addStatusIndicator(ImageButton piece)
+   private void addStatusIndicator(PieceCont cont)
    {
-      StatusIndicator statusIndicator = new StatusIndicator(this);
-      FrameLayout parent = (FrameLayout) piece.getParent();
-      parent.addView(statusIndicator, 1);
+      ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
+      progressBar.setMax((int) GameManager.getMaxPieceStatus());
+      progressBar.setProgress((int) cont.getStatus());
+      progressBar.setVisibility(View.VISIBLE);
+      progressBar.invalidate();
    }
 
    private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
@@ -230,10 +230,6 @@ public class GameActivity extends AppCompatActivity
                newSpot.setBackgroundResource(R.drawable.lastmove);
                lastNewSpot = newSpot;
             });
-      if (allowQMove)
-      {
-         addStatusIndicator(newSpot);
-      }
    }
 
    private void remove(PieceCont cont)
@@ -248,7 +244,9 @@ public class GameActivity extends AppCompatActivity
 
    private void change(PieceCont cont)
    {
-      addStatusIndicator(getImageButtonAt(cont.getX(), cont.getY()));
+      ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
+      imageButton.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
+      addStatusIndicator(cont);
       // TODO: 26.05.2019
    }
 
@@ -274,6 +272,14 @@ public class GameActivity extends AppCompatActivity
             board.getChildAt(position.getY()))
             .getChildAt(position.getX()))
             .getChildAt(0);
+   }
+
+   private ProgressBar getProgressBarAt(int x, int y)
+   {
+      return (ProgressBar) ((FrameLayout) ((LinearLayout)
+            board.getChildAt(y))
+            .getChildAt(x))
+            .getChildAt(1);
    }
 
    @Override

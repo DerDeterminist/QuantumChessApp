@@ -73,6 +73,6 @@ public class Tile
 
    public void reportStatusChange()
    {
-      board.getChange().addChanged(piece);
+      board.getChange().addChanged(piece.clone());
    }
 }
