@@ -121,7 +121,7 @@ public abstract class Piece implements Cloneable
       newTile.setPiece(clonedPiece);
       clonedPiece.tile = newTile;
       clonedPiece.setStatus(newStatus);
-      this.setStatus(MAX_STATUS - clonedPiece.getStatus());
+      this.setStatus(getStatus() - clonedPiece.getStatus());
 //            clonedPiece.entangledPieces.addAll(entangledPieces);
    }
 

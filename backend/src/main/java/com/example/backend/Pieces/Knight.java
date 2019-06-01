@@ -42,6 +42,7 @@ public class Knight extends Piece
             tile.getCloseOne(Direction.TOP, Direction.TOP, Direction.RIGHT),
             tile.getCloseOne(Direction.TOP, Direction.TOP, Direction.LEFT),
             tile.getCloseOne(Direction.RIGHT, Direction.RIGHT, Direction.DOWN))
-            .filter(tile1 -> qMove ? getQPredicate().test(tile1) : getNPredicate().test(tile1)).collect(Collectors.toSet());
+            .filter(tile1 -> qMove ? getQPredicate().test(tile1) : getNPredicate().test(tile1))
+            .filter(tile2 -> !tile2.getPiece().isPresent()).collect(Collectors.toSet());
    }
 }

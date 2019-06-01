@@ -230,12 +230,21 @@ public class GameActivity extends AppCompatActivity
                newSpot.setBackgroundResource(R.drawable.lastmove);
                lastNewSpot = newSpot;
             });
+      if (allowQMove && cont.getStatus() < GameManager.getMaxPieceStatus())
+      {
+         addStatusIndicator(cont);
+      }
    }
 
    private void remove(PieceCont cont)
    {
       ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
       imageButton.setImageDrawable(null);
+      if (allowQMove)
+      {
+         ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
+         progressBar.setVisibility(View.INVISIBLE);
+      }
       if (!change.getAdded().contains(cont))
       {
          addToCapturedPieces(cont);

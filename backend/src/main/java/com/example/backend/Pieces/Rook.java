@@ -34,6 +34,6 @@ public class Rook extends InLine
       Set<Tile> tiles = oneMove(toGo, true);
       tiles.addAll(tiles.stream().flatMap(tile -> oneMove(tile, true).stream())
             .collect(Collectors.toList()));
-      return tiles;
+      return tiles.stream().filter(tile -> !tile.getPiece().isPresent()).collect(Collectors.toSet());
    }
 }
