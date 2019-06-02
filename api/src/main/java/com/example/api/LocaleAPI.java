@@ -22,12 +22,22 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class OfflineAPI implements Api
+public class LocaleAPI implements Api
 {
    private static volatile GameManager gameManager = GameManager.getInstance();
+   private static LocaleAPI localeAPI;
 
-   OfflineAPI()
+   private LocaleAPI()
    {
+   }
+
+   public static Api getInstance()
+   {
+      if (localeAPI == null)
+      {
+         localeAPI = new LocaleAPI();
+      }
+      return localeAPI;
    }
 
    @Override

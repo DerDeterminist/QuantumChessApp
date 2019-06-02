@@ -8,19 +8,6 @@ import com.example.api.Response.TileResponse;
 
 public interface Api
 {
-   static Api getInstance(GameVariant variant)
-   {
-      switch (variant)
-      {
-         case ONLINE:
-            return new OnlineAPI();
-         case OFFLINE:
-            return new OfflineAPI();
-            default:
-               throw new RuntimeException("every GameVariant has to be implemented");
-      }
-   }
-
    StartResponse startGame();
 
    TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove);

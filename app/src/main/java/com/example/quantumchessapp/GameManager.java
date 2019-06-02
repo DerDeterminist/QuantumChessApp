@@ -1,11 +1,12 @@
 package com.example.quantumchessapp;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import com.example.api.Api;
 import com.example.api.Containter.BoardCont;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.StatusCont;
-import com.example.api.GameVariant;
+import com.example.api.LocaleAPI;
 import com.example.api.Response.AbstractResponse;
 import com.example.api.Response.BoardResponse;
 import com.example.api.Response.ChangeResponse;
@@ -13,6 +14,7 @@ import com.example.api.Response.PieceOfActivePlayerResponse;
 import com.example.api.Response.TileResponse;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
+import com.example.restapi.GameClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +37,18 @@ public class GameManager
    private static int height;
    private static double maxPieceStatus;
 
-   public static void newGame(Player player, Player player1, GameVariant variance)
+   public static void newGame(Context context, Player player, Player player1,
+                              GameVariant variant)
    {
-      api = Api.getInstance(variance);
+      switch (variant)
+      {
+         case OFFLINE:
+            api = LocaleAPI.getInstance();
+            break;
+         case ONLINE:
+            api = new GameClient(context);
+            break;
+      }
       players = new ArrayList<>();
       players.add(player);
       players.add(player1);
@@ -65,7 +76,9 @@ public class GameManager
 
    public static ChangeCont movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
-      ChangeResponse changeResponse = (ChangeResponse) doAsync(() -> null);
+      ChangeResponse changeResponse = (ChangeResponse) doAsync(
+            () -> api.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove));
       convertStatus(changeResponse.getStatus());
       ChangeCont changeCont = changeResponse.getChangeCont();
       changeCont.getAdded().forEach(cont -> cont.setY(height - 1 - cont.getY()));

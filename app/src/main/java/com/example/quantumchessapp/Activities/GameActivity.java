@@ -17,8 +17,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.PieceCont;
-import com.example.api.GameVariant;
 import com.example.quantumchessapp.GameManager;
+import com.example.quantumchessapp.GameVariant;
 import com.example.quantumchessapp.PieceRenderer;
 import com.example.quantumchessapp.R;
 import com.example.quantumchessapp.spiel.Player;
@@ -73,7 +73,7 @@ public class GameActivity extends AppCompatActivity
 
       activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
-      GameManager.newGame(new Player(), new Player(), GameVariant.OFFLINE);
+      GameManager.newGame(this,new Player(), new Player(), GameVariant.OFFLINE);
 
       initListener();
    }

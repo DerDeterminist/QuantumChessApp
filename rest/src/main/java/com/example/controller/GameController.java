@@ -1,7 +1,7 @@
 package com.example.controller;
 
 import com.example.api.Api;
-import com.example.api.GameVariant;
+import com.example.api.LocaleAPI;
 import com.example.api.Request.Game.BoardRequest;
 import com.example.api.Request.Game.MovePieceRequest;
 import com.example.api.Request.Game.PieceOfActivePlayerRequest;
@@ -26,7 +26,7 @@ public class GameController
 
    public GameController()
    {
-      api = Api.getInstance(GameVariant.OFFLINE);
+      api = LocaleAPI.getInstance();
    }
 
    @PostMapping("/start")
