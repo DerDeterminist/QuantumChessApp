@@ -10,6 +10,7 @@ import com.example.api.Containter.TileCont;
 import com.example.api.Response.BoardResponse;
 import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
+import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 import com.example.backend.Game.Board;
 import com.example.backend.Game.Change;
@@ -30,9 +31,12 @@ class OfflineAPI implements Api
    }
 
    @Override
-   public String startGame()
+   public StartResponse startGame()
    {
-      return gameManager.startGame();
+      String gameID = gameManager.startGame();
+      StartResponse startResponse = new StartResponse();
+      startResponse.setGameID(gameID);
+      return startResponse;
    }
 
    @Override

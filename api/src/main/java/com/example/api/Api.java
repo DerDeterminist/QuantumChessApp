@@ -3,6 +3,7 @@ package com.example.api;
 import com.example.api.Response.BoardResponse;
 import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
+import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 
 public interface Api
@@ -20,7 +21,7 @@ public interface Api
       }
    }
 
-   String startGame();
+   StartResponse startGame();
 
    TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove);
 

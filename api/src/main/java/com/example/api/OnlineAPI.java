@@ -3,14 +3,15 @@ package com.example.api;
 import com.example.api.Response.BoardResponse;
 import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
+import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 
 class OnlineAPI implements Api
 {
    @Override
-   public String startGame()
+   public StartResponse startGame()
    {
-      return "";
+      return null;
    }
 
    @Override

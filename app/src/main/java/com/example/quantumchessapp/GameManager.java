@@ -1,11 +1,11 @@
 package com.example.quantumchessapp;
 
+import android.os.AsyncTask;
 import com.example.api.Api;
 import com.example.api.Containter.BoardCont;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.StatusCont;
 import com.example.api.GameVariant;
-import com.example.api.Request.AbstractRequest;
 import com.example.api.Response.AbstractResponse;
 import com.example.api.Response.BoardResponse;
 import com.example.api.Response.ChangeResponse;
@@ -17,6 +17,7 @@ import com.example.quantumchessapp.spiel.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
@@ -40,104 +41,63 @@ public class GameManager
       players = new ArrayList<>();
       players.add(player);
       players.add(player1);
-      ClientProxy clientProxy = new ClientProxy()
-      {
-         @Override
-         protected AbstractResponse doInBackground(AbstractRequest... abstractRequests)
-         {
-            gameID = api.startGame();
-            return api.getCompleteBord(gameID);
-         }
-      };
-      clientProxy.execute();
-      try
-      {
-         BoardCont boardCont = ((BoardResponse) clientProxy.get()).getBoardCont();
-         height = boardCont.getHeight();
-         wight = boardCont.getWith();
-         maxPieceStatus = boardCont.getMaxPieceStatus();
-      }
-      catch (ExecutionException | InterruptedException e)
-      {
-         e.printStackTrace();
-         throw new RuntimeException(e);
-      }
+      BoardCont boardCont = ((BoardResponse) doAsync(() -> {
+         gameID = api.startGame().getGameID();
+         return api.getCompleteBord(gameID);
+      })).getBoardCont();
+      height = boardCont.getHeight();
+      wight = boardCont.getWith();
+      maxPieceStatus = boardCont.getMaxPieceStatus();
    }
 
    public static List<Position> getPossibleMoves(Position startPosition, boolean qMove)
    {
-      ClientProxy clientProxy = new ClientProxy()
-      {
-         @Override
-         protected AbstractResponse doInBackground(AbstractRequest... abstractRequests)
-         {
-            TileResponse possibleMoves =
-                  api.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition), qMove);
-            convertStatus(possibleMoves.getStatus());
-            return possibleMoves;
-         }
-      };
-      clientProxy.execute();
-      try
-      {
-         return ((TileResponse) clientProxy.get()).getTiles().stream()
-               .map(tileContainer -> convertXYToPosition(tileContainer.getX(), tileContainer.getY()))
-               .collect(Collectors.toList());
-      }
-      catch (ExecutionException | InterruptedException e)
-      {
-         e.printStackTrace();
-         throw new RuntimeException(e);
-      }
+      TileResponse tileResponse = (TileResponse) doAsync(() -> {
+         TileResponse possibleMoves =
+               api.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition), qMove);
+         convertStatus(possibleMoves.getStatus());
+         return possibleMoves;
+      });
+      return tileResponse.getTiles().stream()
+            .map(tileContainer -> convertXYToPosition(tileContainer.getX(), tileContainer.getY()))
+            .collect(Collectors.toList());
    }
 
    public static ChangeCont movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
-      ClientProxy clientProxy = new ClientProxy()
-      {
-         @Override
-         protected AbstractResponse doInBackground(AbstractRequest... abstractRequests)
-         {
-            return api.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
-                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
-         }
-      };
-      clientProxy.execute();
-      try
-      {
-         ChangeResponse changeResponse = (ChangeResponse) clientProxy.get();
-         convertStatus(changeResponse.getStatus());
-         ChangeCont changeCont = changeResponse.getChangeCont();
-         changeCont.getAdded().forEach(cont -> cont.setY(height - 1 - cont.getY()));
-         changeCont.getRemoved().forEach(cont -> cont.setY(height - 1 - cont.getY()));
-         changeCont.getChanged().forEach(cont -> cont.setY(height - 1 - cont.getY()));
-         return changeCont;
-      }
-      catch (ExecutionException | InterruptedException e)
-      {
-         e.printStackTrace();
-         throw new RuntimeException(e);
-      }
+      ChangeResponse changeResponse = (ChangeResponse) doAsync(() -> null);
+      convertStatus(changeResponse.getStatus());
+      ChangeCont changeCont = changeResponse.getChangeCont();
+      changeCont.getAdded().forEach(cont -> cont.setY(height - 1 - cont.getY()));
+      changeCont.getRemoved().forEach(cont -> cont.setY(height - 1 - cont.getY()));
+      changeCont.getChanged().forEach(cont -> cont.setY(height - 1 - cont.getY()));
+      return changeCont;
    }
 
    public static boolean isPieceOfActivePlayer(Position position)
    {
-      ClientProxy clientProxy = new ClientProxy()
+      return ((PieceOfActivePlayerResponse) doAsync(
+            () -> api.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position))))
+            .isPieceOfActivePlayer();
+   }
+
+   private static AbstractResponse doAsync(Supplier<AbstractResponse> todo)
+   {
+      AsyncTask<Object, Object, AbstractResponse> task = new AsyncTask<Object, Object, AbstractResponse>()
       {
          @Override
-         protected AbstractResponse doInBackground(AbstractRequest... abstractRequests)
+         protected AbstractResponse doInBackground(Object... objects)
          {
-            return api.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position));
+            return todo.get();
          }
       };
-      clientProxy.execute();
+      task.execute();
       try
       {
-         return ((PieceOfActivePlayerResponse) clientProxy.get()).isPieceOfActivePlayer();
+         return task.get();
       }
-      catch (InterruptedException | ExecutionException e)
+      catch (ExecutionException | InterruptedException e)
       {
-         e.printStackTrace();
          throw new RuntimeException(e);
       }
    }
