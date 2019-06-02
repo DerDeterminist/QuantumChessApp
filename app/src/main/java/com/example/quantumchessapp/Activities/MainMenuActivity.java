@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.Button;
 import com.example.quantumchessapp.Account;
 import com.example.quantumchessapp.R;
+import com.example.restapi.RestAPI;
 
 public class MainMenuActivity extends AppCompatActivity
 {
@@ -24,6 +25,9 @@ public class MainMenuActivity extends AppCompatActivity
       offlineGame = findViewById(R.id.offlineGame);
       onlineGame = findViewById(R.id.onlineGame);
       brenden = findViewById(R.id.beenden);
+
+      RestAPI restAPI = new RestAPI(this);
+      restAPI.startGame();
 
       initListener();
    }
