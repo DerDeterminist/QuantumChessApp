@@ -24,8 +24,6 @@ import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.CountDownLatch;
-
 public class GameClient implements Api
 {
    private static Gson gson = new Gson();
@@ -84,7 +82,6 @@ public class GameClient implements Api
 
    private static AbstractResponse request(GameRequest gameRequest, final Class<? extends AbstractResponse> aClass)
    {
-      final CountDownLatch countDownLatch = new CountDownLatch(1);
       final ResponseHolder holder = new ResponseHolder();
       try
       {
@@ -96,7 +93,6 @@ public class GameClient implements Api
                         public void onResponse(JSONObject response)
                         {
                            holder.setObject(gson.fromJson(response.toString(), aClass));
-                           countDownLatch.countDown();
                         }
                      }, new Response.ErrorListener()
                {
@@ -104,17 +100,11 @@ public class GameClient implements Api
                   public void onErrorResponse(VolleyError error)
                   {
                      error.printStackTrace();
-                     countDownLatch.countDown();
                   }
                });
          queue.add(request);
       }
       catch (JSONException e)
-      {
-         e.printStackTrace();
-         countDownLatch.countDown();
-      }
-      catch (Exception e)
       {
          e.printStackTrace();
       }
