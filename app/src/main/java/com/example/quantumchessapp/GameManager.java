@@ -46,8 +46,8 @@ public class GameManager
       players = new ArrayList<>();
       players.add(player);
       players.add(player1);
-      BoardCont boardCont = api.getCompleteBord(gameID).getBoardCont();
       gameID = api.startGame().getGameID();
+      BoardCont boardCont = api.getCompleteBord(gameID).getBoardCont();
       height = boardCont.getHeight();
       wight = boardCont.getWith();
       maxPieceStatus = boardCont.getMaxPieceStatus();
