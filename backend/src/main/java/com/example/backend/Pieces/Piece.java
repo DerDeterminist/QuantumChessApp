@@ -21,7 +21,7 @@ public abstract class Piece implements Cloneable
    private Player owner;
    private double status;
    //   private List<Piece> entangledPieces;
-   private List<Piece> instances;
+   private List<Piece> instances; // one instance of this List for all instances Piece with the sam id
 
    private Predicate<Tile> qPredicate;
    private Predicate<Tile> nPredicate;
@@ -41,6 +41,7 @@ public abstract class Piece implements Cloneable
       status = MAX_STATUS;
 //      entangledPieces = new ArrayList<>();
       instances = new ArrayList<>();
+      instances.add(this);
       id = UUID.randomUUID().toString();
 
       qPredicate = tile1 -> {
@@ -84,25 +85,22 @@ public abstract class Piece implements Cloneable
             List<Piece> entangledPieces = entangledTiles.stream().map(Tile::getPiece).filter(Optional::isPresent).map(Optional::get)
                   .collect(Collectors.toList());
             double newStatus = this.getStatus() * 0.5 *
-                  entangledPieces.stream().mapToDouble(piece -> piece.getStatus() / MAX_STATUS).reduce(1, (left, right) -> right * left);
-            if (newTile.getPiece().isPresent())
-            {
-               if (newStatus > Math.random() * MAX_STATUS)
-               {
-                  splitInstance(newTile, newStatus);
-                  return true;
-               }
-               else
-               {
-                  discardInstance();
-                  return false;
-               }
-            }
+                  entangledPieces.stream().mapToDouble(piece -> piece.getStatus() / MAX_STATUS)
+                        .reduce(1, (left, right) -> right * left);
             splitInstance(newTile, newStatus);
          }
          else
          {
-            newTile.getPiece().ifPresent(Piece::removeFromOwner);
+            newTile.getPiece().ifPresent(piece -> {
+               if (piece.getStatus() < MAX_STATUS)
+               {
+                  piece.measure();
+               }
+               else
+               {
+                  piece.removeFromOwner();
+               }
+            });
             this.tile.setPiece(null);
             this.tile = newTile;
             newTile.setPiece(null);
@@ -116,8 +114,6 @@ public abstract class Piece implements Cloneable
    private void splitInstance(Tile newTile, double newStatus)
    {
       Piece clonedPiece = duplicate();
-      this.instances.add(clonedPiece);
-      clonedPiece.instances.add(this);
       newTile.setPiece(clonedPiece);
       clonedPiece.tile = newTile;
       clonedPiece.setStatus(newStatus);
@@ -125,18 +121,32 @@ public abstract class Piece implements Cloneable
 //            clonedPiece.entangledPieces.addAll(entangledPieces);
    }
 
-   private void discardInstance()
+   private void measure()
    {
-      if (instances.size() > 1)
+      double random = Math.random() * MAX_STATUS;
+      double counter = 0;
+      Piece theOne = null;
+      for (Piece instance : instances)
       {
-         for (Piece instance : instances)
+         counter += instance.getStatus();
+         if (counter >= random)
          {
-            instance.setStatus(instance.getStatus() + this.getStatus() / instances.size());
-            instance.instances.remove(this);
+            theOne = instance;
+            break;
          }
-         this.tile.setPiece(null);
-         this.removeFromOwner();
       }
+      assert theOne != null;
+      theOne.setStatus(MAX_STATUS);
+      Piece finalTheOne = theOne;
+      instances.stream().filter(piece -> !piece.equals(finalTheOne)).forEach(Piece::discard);
+      instances.clear();
+   }
+
+   private void discard()
+   {
+      removeFromOwner();
+      tile.setPiece(null);
+      tile = null;
    }
 
 
@@ -221,7 +231,7 @@ public abstract class Piece implements Cloneable
    private Piece duplicate()
    {
       Piece duplicate = clone();
-      duplicate.instances = new ArrayList<>(this.instances);
+      instances.add(duplicate);
       owner.addPiece(duplicate);
       return duplicate;
    }

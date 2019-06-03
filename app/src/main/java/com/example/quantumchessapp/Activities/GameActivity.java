@@ -73,7 +73,7 @@ public class GameActivity extends AppCompatActivity
 
       activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
 
-      GameManager.newGame(this,new Player(), new Player(), GameVariant.OFFLINE);
+      GameManager.newGame(this, new Player(), new Player(), GameVariant.OFFLINE);
 
       initListener();
    }
@@ -110,10 +110,17 @@ public class GameActivity extends AppCompatActivity
    private void addStatusIndicator(PieceCont cont)
    {
       ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
-      progressBar.setMax((int) GameManager.getMaxPieceStatus());
-      progressBar.setProgress((int) cont.getStatus());
-      progressBar.setVisibility(View.VISIBLE);
-      progressBar.invalidate();
+      if (cont.getStatus() == GameManager.getMaxPieceStatus())
+      {
+         progressBar.setVisibility(View.INVISIBLE);
+      }
+      else
+      {
+         progressBar.setMax((int) GameManager.getMaxPieceStatus());
+         progressBar.setProgress((int) cont.getStatus());
+         progressBar.setVisibility(View.VISIBLE);
+         progressBar.invalidate();
+      }
    }
 
    private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
@@ -127,9 +134,9 @@ public class GameActivity extends AppCompatActivity
             {
                removeLastMoveIndicator();
 
+               change.getChanged().forEach(this::change);
                change.getRemoved().forEach(this::remove);
                change.getAdded().forEach(this::add);
-               change.getChanged().forEach(this::change);
 
                if (GameManager.isGameWon())
                {
@@ -256,7 +263,6 @@ public class GameActivity extends AppCompatActivity
       ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
       imageButton.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
       addStatusIndicator(cont);
-      // TODO: 26.05.2019
    }
 
    private void deSelect()
