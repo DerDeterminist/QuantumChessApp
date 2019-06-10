@@ -42,25 +42,25 @@ public class GameModel
 
    public void setGameID(String gameID)
    {
-      propertyChangeSupport.firePropertyChange("start", this.gameID, gameID);
+      propertyChangeSupport.firePropertyChange("start", null, gameID);
       this.gameID = gameID;
    }
 
    public void setPossibleMoves(List<TileCont> possibleMoves)
    {
-      propertyChangeSupport.firePropertyChange("possibleMoves", this.possibleMoves, possibleMoves);
+      propertyChangeSupport.firePropertyChange("possibleMoves", null, possibleMoves);
       this.possibleMoves = possibleMoves;
    }
 
    public void setChange(ChangeCont change)
    {
-      propertyChangeSupport.firePropertyChange("move", this.change, change);
+      propertyChangeSupport.firePropertyChange("move", null, change);
       this.change = change;
    }
 
    public void setHeight(int height)
    {
-      propertyChangeSupport.firePropertyChange("board", this.height, height);
+      propertyChangeSupport.firePropertyChange("board", null, height);
       this.height = height;
    }
 
