@@ -66,7 +66,7 @@ public class GameModel
 
    public void setPieceOfActivePlayer(boolean pieceOfActivePlayer)
    {
-      propertyChangeSupport.firePropertyChange("pieceOfActivePlayer", this.pieceOfActivePlayer, pieceOfActivePlayer);
+      propertyChangeSupport.firePropertyChange("pieceOfActivePlayer", !pieceOfActivePlayer, pieceOfActivePlayer);
       this.pieceOfActivePlayer = pieceOfActivePlayer;
    }
 
