@@ -195,6 +195,7 @@ public class GameActivity extends AppCompatActivity
    {
       Toast toast = Toast.makeText(this, "Game Over", Toast.LENGTH_LONG);
       toast.show();
+      deSelect();
    }
 
    private void addToCapturedPieces(PieceCont piece)
