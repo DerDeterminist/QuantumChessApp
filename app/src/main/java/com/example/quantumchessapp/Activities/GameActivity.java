@@ -17,6 +17,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.PieceCont;
+import com.example.api.Containter.TileCont;
 import com.example.quantumchessapp.GameManager;
 import com.example.quantumchessapp.GameVariant;
 import com.example.quantumchessapp.PieceRenderer;
@@ -24,9 +25,11 @@ import com.example.quantumchessapp.R;
 import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 
+import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.stream.Collectors;
 
 public class GameActivity extends AppCompatActivity
 {
@@ -110,13 +113,13 @@ public class GameActivity extends AppCompatActivity
    private void addStatusIndicator(PieceCont cont)
    {
       ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
-      if (cont.getStatus() == GameManager.getMaxPieceStatus())
+      if (cont.getStatus() == GameManager.getModel().getMaxPieceStatus())
       {
          progressBar.setVisibility(View.INVISIBLE);
       }
       else
       {
-         progressBar.setMax((int) GameManager.getMaxPieceStatus());
+         progressBar.setMax((int) GameManager.getModel().getMaxPieceStatus());
          progressBar.setProgress((int) cont.getStatus());
          progressBar.setVisibility(View.VISIBLE);
          progressBar.invalidate();
@@ -125,38 +128,49 @@ public class GameActivity extends AppCompatActivity
 
    private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
    {
-      if (!GameManager.isGameWon())
+      if (!GameManager.getModel().isGameWon())
       {
          if (activePiece != null)
          {
-            change = GameManager.movePiece(activePosition, position, this.qMove);
-            if (GameManager.isLastMoveValid())
-            {
-               removeLastMoveIndicator();
-
-               change.getChanged().forEach(this::change);
-               change.getRemoved().forEach(this::remove);
-               change.getAdded().forEach(this::add);
-
-               if (GameManager.isGameWon())
+            PropertyChangeListener moveListener = evt -> {
+               if (GameManager.getModel().isLastMoveWasValid())
                {
-                  showWinner();
-                  return;
+                  removeLastMoveIndicator();
+                  change = (ChangeCont) evt.getNewValue();
+
+                  change.getChanged().forEach(GameActivity.this::change);
+                  change.getRemoved().forEach(GameActivity.this::remove);
+                  change.getAdded().forEach(GameActivity.this::add);
+
+                  if (GameManager.getModel().isGameWon())
+                  {
+                     showWinner();
+                     return;
+                  }
+                  updateActivePlayerIndicator();
                }
-               updateActivePlayerIndicator();
-            }
-            deSelect();
+               deSelect();
+               GameManager.getModel().clearListeners();
+            };
+            GameManager.addPropertyChangeListener("move", moveListener);
+            GameManager.movePiece(activePosition, position, this.qMove);
          }
          else
          {
-            if (GameManager.isPieceOfActivePlayer(position))
-            {
-               setActivePiece(position, piece, qMove);
-            }
-            else
-            {
-               deSelect();
-            }
+            PropertyChangeListener changeListener = evt -> {
+               System.out.println(Thread.currentThread().getName());
+               if (((boolean) evt.getNewValue()))
+               {
+                  setActivePiece(position, piece, qMove);
+               }
+               else
+               {
+                  deSelect();
+                  GameManager.getModel().clearListeners();
+               }
+            };
+            GameManager.addPropertyChangeListener("pieceOfActivePlayer", changeListener);
+            GameManager.isPieceOfActivePlayer(position);
          }
       }
    }
@@ -175,10 +189,17 @@ public class GameActivity extends AppCompatActivity
       this.qMove = qMove;
       activePiece = piece;
       activePosition = position;
-      possiblePositions = GameManager.getPossibleMoves(position, qMove);
-      possiblePositions.stream()
-            .map(this::getImageButtonAt)
-            .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
+      PropertyChangeListener possibleMovesListener = evt -> {
+         possiblePositions = ((List<TileCont>) evt.getNewValue()).stream().map(
+               tileCont -> GameManager.convertXYToPosition(tileCont.getX(), tileCont.getY())).collect(Collectors.toList());
+
+         possiblePositions.stream()
+               .map(GameActivity.this::getImageButtonAt)
+               .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
+         GameManager.getModel().clearListeners();
+      };
+      GameManager.addPropertyChangeListener("possibleMoves", possibleMovesListener);
+      GameManager.getPossibleMoves(position, qMove);
    }
 
    private void showWinner()
@@ -237,7 +258,7 @@ public class GameActivity extends AppCompatActivity
                newSpot.setBackgroundResource(R.drawable.lastmove);
                lastNewSpot = newSpot;
             });
-      if (allowQMove && cont.getStatus() < GameManager.getMaxPieceStatus())
+      if (allowQMove && cont.getStatus() < GameManager.getModel().getMaxPieceStatus())
       {
          addStatusIndicator(cont);
       }

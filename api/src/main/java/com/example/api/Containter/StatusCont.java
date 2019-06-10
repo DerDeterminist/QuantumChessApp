@@ -8,7 +8,7 @@ import java.util.List;
 @Data
 public class StatusCont
 {
-   private boolean lastMoveWasValid;
+   private boolean lastMoveValid;
    private boolean isGameWon;
    private int winner;
    private int activePlayer;
@@ -18,7 +18,7 @@ public class StatusCont
    {
       isGameWon = responseStatus.isGameWon();
       winner = responseStatus.getWinner();
-      lastMoveWasValid = responseStatus.isLastMoveWasValid();
+      lastMoveValid = responseStatus.isLastMoveWasValid();
       activePlayer = responseStatus.getActivePlayer();
       loser = new ArrayList<>(responseStatus.getLoser());
    }
