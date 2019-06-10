@@ -25,20 +25,6 @@ import java.util.stream.Collectors;
 public class LocaleAPI implements Api
 {
    private static volatile GameManager gameManager = GameManager.getInstance();
-   private static LocaleAPI localeAPI;
-
-   private LocaleAPI()
-   {
-   }
-
-   public static Api getInstance()
-   {
-      if (localeAPI == null)
-      {
-         localeAPI = new LocaleAPI();
-      }
-      return localeAPI;
-   }
 
    @Override
    public StartResponse startGame()

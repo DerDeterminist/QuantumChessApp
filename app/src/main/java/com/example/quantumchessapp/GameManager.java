@@ -5,6 +5,8 @@ import com.example.api.Api;
 import com.example.api.Containter.BoardCont;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.StatusCont;
+import com.example.api.Containter.TileCont;
+import com.example.api.GameModel;
 import com.example.api.LocaleAPI;
 import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.TileResponse;
@@ -12,91 +14,116 @@ import com.example.quantumchessapp.spiel.Player;
 import com.example.quantumchessapp.spiel.Position;
 import com.example.restapi.GameClient;
 
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("unused")
 public class GameManager
 {
-   private static String gameID;
    private static Api api;
+   private static GameClient client;
+   private static GameModel model;
+   private static GameVariant variant;
 
-   private static List<Player> players;
-   private static boolean isGameWon;
-   private static boolean lastMoveWasValid;
-   private static Player winner;
+   public static void newGame(Context context, Player player, Player player1, GameVariant variant)
+   {
+      model = new GameModel();
+      GameManager.variant = variant;
+      switch (variant)
+      {
+         case OFFLINE:
+            api = new LocaleAPI();
+            model.setPlayers(Collections.emptyList());
+            model.setGameID(api.startGame().getGameID());
+            BoardCont boardCont = api.getCompleteBord(model.getGameID()).getBoardCont();
+            model.setHeight(boardCont.getHeight());
+            model.setWight(boardCont.getWith());
+            model.setMaxPieceStatus(boardCont.getMaxPieceStatus());
+            break;
+         case ONLINE:
+            client = new GameClient(context, model);
+            model.addPropertyChangeListener("start", evt -> client.getCompleteBord(model.getGameID()));
+            break;
+      }
+   }
 
-   private static int wight;
-   private static int height;
-   private static double maxPieceStatus;
-
-   public static void newGame(Context context, Player player, Player player1,
-                              GameVariant variant)
+   public static void getPossibleMoves(Position startPosition, boolean qMove)
    {
       switch (variant)
       {
          case OFFLINE:
-            api = LocaleAPI.getInstance();
+            TileResponse possibleMoves =
+                  api.getPossibleMoves(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                        qMove);
+            convertStatus(possibleMoves.getStatus());
+            model.setPossibleMoves(new ArrayList<>(possibleMoves.getTiles()));
             break;
          case ONLINE:
-            api = new GameClient(context);
+            client.getPossibleMoves(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  qMove);
             break;
       }
-      players = new ArrayList<>();
-      players.add(player);
-      players.add(player1);
-      gameID = api.startGame().getGameID();
-      BoardCont boardCont = api.getCompleteBord(gameID).getBoardCont();
-      height = boardCont.getHeight();
-      wight = boardCont.getWith();
-      maxPieceStatus = boardCont.getMaxPieceStatus();
    }
 
-   public static List<Position> getPossibleMoves(Position startPosition, boolean qMove)
+   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
    {
-      TileResponse possibleMoves =
-            api.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition), qMove);
-      convertStatus(possibleMoves.getStatus());
-      return possibleMoves.getTiles().stream()
-            .map(tileContainer -> convertXYToPosition(tileContainer.getX(), tileContainer.getY()))
-            .collect(Collectors.toList());
-   }
-
-   public static ChangeCont movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
-   {
-      ChangeResponse changeResponse =
-            api.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
+      switch (variant)
+      {
+         case OFFLINE:
+            ChangeResponse changeResponse =
+                  api.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                        convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
+            convertStatus(changeResponse.getStatus());
+            ChangeCont changeCont = changeResponse.getChangeCont();
+            changeCont.getAdded().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
+            changeCont.getRemoved().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
+            changeCont.getChanged().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
+            model.setChange(changeCont);
+            break;
+         case ONLINE:
+            client.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
                   convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
-      convertStatus(changeResponse.getStatus());
-      ChangeCont changeCont = changeResponse.getChangeCont();
-      changeCont.getAdded().forEach(cont -> cont.setY(height - 1 - cont.getY()));
-      changeCont.getRemoved().forEach(cont -> cont.setY(height - 1 - cont.getY()));
-      changeCont.getChanged().forEach(cont -> cont.setY(height - 1 - cont.getY()));
-      return changeCont;
+            break;
+      }
    }
 
-   public static boolean isPieceOfActivePlayer(Position position)
+   public static void isPieceOfActivePlayer(Position position)
    {
-      return api.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position))
-            .isPieceOfActivePlayer();
+      switch (variant)
+      {
+         case OFFLINE:
+            model.setPieceOfActivePlayer(
+                  api.isPieceOfActivePlayer(model.getGameID(), convertPositionWight(position), convertPositionHeight(position))
+                        .isPieceOfActivePlayer());
+            break;
+         case ONLINE:
+            client.isPieceOfActivePlayer(model.getGameID(),position.getX(), position.getY());
+            break;
+      }
    }
 
    private static void convertStatus(final StatusCont statusCont)
    {
-      isGameWon = statusCont.isGameWon();
-      lastMoveWasValid = statusCont.isLastMoveWasValid();
-      winner = players.stream().filter(player -> player.getId() == statusCont.getWinner()).findAny().orElse(null);
+      model.setGameWon(statusCont.isGameWon());
+      model.setLastMoveWasValid(statusCont.isLastMoveValid());
+//      model.setPlayers(players.stream().filter(player -> player.getId() == statusCont.getWinner()).findAny().orElse(null));
    }
 
-   private static Position convertXYToPosition(int x, int y)
+   public List<Position> toContToPositions(List<TileCont> list)
    {
-      return new Position(x, height - 1 - y);
+      return list.stream().map(tileCont -> convertXYToPosition(tileCont.getX(), tileCont.getY())).collect(Collectors.toList());
+   }
+
+   public static Position convertXYToPosition(int x, int y)
+   {
+      return new Position(x, model.getHeight() - 1 - y);
    }
 
    private static int convertPositionHeight(Position position)
    {
-      return height - 1 - position.getY();
+      return model.getHeight() - 1 - position.getY();
    }
 
    private static int convertPositionWight(Position position)
@@ -104,38 +131,18 @@ public class GameManager
       return position.getX();
    }
 
-   public static List<Player> getPlayers()
+   public static GameModel getModel()
    {
-      return players;
+      return model;
    }
 
-   public static boolean isGameWon()
+   public static void addPropertyChangeListener(String property, PropertyChangeListener listener)
    {
-      return isGameWon;
+      model.addPropertyChangeListener(property, listener);
    }
 
-   public static boolean isLastMoveValid()
+   public static void removePropertyChangeListener(PropertyChangeListener listener)
    {
-      return lastMoveWasValid;
-   }
-
-   public static Player getWinner()
-   {
-      return winner;
-   }
-
-   public static int getWight()
-   {
-      return wight;
-   }
-
-   public static int getHeight()
-   {
-      return height;
-   }
-
-   public static double getMaxPieceStatus()
-   {
-      return maxPieceStatus;
+      model.removePropertyChangeListener(listener);
    }
 }

@@ -26,7 +26,7 @@ public class GameController
 
    public GameController()
    {
-      api = LocaleAPI.getInstance();
+      api = new LocaleAPI();
    }
 
    @PostMapping("/start")

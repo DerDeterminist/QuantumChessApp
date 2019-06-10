@@ -5,10 +5,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.api.Api;
+import com.example.api.Containter.BoardCont;
+import com.example.api.Containter.StatusCont;
+import com.example.api.GameModel;
 import com.example.api.Request.Game.BoardRequest;
 import com.example.api.Request.Game.GameRequest;
 import com.example.api.Request.Game.MovePieceRequest;
+import com.example.api.Request.Game.PieceOfActivePlayerRequest;
 import com.example.api.Request.Game.PossibleMovesRequest;
 import com.example.api.Request.Game.StartRequest;
 import com.example.api.Response.AbstractResponse;
@@ -18,29 +21,33 @@ import com.example.api.Response.PieceOfActivePlayerResponse;
 import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 import com.google.gson.Gson;
-import lombok.Data;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class GameClient implements Api
+import java.util.ArrayList;
+import java.util.function.Consumer;
+
+public class GameClient
 {
    private static Gson gson = new Gson();
    private static RequestQueue queue;
+   private static GameModel model;
 
-   public GameClient(Context context)
+   public GameClient(Context context, GameModel model)
    {
       queue = Volley.newRequestQueue(context);
+      GameClient.model = model;
    }
 
-   @Override
-   public StartResponse startGame()
+   public void startGame()
    {
-      StartRequest startRequest = new StartRequest();
-      return (StartResponse) request(startRequest, StartResponse.class);
+      final StartRequest startRequest = new StartRequest();
+      request(startRequest, StartResponse.class, (Consumer<StartResponse>) startResponse -> {
+         model.setGameID(startResponse.getGameID());
+      });
    }
 
-   @Override
-   public TileResponse getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
+   public void getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
    {
       PossibleMovesRequest request = new PossibleMovesRequest();
       request.setGameID(gameID);
@@ -48,11 +55,13 @@ public class GameClient implements Api
       request.setXFrom(xFrom);
       request.setYFrom(yFrom);
       request.setGameID(gameID);
-      return (TileResponse) request(request, TileResponse.class);
+      request(request, TileResponse.class, (Consumer<TileResponse>) tileResponse -> {
+         convertStatus(tileResponse.getStatus());
+         model.setPossibleMoves(new ArrayList<>(tileResponse.getTiles()));
+      });
    }
 
-   @Override
-   public ChangeResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public void movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
       MovePieceRequest request = new MovePieceRequest();
       request.setGameID(gameID);
@@ -61,45 +70,59 @@ public class GameClient implements Api
       request.setXTo(xTo);
       request.setYTo(yTo);
       request.setQMove(qMove);
-      return (ChangeResponse) request(request, ChangeResponse.class);
+      request(request, ChangeResponse.class, (Consumer<ChangeResponse>) changeResponse -> {
+         convertStatus(changeResponse.getStatus());
+         model.setChange(changeResponse.getChangeCont());
+      });
    }
 
-   @Override
-   public BoardResponse getCompleteBord(String gameID)
+   public void getCompleteBord(String gameID)
    {
       BoardRequest request = new BoardRequest();
       request.setGameID(gameID);
-      return (BoardResponse) request(request, BoardResponse.class);
+      request(request, BoardResponse.class, (Consumer<BoardResponse>) boardResponse -> {
+         BoardCont boardCont = boardResponse.getBoardCont();
+         model.setHeight(boardCont.getHeight());
+         model.setWight(boardCont.getWith());
+         model.setMaxPieceStatus(boardCont.getMaxPieceStatus());
+      });
    }
 
-   @Override
-   public PieceOfActivePlayerResponse isPieceOfActivePlayer(String gameID, int x, int y)
+   public void isPieceOfActivePlayer(String gameID, int x, int y)
    {
-      return null;
+      PieceOfActivePlayerRequest request = new PieceOfActivePlayerRequest();
+      request.setX(x);
+      request.setY(y);
+      request.setGameID(gameID);
+      request(request, PieceOfActivePlayerResponse.class,
+            (Consumer<PieceOfActivePlayerResponse>) pieceOfActivePlayerResponse -> model
+                  .setPieceOfActivePlayer(pieceOfActivePlayerResponse.isPieceOfActivePlayer()));
    }
 
-   private static AbstractResponse request(GameRequest gameRequest, final Class<? extends AbstractResponse> aClass)
+   private static void convertStatus(final StatusCont statusCont)
    {
-      final ResponseHolder holder = new ResponseHolder();
+      model.setGameWon(statusCont.isGameWon());
+      model.setLastMoveWasValid(statusCont.isLastMoveValid());
+      model.setWinner(
+            model.getPlayers().stream().filter(player -> player.getId() == statusCont.getWinner()).findAny().orElse(null));
+   }
+
+   private static void request(GameRequest gameRequest, final Class<? extends AbstractResponse> aClass,
+                               Consumer consumer)
+   {
       try
       {
          JsonObjectRequest request =
                new JsonObjectRequest(Request.Method.POST, gameRequest.getUrl(), new JSONObject(gson.toJson(gameRequest)),
-                     response -> holder.setObject(gson.fromJson(response.toString(), aClass)),
-                     Throwable::printStackTrace);
+                     response -> {
+                        AbstractResponse response1 = gson.fromJson(response.toString(), aClass);
+                        consumer.accept(response1);
+                     }, Throwable::printStackTrace);
          queue.add(request);
       }
       catch (JSONException e)
       {
          e.printStackTrace();
       }
-
-      return holder.getObject();
-   }
-
-   @Data
-   private static class ResponseHolder
-   {
-      private AbstractResponse object;
    }
 }
