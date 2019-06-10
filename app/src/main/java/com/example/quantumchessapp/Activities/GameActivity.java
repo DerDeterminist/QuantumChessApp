@@ -2,8 +2,6 @@ package com.example.quantumchessapp.Activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -28,7 +26,6 @@ import com.example.quantumchessapp.spiel.Position;
 import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class GameActivity extends AppCompatActivity
@@ -50,10 +47,6 @@ public class GameActivity extends AppCompatActivity
    private LinearLayout blackCapturedPieces;
    private LinearLayout whiteCapturedPieces;
 
-   //indicates the active Player by changing its color
-   private volatile ProgressBar activeColorIndicator;
-   private volatile AtomicBoolean blackActive = new AtomicBoolean();
-
    //represents the changes to pieces in the last move
    private ChangeCont change;
 
@@ -74,8 +67,6 @@ public class GameActivity extends AppCompatActivity
 
       findViews();
 
-      activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
-
       GameManager.newGame(this, new Player(), new Player(), GameVariant.OFFLINE);
 
       initListener();
@@ -87,7 +78,6 @@ public class GameActivity extends AppCompatActivity
       background = findViewById(R.id.background_game);
       blackCapturedPieces = findViewById(R.id.blackCapturedPieces);
       whiteCapturedPieces = findViewById(R.id.whiteCapturedPieces);
-      activeColorIndicator = findViewById(R.id.activecolor);
    }
 
    private void initListener()
@@ -147,7 +137,6 @@ public class GameActivity extends AppCompatActivity
                      showWinner();
                      return;
                   }
-                  updateActivePlayerIndicator();
                }
                deSelect();
                GameManager.getModel().clearListeners();
@@ -206,22 +195,6 @@ public class GameActivity extends AppCompatActivity
    {
       Toast toast = Toast.makeText(this, "Game Over", Toast.LENGTH_LONG);
       toast.show();
-   }
-
-   private void updateActivePlayerIndicator()
-   {
-      if (blackActive.get())
-      {
-         blackActive.set(false);
-         activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY);
-         activeColorIndicator.invalidate();
-      }
-      else
-      {
-         blackActive.set(true);
-         activeColorIndicator.getIndeterminateDrawable().setColorFilter(Color.BLACK, PorterDuff.Mode.MULTIPLY);
-         activeColorIndicator.invalidate();
-      }
    }
 
    private void addToCapturedPieces(PieceCont piece)
