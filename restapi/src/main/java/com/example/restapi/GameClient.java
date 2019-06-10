@@ -3,8 +3,6 @@ package com.example.restapi;
 import android.content.Context;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.api.Api;
@@ -87,21 +85,8 @@ public class GameClient implements Api
       {
          JsonObjectRequest request =
                new JsonObjectRequest(Request.Method.POST, gameRequest.getUrl(), new JSONObject(gson.toJson(gameRequest)),
-                     new Response.Listener<JSONObject>()
-                     {
-                        @Override
-                        public void onResponse(JSONObject response)
-                        {
-                           holder.setObject(gson.fromJson(response.toString(), aClass));
-                        }
-                     }, new Response.ErrorListener()
-               {
-                  @Override
-                  public void onErrorResponse(VolleyError error)
-                  {
-                     error.printStackTrace();
-                  }
-               });
+                     response -> holder.setObject(gson.fromJson(response.toString(), aClass)),
+                     Throwable::printStackTrace);
          queue.add(request);
       }
       catch (JSONException e)

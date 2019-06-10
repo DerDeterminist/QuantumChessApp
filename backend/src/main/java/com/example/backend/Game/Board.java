@@ -3,7 +3,6 @@ package com.example.backend.Game;
 import com.example.backend.Pieces.Piece;
 
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -16,14 +15,12 @@ public final class Board
    private int with;
    private int height;
    private Change change;
-   private List<Tile> last;
 
    public Board(int with, int height)
    {
       this.with = with;
       this.height = height;
       change = new Change();
-      last = new ArrayList<>();
    }
 
    Change getChange()
@@ -36,7 +33,6 @@ public final class Board
       return with;
    }
 
-   @SuppressWarnings("WeakerAccess")
    public int getHeight()
    {
       return height;
@@ -61,7 +57,7 @@ public final class Board
 
    Piece instantiatePiece(Player player, int x, int y, String pieceName)
    {
-      Piece piece = null;
+      Piece piece;
       try
       {
          Class<?> pieceClass = Class.forName("com.example.backend.Pieces." + pieceName);
@@ -70,13 +66,9 @@ public final class Board
          piece = ((Piece) constructor.newInstance(tile, player));
          tile.setPiece(piece);
       }
-      catch (NoSuchMethodException e)
+      catch (Exception e)
       {
-         System.out.println("Die Class auf die zugegriffen werden soll muss public sein");
-      }
-      catch (Exception ignored)
-      {
-
+         throw new RuntimeException(e);
       }
       return piece;
    }
