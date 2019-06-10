@@ -168,8 +168,7 @@ public class GameActivity extends AppCompatActivity
    {
       if (lastOrigin != null && lastNewSpot != null)
       {
-         lastOrigin.setBackgroundResource(R.drawable.transparent);
-         lastNewSpot.setBackgroundResource(R.drawable.transparent);
+         markLastMove(R.drawable.transparent);
       }
    }
 
@@ -226,16 +225,20 @@ public class GameActivity extends AppCompatActivity
             .filter(cont::equals)
             .findAny()
             .ifPresent(cont1 -> {
-               ImageButton origin = getImageButtonAt(cont1.getX(), cont1.getY());
-               origin.setBackgroundResource(R.drawable.lastmove);
-               lastOrigin = origin;
-               newSpot.setBackgroundResource(R.drawable.lastmove);
+               lastOrigin = getImageButtonAt(cont1.getX(), cont1.getY());
                lastNewSpot = newSpot;
+               markLastMove(R.drawable.lastmove);
             });
       if (allowQMove && cont.getStatus() < GameManager.getModel().getMaxPieceStatus())
       {
          addStatusIndicator(cont);
       }
+   }
+
+   private void markLastMove(int resource)
+   {
+      lastOrigin.setBackgroundResource(resource);
+      lastNewSpot.setBackgroundResource(resource);
    }
 
    private void remove(PieceCont cont)
@@ -266,9 +269,9 @@ public class GameActivity extends AppCompatActivity
       activePosition = null;
       possiblePositions.stream()
             .map(this::getImageButtonAt)
-            .filter(imageButton -> !imageButton.equals(lastNewSpot))
             .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.transparent));
       possiblePositions = Collections.emptyList();
+      markLastMove(R.drawable.lastmove);
    }
 
    private ImageButton getImageButtonAt(int x, int y)
