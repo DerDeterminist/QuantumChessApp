@@ -44,6 +44,7 @@ public class GameManager
             break;
          case ONLINE:
             client = new GameClient(context, model);
+            client.startGame();
             model.addPropertyChangeListener("start", evt -> client.getCompleteBord(model.getGameID()));
             break;
       }

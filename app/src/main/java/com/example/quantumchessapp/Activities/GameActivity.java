@@ -125,7 +125,7 @@ public class GameActivity extends AppCompatActivity
             PropertyChangeListener moveListener = evt -> {
                if (GameManager.getModel().isLastMoveWasValid())
                {
-                  removeLastMoveIndicator();
+                  markLastMove(R.drawable.transparent);
                   change = (ChangeCont) evt.getNewValue();
 
                   change.getChanged().forEach(GameActivity.this::change);
@@ -161,14 +161,6 @@ public class GameActivity extends AppCompatActivity
             GameManager.addPropertyChangeListener("pieceOfActivePlayer", changeListener);
             GameManager.isPieceOfActivePlayer(position);
          }
-      }
-   }
-
-   private void removeLastMoveIndicator()
-   {
-      if (lastOrigin != null && lastNewSpot != null)
-      {
-         markLastMove(R.drawable.transparent);
       }
    }
 
@@ -237,8 +229,11 @@ public class GameActivity extends AppCompatActivity
 
    private void markLastMove(int resource)
    {
-      lastOrigin.setBackgroundResource(resource);
-      lastNewSpot.setBackgroundResource(resource);
+      if (lastOrigin != null && lastNewSpot != null)
+      {
+         lastOrigin.setBackgroundResource(resource);
+         lastNewSpot.setBackgroundResource(resource);
+      }
    }
 
    private void remove(PieceCont cont)

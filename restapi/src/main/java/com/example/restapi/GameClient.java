@@ -42,9 +42,8 @@ public class GameClient
    public void startGame()
    {
       final StartRequest startRequest = new StartRequest();
-      request(startRequest, StartResponse.class, (Consumer<StartResponse>) startResponse -> {
-         model.setGameID(startResponse.getGameID());
-      });
+      request(startRequest, StartResponse.class,
+            (Consumer<StartResponse>) startResponse -> model.setGameID(startResponse.getGameID()));
    }
 
    public void getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
@@ -112,7 +111,7 @@ public class GameClient
    {
       try
       {
-         JsonObjectRequest request =
+         final JsonObjectRequest request =
                new JsonObjectRequest(Request.Method.POST, gameRequest.getUrl(), new JSONObject(gson.toJson(gameRequest)),
                      response -> {
                         AbstractResponse response1 = gson.fromJson(response.toString(), aClass);
