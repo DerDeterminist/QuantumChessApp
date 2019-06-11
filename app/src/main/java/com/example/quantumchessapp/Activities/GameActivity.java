@@ -64,10 +64,11 @@ public class GameActivity extends AppCompatActivity
 
       Intent gameActivityIntent = getIntent();
       allowQMove = gameActivityIntent.getBooleanExtra("allowQMove", false);
+      GameVariant variant = (GameVariant) gameActivityIntent.getSerializableExtra("variant");
 
       findViews();
 
-      GameManager.newGame(this, new Player(), new Player(), GameVariant.OFFLINE);
+      GameManager.newGame(this, new Player(), new Player(), variant);
 
       initListener();
    }

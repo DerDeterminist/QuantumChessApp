@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import com.example.quantumchessapp.Account;
+import com.example.quantumchessapp.GameVariant;
 import com.example.quantumchessapp.R;
 
 public class MainMenuActivity extends AppCompatActivity
@@ -31,6 +32,7 @@ public class MainMenuActivity extends AppCompatActivity
    private void initListener()
    {
       final Intent gameModeActivity = new Intent(this, GameModeActivity.class);
+      gameModeActivity.putExtra("variant", GameVariant.OFFLINE);
       offlineGame.setOnClickListener(v -> startActivity(gameModeActivity));
 
       final Intent registerActivity = new Intent(this, RegisterActivity.class);

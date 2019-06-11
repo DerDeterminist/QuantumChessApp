@@ -10,7 +10,6 @@ import com.example.backend.Game.Tile;
 
 import java.util.Collections;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class GameManager
@@ -29,7 +28,7 @@ public class GameManager
 
    public String startGame()
    {
-      String gameID = UUID.randomUUID().toString();
+      String gameID = RandomGenerator.getString();
       games.put(gameID, new DefaultGameImpl(new Player(0), new Player(1)));
       return gameID;
    }

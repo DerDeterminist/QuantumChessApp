@@ -1,5 +1,6 @@
 package com.example.quantumchessapp.Activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +9,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import com.example.quantumchessapp.Account;
+import com.example.quantumchessapp.GameVariant;
 import com.example.quantumchessapp.R;
 
 public class RegisterActivity extends AppCompatActivity
@@ -37,12 +39,16 @@ public class RegisterActivity extends AppCompatActivity
 
    private void intListener()
    {
+      final Intent gameModeActivity = new Intent(this, GameModeActivity.class);
+      gameModeActivity.putExtra("variant",GameVariant.ONLINE);
       confirm.setOnClickListener(v -> {
          if (accName.getText().length() != 0)
          {
             account.setShowUserNameOnline(show_username_online.isChecked());
             account.setUserName(accName.getText().toString());
             account.saveAccountData();
+
+            startActivity(gameModeActivity);
          }
       });
    }

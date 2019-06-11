@@ -2,13 +2,13 @@ package com.example.backend.Pieces;
 
 import com.example.backend.Game.Player;
 import com.example.backend.Game.Tile;
+import com.example.backend.RandomGenerator;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -28,7 +28,7 @@ public abstract class Piece implements Cloneable
 
    /**
     * Extend this if you want a Piece that can move from point to point like
-    * the king or the Knight. For movement in a Line see {@code InLine}
+    * the King or the Knight. For movement in a Line see {@code InLine}
     *
     * @param tile  tile the Piece starts on
     * @param owner the owner
@@ -42,7 +42,7 @@ public abstract class Piece implements Cloneable
 //      entangledPieces = new ArrayList<>();
       instances = new ArrayList<>();
       instances.add(this);
-      id = UUID.randomUUID().toString();
+      id = RandomGenerator.getString();
 
       qPredicate = tile1 -> {
          if (tile1 == null)
