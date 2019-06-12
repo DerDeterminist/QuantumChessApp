@@ -22,6 +22,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+/**
+ * Api for Backend Module
+ * @see GameManager
+ */
 public class LocaleAPI implements Api
 {
    private static volatile GameManager gameManager = GameManager.getInstance();

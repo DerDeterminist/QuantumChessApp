@@ -32,8 +32,10 @@ public class MainMenuActivity extends AppCompatActivity
    private void initListener()
    {
       final Intent gameModeActivity = new Intent(this, GameModeActivity.class);
-      gameModeActivity.putExtra("variant", GameVariant.OFFLINE);
-      offlineGame.setOnClickListener(v -> startActivity(gameModeActivity));
+      offlineGame.setOnClickListener(v -> {
+         gameModeActivity.putExtra("variant", GameVariant.OFFLINE);
+         startActivity(gameModeActivity);
+      });
 
       final Intent registerActivity = new Intent(this, RegisterActivity.class);
       Account account = new Account(this);
@@ -41,7 +43,8 @@ public class MainMenuActivity extends AppCompatActivity
          if (account.hasAccount())
          {
             account.loadAccountData();
-            // TODO: 12.05.2019 start online game
+            gameModeActivity.putExtra("variant", GameVariant.ONLINE);
+            startActivity(gameModeActivity);
          }
          else
          {
@@ -49,9 +52,7 @@ public class MainMenuActivity extends AppCompatActivity
          }
       });
 
-      brenden.setOnClickListener(v -> {
-         System.exit(0); // TODO: 16.04.2019 richtig beenden
-      });
+      brenden.setOnClickListener(v -> System.exit(0));
    }
 
    @Override

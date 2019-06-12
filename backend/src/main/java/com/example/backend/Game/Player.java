@@ -25,9 +25,9 @@ public class Player
       return pieces;
    }
 
-   public boolean removePiece(Piece piece)
+   public void removePiece(Piece piece)
    {
-      return pieces.remove(piece);
+      pieces.remove(piece);
    }
 
    public void addPiece(Piece piece)

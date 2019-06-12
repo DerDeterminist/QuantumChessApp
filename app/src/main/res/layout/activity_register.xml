@@ -24,7 +24,9 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName"
                 android:ems="10"
-                android:id="@+id/accName" android:hint="@string/username"/>
+                android:id="@+id/accName"
+                android:hint="@string/username"
+                android:autofillHints="username"/>
         <CheckBox
                 android:text="@string/show_username_online"
                 android:layout_width="match_parent"
@@ -34,6 +36,6 @@
                 android:text="@string/confirm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/confirm" />
+                android:id="@+id/confirm" android:enabled="false"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>

@@ -16,11 +16,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * RestMapping for the LocaleApi
+ *
+ * @see LocaleAPI
+ */
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping(GameController.BASE_URL)
 public class GameController
 {
-   public static final String BASE_URL = "/api/v1/game";
+   static final String BASE_URL = "/api/v1/game";
 
    private Api api;
 
@@ -30,7 +36,7 @@ public class GameController
    }
 
    @PostMapping("/start")
-   public StartResponse startGame(StartRequest requst)
+   public StartResponse startGame(StartRequest request)
    {
       return api.startGame();
    }

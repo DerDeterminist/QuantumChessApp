@@ -9,6 +9,10 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.List;
 
+/**
+ * Represents the game played. Uses the ObserverPattern for Api relevant attributes
+ * @see Api
+ */
 @Data
 public class GameModel
 {

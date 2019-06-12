@@ -40,6 +40,7 @@ public class ResponseStatus
       return lastMoveWasValid;
    }
 
+   @SuppressWarnings("WeakerAccess")
    public void setLastMoveWasValid(boolean lastMoveWasValid)
    {
       this.lastMoveWasValid = lastMoveWasValid;

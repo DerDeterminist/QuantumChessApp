@@ -54,9 +54,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" >
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_81"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -83,6 +85,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_82"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -109,6 +112,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_83"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -135,6 +139,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_84"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -161,6 +166,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_85"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -185,6 +191,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_86"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -209,6 +216,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_87"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -235,6 +243,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_88"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -269,9 +278,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_71"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -298,6 +309,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_72"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -324,6 +336,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_73"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -350,6 +363,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_74"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -376,6 +390,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_75"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -402,6 +417,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_76"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -428,6 +444,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_77"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -454,6 +471,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_78"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -488,9 +506,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_61"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -517,6 +537,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_62"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -543,6 +564,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_63"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -569,6 +591,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_64"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -595,6 +618,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_65"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -621,6 +645,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_66"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -647,6 +672,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_67"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -673,6 +699,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_68"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -707,9 +734,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights,TooManyViews">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_51"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -736,6 +765,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_52"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -762,6 +792,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_53"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -788,6 +819,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_54"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -814,6 +846,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_55"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -840,10 +873,10 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_56"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:background="#00FFFFFF"
                         android:paddingHorizontal="0px"
                         android:paddingVertical="0px"
@@ -867,6 +900,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_57"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -893,6 +927,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_58"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -927,9 +962,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_41"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -956,6 +993,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_42"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -982,6 +1020,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_43"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1008,6 +1047,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_44"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1034,6 +1074,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_45"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1060,6 +1101,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_46"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1086,6 +1128,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_47"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1112,6 +1155,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_48"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1146,9 +1190,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_31"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1175,6 +1221,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_32"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1201,6 +1248,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_33"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1227,6 +1275,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_34"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1253,6 +1302,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_35"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1281,6 +1331,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_36"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1307,6 +1358,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_37"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1334,6 +1386,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_38"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1368,9 +1421,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_21"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1397,6 +1452,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_22"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1423,6 +1479,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_23"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1449,6 +1506,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_24"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1475,6 +1533,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_25"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1501,6 +1560,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_26"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1527,6 +1587,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_27"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1553,6 +1614,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_28"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1587,9 +1649,11 @@
             <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    tools:ignore="NestedWeights">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1616,6 +1680,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_12"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1642,6 +1707,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_13"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1668,6 +1734,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_14"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1694,6 +1761,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_15"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1720,6 +1788,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1746,6 +1815,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_17"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -1772,6 +1842,7 @@
                     android:layout_weight="1">
 
                 <ImageButton
+                        android:contentDescription="@string/piece"
                         android:id="@+id/_18"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

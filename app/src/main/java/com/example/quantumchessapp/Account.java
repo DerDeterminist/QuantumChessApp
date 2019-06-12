@@ -2,9 +2,14 @@ package com.example.quantumchessapp;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import lombok.Data;
 
 import java.util.UUID;
 
+/**
+ * Placeholder for a more developed Account when implementing multiplayer
+ */
+@Data
 public class Account
 {
    private static Account account;
@@ -50,35 +55,5 @@ public class Account
    public boolean hasAccount()
    {
       return sharedPreferences.contains(USERID);
-   }
-
-   public String getUserID()
-   {
-      return userID;
-   }
-
-   public void setUserID(String userID)
-   {
-      this.userID = userID;
-   }
-
-   public String getUserName()
-   {
-      return userName;
-   }
-
-   public void setUserName(String userName)
-   {
-      this.userName = userName;
-   }
-
-   public boolean isShowUserNameOnline()
-   {
-      return showUserNameOnline;
-   }
-
-   public void setShowUserNameOnline(boolean showUserNameOnline)
-   {
-      this.showUserNameOnline = showUserNameOnline;
    }
 }

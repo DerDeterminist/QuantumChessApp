@@ -5,6 +5,7 @@ import com.example.backend.Pieces.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings("WeakerAccess")
 public class Change
 {
    private final List<Piece> removed;

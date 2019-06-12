@@ -38,6 +38,7 @@ public final class Board
       return height;
    }
 
+   @SuppressWarnings("WeakerAccess")
    public Tile getTileAt(int x, int y)
    {
       return tiles.stream().filter(tile -> tile.getX() == x && tile.getY() == y).findFirst().orElse(null);

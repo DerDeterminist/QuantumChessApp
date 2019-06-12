@@ -19,15 +19,23 @@ import com.example.api.Containter.TileCont;
 import com.example.quantumchessapp.GameManager;
 import com.example.quantumchessapp.GameVariant;
 import com.example.quantumchessapp.PieceRenderer;
+import com.example.quantumchessapp.Position;
 import com.example.quantumchessapp.R;
-import com.example.quantumchessapp.spiel.Player;
-import com.example.quantumchessapp.spiel.Position;
 
 import java.beans.PropertyChangeListener;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Activity fo playing any chess mode
+ * <p>
+ * extras:
+ * - boolean "allowQMove" : are quantum moves allowed
+ * - GameVariant "variant" : online or offline
+ *
+ * @see GameVariant
+ */
 public class GameActivity extends AppCompatActivity
 {
    //if quantum moves are allowed. get set as a extra before starting this activity
@@ -68,7 +76,7 @@ public class GameActivity extends AppCompatActivity
 
       findViews();
 
-      GameManager.newGame(this, new Player(), new Player(), variant);
+      GameManager.newGame(this, variant);
 
       initListener();
    }
@@ -101,6 +109,11 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+   /**
+    * Sets up a StatusIndicator that shows how likely it is that the Piece will be found there
+    *
+    * @param cont the Piece for which to show the StatusIndicator
+    */
    private void addStatusIndicator(PieceCont cont)
    {
       ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
@@ -117,6 +130,13 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+   /**
+    * the heart of this activity. Controls every user input. Controls only. Implements the ObservablePattern
+    *
+    * @param position position the user clicked
+    * @param piece    the ImageButton the user clicked
+    * @param qMove    is this the setup for a quantum move
+    */
    private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
    {
       if (!GameManager.getModel().isGameWon())
@@ -165,12 +185,16 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+   /**
+    * Sets the selected Piece the user wants to move with the next input
+    */
    private void setActivePiece(Position position, ImageButton piece, boolean qMove)
    {
       this.qMove = qMove;
       activePiece = piece;
       activePosition = position;
       PropertyChangeListener possibleMovesListener = evt -> {
+         //noinspection unchecked
          possiblePositions = ((List<TileCont>) evt.getNewValue()).stream().map(
                tileCont -> GameManager.convertXYToPosition(tileCont.getX(), tileCont.getY())).collect(Collectors.toList());
 
@@ -183,6 +207,9 @@ public class GameActivity extends AppCompatActivity
       GameManager.getPossibleMoves(position, qMove);
    }
 
+   /**
+    * Shows the winner of the Game.
+    */
    private void showWinner()
    {
       Toast toast = Toast.makeText(this, "Game Over", Toast.LENGTH_LONG);
@@ -190,6 +217,11 @@ public class GameActivity extends AppCompatActivity
       deSelect();
    }
 
+   /**
+    * Adds the Piece to the respective LinearLayout that holds the captured pieces
+    *
+    * @param piece the piece to add
+    */
    private void addToCapturedPieces(PieceCont piece)
    {
       ImageView imageView = new ImageView(this);
@@ -210,6 +242,11 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+   /**
+    * gets called when a piece wars added
+    *
+    * @param cont PieceCont that got added
+    */
    private void add(PieceCont cont)
    {
       ImageButton newSpot = getImageButtonAt(cont.getX(), cont.getY());
@@ -228,15 +265,11 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
-   private void markLastMove(int resource)
-   {
-      if (lastOrigin != null && lastNewSpot != null)
-      {
-         lastOrigin.setBackgroundResource(resource);
-         lastNewSpot.setBackgroundResource(resource);
-      }
-   }
-
+   /**
+    * Gets called when a piece wars removed
+    *
+    * @param cont PieceCont that got removed
+    */
    private void remove(PieceCont cont)
    {
       ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
@@ -252,6 +285,11 @@ public class GameActivity extends AppCompatActivity
       }
    }
 
+   /**
+    * Gets called when a piece wars changed
+    *
+    * @param cont PieceCont that got changed
+    */
    private void change(PieceCont cont)
    {
       ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
@@ -259,6 +297,21 @@ public class GameActivity extends AppCompatActivity
       addStatusIndicator(cont);
    }
 
+   /**
+    * @param resource with witch resource? red/transparent for example
+    */
+   private void markLastMove(int resource)
+   {
+      if (lastOrigin != null && lastNewSpot != null)
+      {
+         lastOrigin.setBackgroundResource(resource);
+         lastNewSpot.setBackgroundResource(resource);
+      }
+   }
+
+   /**
+    * removes the selection of the user
+    */
    private void deSelect()
    {
       activePiece = null;

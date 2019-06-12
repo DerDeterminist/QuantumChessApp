@@ -12,6 +12,12 @@ import java.util.Collections;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Manages all the Games played on this backend.
+ * Is multithreading save
+ *
+ * @see Game
+ */
 public class GameManager
 {
    private volatile static ConcurrentHashMap<String, Game> games = new ConcurrentHashMap<>();
@@ -21,7 +27,7 @@ public class GameManager
    {
    }
 
-   public static GameManager getInstance()
+   public synchronized static GameManager getInstance()
    {
       return gameManager;
    }

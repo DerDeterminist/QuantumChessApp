@@ -1,4 +1,4 @@
-package com.example.quantumchessapp.spiel;
+package com.example.quantumchessapp;
 
 public class Position {
 

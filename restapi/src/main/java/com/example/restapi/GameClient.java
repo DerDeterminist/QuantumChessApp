@@ -27,6 +27,13 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+/**
+ * RestApi oriented at Api.
+ * uses observablePattern to fill the GameModel
+ *
+ * @see com.example.api.Api
+ * @see GameModel
+ */
 public class GameClient
 {
    private static Gson gson = new Gson();
@@ -115,6 +122,7 @@ public class GameClient
                new JsonObjectRequest(Request.Method.POST, gameRequest.getUrl(), new JSONObject(gson.toJson(gameRequest)),
                      response -> {
                         AbstractResponse response1 = gson.fromJson(response.toString(), aClass);
+                        //noinspection unchecked
                         consumer.accept(response1);
                      }, Throwable::printStackTrace);
          queue.add(request);

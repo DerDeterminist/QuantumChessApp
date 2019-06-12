@@ -17,11 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 @RestController
 @RequestMapping(PlayerController.BASE_URL)
 public class PlayerController
 {
-   public static final String BASE_URL = "/api/v1/Players";
+   static final String BASE_URL = "/api/v1/Players";
 
    private final PlayerService playerService;
 

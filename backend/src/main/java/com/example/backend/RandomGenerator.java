@@ -2,6 +2,9 @@ package com.example.backend;
 
 import java.util.Random;
 
+/**
+ * Generate JSON save random IDs
+ */
 public class RandomGenerator
 {
    public static String getString()

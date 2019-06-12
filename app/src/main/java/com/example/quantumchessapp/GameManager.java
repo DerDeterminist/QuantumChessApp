@@ -5,21 +5,24 @@ import com.example.api.Api;
 import com.example.api.Containter.BoardCont;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.StatusCont;
-import com.example.api.Containter.TileCont;
 import com.example.api.GameModel;
 import com.example.api.LocaleAPI;
 import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.TileResponse;
-import com.example.quantumchessapp.spiel.Player;
-import com.example.quantumchessapp.spiel.Position;
 import com.example.restapi.GameClient;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * Manages the currently played game.
+ * Bundles the communication the different Apis.
+ * Depending on the Api has to change the gameModel itself of takes advantage of the observerPattern
+ *
+ * @see LocaleAPI
+ * @see GameClient
+ */
 public class GameManager
 {
    private static Api api;
@@ -27,7 +30,7 @@ public class GameManager
    private static GameModel model;
    private static GameVariant variant;
 
-   public static void newGame(Context context, Player player, Player player1, GameVariant variant)
+   public static void newGame(Context context, GameVariant variant)
    {
       model = new GameModel();
       GameManager.variant = variant;
@@ -100,7 +103,7 @@ public class GameManager
                         .isPieceOfActivePlayer());
             break;
          case ONLINE:
-            client.isPieceOfActivePlayer(model.getGameID(),position.getX(), position.getY());
+            client.isPieceOfActivePlayer(model.getGameID(), position.getX(), position.getY());
             break;
       }
    }
@@ -109,12 +112,6 @@ public class GameManager
    {
       model.setGameWon(statusCont.isGameWon());
       model.setLastMoveWasValid(statusCont.isLastMoveValid());
-//      model.setPlayers(players.stream().filter(player -> player.getId() == statusCont.getWinner()).findAny().orElse(null));
-   }
-
-   public List<Position> toContToPositions(List<TileCont> list)
-   {
-      return list.stream().map(tileCont -> convertXYToPosition(tileCont.getX(), tileCont.getY())).collect(Collectors.toList());
    }
 
    public static Position convertXYToPosition(int x, int y)
@@ -142,6 +139,7 @@ public class GameManager
       model.addPropertyChangeListener(property, listener);
    }
 
+   @SuppressWarnings("unused")
    public static void removePropertyChangeListener(PropertyChangeListener listener)
    {
       model.removePropertyChangeListener(listener);

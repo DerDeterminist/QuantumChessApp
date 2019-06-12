@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 @Service
 class PlayerServiceImpl implements PlayerService
 {
@@ -42,7 +43,8 @@ class PlayerServiceImpl implements PlayerService
    {
       Player player = new Player();
       player.setUserID(id);
+      Player result = null;
       return playerRepository.findOne(
-            Example.of(player, ExampleMatcher.matchingAll().withIgnorePaths("id", "userName", "elo", "showUserNameOnline"))).get();
+            Example.of(player, ExampleMatcher.matchingAll().withIgnorePaths("id", "userName", "elo", "showUserNameOnline"))).orElse(null);
    }
 }

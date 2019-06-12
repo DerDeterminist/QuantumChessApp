@@ -4,6 +4,9 @@ import com.example.api.Containter.PlayerCont;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+/**
+ * Example request for a player
+ */
 @EqualsAndHashCode(callSuper = true)
 @Data
 public class PlayerRequest extends AbstractRequest

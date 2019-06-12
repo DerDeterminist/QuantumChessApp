@@ -6,6 +6,11 @@ import android.support.v4.content.ContextCompat;
 import com.example.api.Containter.PieceColor;
 import com.example.api.Containter.PieceCont;
 
+/**
+ * Maps the Piece form the api to a Drawable
+ * @see PieceCont
+ * @see Drawable
+ */
 public class PieceRenderer
 {
    public static Drawable getPieceDrawable(PieceCont cont, Context context)
