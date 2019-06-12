@@ -259,10 +259,6 @@ public class GameActivity extends AppCompatActivity
                lastNewSpot = newSpot;
                markLastMove(R.drawable.lastmove);
             });
-      if (allowQMove && cont.getStatus() < GameManager.getModel().getMaxPieceStatus())
-      {
-         addStatusIndicator(cont);
-      }
    }
 
    /**
