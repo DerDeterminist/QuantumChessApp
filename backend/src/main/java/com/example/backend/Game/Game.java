@@ -15,4 +15,6 @@ public interface Game
    boolean isPieceOfActivePlayer(int x, int y);
 
    Change getChange();
+
+   String getFEN();
 }

@@ -73,4 +73,9 @@ public class GameManager
    {
       return games.get(gameID).getChange();
    }
+
+   public String getFEN(String gameID)
+   {
+      return games.get(gameID).getFEN();
+   }
 }

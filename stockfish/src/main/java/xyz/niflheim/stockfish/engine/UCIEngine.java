@@ -97,7 +97,7 @@ abstract class UCIEngine {
     }
 
     private String getPath(Variant variant, String override) {
-        StringBuilder path = new StringBuilder(override == null ? "assets/engines/stockfish_10_x64" : override + "stockfish_10_x64");
+        StringBuilder path = new StringBuilder(override == null ? "stockfish/assets/engines/stockfish_10_x64" : override + "stockfish_10_x64");
 
         if (System.getProperty("os.name").toLowerCase().contains("win"))
             switch (variant) {

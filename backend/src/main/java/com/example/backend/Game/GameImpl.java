@@ -97,6 +97,79 @@ public abstract class GameImpl implements Game
       return lastResponseStatus;
    }
 
+   @Override
+   public String getFEN()
+   {
+      if (players.size() != 2)
+      {
+         throw new RuntimeException("To generate a Forsyth–Edwards Notation a game needs 2 player");
+      }
+
+      StringBuilder stringBuilder = new StringBuilder();
+
+      for (int y = 0; y < 8; y++)
+      {
+         int emptyTilesInARow = 0;
+         for (int x = 0; x < 8; x++)
+         {
+            Optional<Piece> piece = board.getTileAt(x, y).getPiece();
+
+            if (piece.isPresent())
+            {
+               // some empty fields
+               if (emptyTilesInARow != 0)
+               {
+                  stringBuilder.append(emptyTilesInARow);
+                  emptyTilesInARow = 0;
+               }
+
+               String name = piece.get().getClass().getSimpleName();
+               char character;
+               switch (name)
+               {
+                  case "Bishop":
+                     character = 'b';
+                     break;
+                  case "King":
+                     character = 'k';
+                     break;
+                  case "Knight":
+                     character = 'n';
+                     break;
+                  case "Pawen":
+                     character = 'p';
+                     break;
+                  case "Queen":
+                     character = 'q';
+                     break;
+                  case "Rook":
+                     character = 'r';
+                     break;
+                  default:
+                     throw new RuntimeException("New Pieces have to be implemented here");
+               }
+               if (piece.get().getOwner().getId() == 0)// White is uppercase
+               {
+                  character = Character.toUpperCase(character);
+               }
+               stringBuilder.append(character);
+            }
+            else
+            {
+               emptyTilesInARow++;
+            }
+         }
+
+         // empty row
+         if (emptyTilesInARow != 0)
+         {
+            stringBuilder.append(emptyTilesInARow);
+         }
+         stringBuilder.append("/");
+      }
+      return stringBuilder.toString();
+   }
+
    private ResponseStatus createStatus()
    {
       long anzPiecesToWin = players.stream().flatMap(player -> player.getPieces().stream()).filter(

@@ -16,6 +16,10 @@ targetCompatibility = 1.8
 def client_version = version.toString()
 def stockfish_version = "10"
 
+dependencies {
+    implementation project(path: ':api')
+}
+
 repositories {
     jcenter()
 }
