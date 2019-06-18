@@ -18,6 +18,7 @@ def stockfish_version = "10"
 
 dependencies {
     implementation project(path: ':api')
+    implementation project(path: ':backend')
 }
 
 repositories {

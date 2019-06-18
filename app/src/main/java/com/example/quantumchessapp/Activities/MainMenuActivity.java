@@ -14,6 +14,7 @@ public class MainMenuActivity extends AppCompatActivity
    private Button offlineGame;
    private Button onlineGame;
    private Button brenden;
+   private Button ki;
 
    @Override
    protected void onCreate(Bundle savedInstanceState)
@@ -25,6 +26,7 @@ public class MainMenuActivity extends AppCompatActivity
       offlineGame = findViewById(R.id.offlineGame);
       onlineGame = findViewById(R.id.onlineGame);
       brenden = findViewById(R.id.beenden);
+      ki = findViewById(R.id.ki);
 
       initListener();
    }
@@ -34,7 +36,7 @@ public class MainMenuActivity extends AppCompatActivity
       final Intent gameModeActivity = new Intent(this, GameModeActivity.class);
       offlineGame.setOnClickListener(v -> {
          gameModeActivity.putExtra("variant", GameVariant.OFFLINE);
-         startActivity(gameModeActivity);
+
       });
 
       final Intent registerActivity = new Intent(this, RegisterActivity.class);
@@ -50,6 +52,11 @@ public class MainMenuActivity extends AppCompatActivity
          {
             startActivity(registerActivity);
          }
+      });
+
+      ki.setOnClickListener(v -> {
+         gameModeActivity.putExtra("variant", GameVariant.KI);
+         startActivity(gameModeActivity);
       });
 
       brenden.setOnClickListener(v -> System.exit(0));

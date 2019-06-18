@@ -62,6 +62,8 @@ public class GameActivity extends AppCompatActivity
    private ImageButton lastOrigin;
    private ImageButton lastNewSpot;
 
+   GameVariant variant;
+
    @SuppressLint("ResourceType")
    @Override
    protected void onCreate(@Nullable Bundle savedInstanceState)
@@ -72,7 +74,7 @@ public class GameActivity extends AppCompatActivity
 
       Intent gameActivityIntent = getIntent();
       allowQMove = gameActivityIntent.getBooleanExtra("allowQMove", false);
-      GameVariant variant = (GameVariant) gameActivityIntent.getSerializableExtra("variant");
+      variant = (GameVariant) gameActivityIntent.getSerializableExtra("variant");
 
       findViews();
 
@@ -157,6 +159,10 @@ public class GameActivity extends AppCompatActivity
                   {
                      showWinner();
                      return;
+                  }
+                  else if (variant.equals(GameVariant.KI))
+                  {
+                     GameManager.stockfishMove();
                   }
                }
                deSelect();

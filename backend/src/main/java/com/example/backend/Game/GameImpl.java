@@ -167,6 +167,29 @@ public abstract class GameImpl implements Game
          }
          stringBuilder.append("/");
       }
+      // generate tail
+      // active color
+      if (activePlayer.getId() == 0)
+      {
+         stringBuilder.append(" w");
+      }
+      else
+      {
+         stringBuilder.append(" b");
+      }
+
+      // castling
+      stringBuilder.append(" -");
+
+      // en passant
+      stringBuilder.append(" -");
+
+      // halfmove clock
+      stringBuilder.append(" 1");
+
+      // fullmove number
+      stringBuilder.append(" 1");
+
       return stringBuilder.toString();
    }
 

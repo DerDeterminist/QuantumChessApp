@@ -10,6 +10,7 @@ import com.example.api.LocaleAPI;
 import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.TileResponse;
 import com.example.restapi.GameClient;
+import xyz.niflheim.stockfish.StockfishAPI;
 
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
@@ -37,7 +38,15 @@ public class GameManager
       switch (variant)
       {
          case OFFLINE:
-            api = new LocaleAPI();
+         case KI:
+            if (variant.equals(GameVariant.KI))
+            {
+               api = new StockfishAPI();
+            }
+            else
+            {
+               api = new LocaleAPI();
+            }
             model.setPlayers(Collections.emptyList());
             model.setGameID(api.startGame().getGameID());
             BoardCont boardCont = api.getCompleteBord(model.getGameID()).getBoardCont();
@@ -79,18 +88,23 @@ public class GameManager
             ChangeResponse changeResponse =
                   api.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
                         convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
-            convertStatus(changeResponse.getStatus());
-            ChangeCont changeCont = changeResponse.getChangeCont();
-            changeCont.getAdded().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
-            changeCont.getRemoved().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
-            changeCont.getChanged().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
-            model.setChange(changeCont);
+            consumeChangeResponse(changeResponse);
             break;
          case ONLINE:
             client.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
                   convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
             break;
       }
+   }
+
+   private static void consumeChangeResponse(ChangeResponse changeResponse)
+   {
+      convertStatus(changeResponse.getStatus());
+      ChangeCont changeCont = changeResponse.getChangeCont();
+      changeCont.getAdded().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
+      changeCont.getRemoved().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
+      changeCont.getChanged().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
+      model.setChange(changeCont);
    }
 
    public static void isPieceOfActivePlayer(Position position)
@@ -105,6 +119,18 @@ public class GameManager
          case ONLINE:
             client.isPieceOfActivePlayer(model.getGameID(), position.getX(), position.getY());
             break;
+      }
+   }
+
+   public static void stockfishMove()
+   {
+      if (api instanceof StockfishAPI)
+      {
+         ((StockfishAPI) api).StockfishMove(model.getGameID(), 10, 3, GameManager::consumeChangeResponse);
+      }
+      else
+      {
+         throw new RuntimeException("Without stockfish no stockfish");
       }
    }
 
