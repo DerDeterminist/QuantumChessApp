@@ -103,7 +103,7 @@ public class GameManager
                         .isPieceOfActivePlayer());
             break;
          case ONLINE:
-            client.isPieceOfActivePlayer(model.getGameID(), position.getX(), position.getY());
+            client.isPieceOfActivePlayer(model.getGameID(), convertPositionWight(position), convertPositionHeight(position));
             break;
       }
    }

@@ -12,9 +12,14 @@ import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
 import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
 
 /**
  * RestMapping for the LocaleApi
@@ -29,40 +34,68 @@ public class GameController
    static final String BASE_URL = "/api/v1/game";
 
    private Api api;
+   private Logger logger = LoggerFactory.getLogger(this.getClass());
 
    public GameController()
    {
       api = new LocaleAPI();
    }
 
-   @PostMapping("/start")
-   public StartResponse startGame(StartRequest request)
+   @PostMapping(value = "/start", consumes = MediaType.APPLICATION_JSON_VALUE)
+   public StartResponse startGame(@RequestBody StartRequest request)
    {
-      return api.startGame();
+      StartResponse response = api.startGame();
+
+      logger.info("Started game: " + response.toString());
+
+      return response;
    }
 
-   @PostMapping("/possibleMoves")
-   public TileResponse getPossibleMoves(PossibleMovesRequest request)
+   @PostMapping(value = "/possibleMoves", consumes = MediaType.APPLICATION_JSON_VALUE)
+   public TileResponse getPossibleMoves(@RequestBody PossibleMovesRequest request)
    {
-      return api.getPossibleMoves(request.getGameID(), request.getXFrom(), request.getYFrom(), request.isQMove());
+      logger.info("possibleMoves request: " + request.toString());
+
+      TileResponse response =
+            api.getPossibleMoves(request.getGameID(), request.getXFrom(), request.getYFrom(), request.isQMove());
+
+      logger.info("possibleMoves response: gameID: " + response.toString());
+      return response;
    }
 
-   @PostMapping("/movePiece")
-   public ChangeResponse movePiece(MovePieceRequest request)
+   @PostMapping(value = "/movePiece", consumes = MediaType.APPLICATION_JSON_VALUE)
+   public ChangeResponse movePiece(@RequestBody MovePieceRequest request)
    {
-      return api.movePiece(request.getGameID(), request.getXFrom(), request.getYFrom(), request.getXTo(), request.getYTo(),
-            request.isQMove());
+      logger.info("movePiece request: " + request.toString());
+
+      ChangeResponse response =
+            api.movePiece(request.getGameID(), request.getXFrom(), request.getYFrom(), request.getXTo(), request.getYTo(),
+                  request.isQMove());
+
+      logger.info("movePiece response: gameID: " + response.toString());
+      return response;
    }
 
-   @PostMapping("/completeBord")
-   public BoardResponse getCompleteBord(BoardRequest request)
+   @PostMapping(value = "/completeBord", consumes = MediaType.APPLICATION_JSON_VALUE)
+   public BoardResponse getCompleteBord(@RequestBody BoardRequest request)
    {
-      return api.getCompleteBord(request.getGameID());
+      logger.info("completeBord request: " + request.toString());
+
+      BoardResponse response = api.getCompleteBord(request.getGameID());
+
+      logger.info("completeBord response: gameID: " + response.toString());
+      return response;
    }
 
-   @PostMapping("/isPieceOfActivePlayer")
-   public PieceOfActivePlayerResponse isPieceOfActivePlayer(PieceOfActivePlayerRequest request)
+   @PostMapping(value = "/isPieceOfActivePlayer", consumes = MediaType.APPLICATION_JSON_VALUE)
+   public PieceOfActivePlayerResponse isPieceOfActivePlayer(@RequestBody PieceOfActivePlayerRequest request)
    {
-      return api.isPieceOfActivePlayer(request.getGameID(), request.getX(), request.getY());
+      logger.info("isPieceOfActivePlayer request: " + request.toString());
+
+      PieceOfActivePlayerResponse response =
+            api.isPieceOfActivePlayer(request.getGameID(), request.getX(), request.getY());
+
+      logger.info("isPieceOfActivePlayer response: gameID: " + response.toString());
+      return response;
    }
 }

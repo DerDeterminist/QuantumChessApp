@@ -168,7 +168,6 @@ public class GameActivity extends AppCompatActivity
          else
          {
             PropertyChangeListener changeListener = evt -> {
-               System.out.println(Thread.currentThread().getName());
                if (((boolean) evt.getNewValue()))
                {
                   setActivePiece(position, piece, qMove);
