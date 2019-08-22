@@ -12,6 +12,7 @@ import com.example.api.Response.ChangeResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
 import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.MediaType;
@@ -59,7 +60,7 @@ public class GameController
       TileResponse response =
             api.getPossibleMoves(request.getGameID(), request.getXFrom(), request.getYFrom(), request.isQMove());
 
-      logger.info("possibleMoves response: gameID: " + response.toString());
+      logger.info("possibleMoves response: " + response.toString());
       return response;
    }
 
@@ -72,7 +73,7 @@ public class GameController
             api.movePiece(request.getGameID(), request.getXFrom(), request.getYFrom(), request.getXTo(), request.getYTo(),
                   request.isQMove());
 
-      logger.info("movePiece response: gameID: " + response.toString());
+      logger.info("movePiece response: " + response.toString());
       return response;
    }
 
@@ -83,7 +84,7 @@ public class GameController
 
       BoardResponse response = api.getCompleteBord(request.getGameID());
 
-      logger.info("completeBord response: gameID: " + response.toString());
+      logger.info("completeBord response: " + response.toString());
       return response;
    }
 
@@ -95,7 +96,7 @@ public class GameController
       PieceOfActivePlayerResponse response =
             api.isPieceOfActivePlayer(request.getGameID(), request.getX(), request.getY());
 
-      logger.info("isPieceOfActivePlayer response: gameID: " + response.toString());
+      logger.info("isPieceOfActivePlayer response: " + response.toString());
       return response;
    }
 }
