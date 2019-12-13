@@ -8,16 +8,9 @@ import java.util.List;
 @SuppressWarnings("WeakerAccess")
 public class Change
 {
-   private final List<Piece> removed;
-   private final List<Piece> added;
-   private final List<Piece> changed;
-
-   public Change()
-   {
-      removed = new ArrayList<>();
-      added = new ArrayList<>();
-      changed = new ArrayList<>();
-   }
+   private final List<Piece> removed = new ArrayList<>();
+   private final List<Piece> added = new ArrayList<>();
+   private final List<Piece> changed = new ArrayList<>();
 
    public void addRemoved(Piece piece)
    {

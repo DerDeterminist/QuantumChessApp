@@ -114,10 +114,12 @@ public abstract class Piece implements Cloneable
    private void splitInstance(Tile newTile, double newStatus)
    {
       Piece clonedPiece = duplicate();
+      clonedPiece.setStatus(newStatus);
       newTile.setPiece(clonedPiece);
       clonedPiece.tile = newTile;
-      clonedPiece.setStatus(newStatus);
+      newTile.reportStatusChange();
       this.setStatus(getStatus() - clonedPiece.getStatus());
+      tile.reportStatusChange();
 //            clonedPiece.entangledPieces.addAll(entangledPieces);
    }
 
@@ -137,6 +139,7 @@ public abstract class Piece implements Cloneable
       }
       assert theOne != null;
       theOne.setStatus(MAX_STATUS);
+      theOne.tile.reportStatusChange();
       Piece finalTheOne = theOne;
       instances.stream().filter(piece -> !piece.equals(finalTheOne)).forEach(Piece::discard);
       instances.clear();
@@ -190,7 +193,6 @@ public abstract class Piece implements Cloneable
    private void setStatus(double status)
    {
       this.status = status;
-      tile.reportStatusChange();
    }
 
    public double getStatus()

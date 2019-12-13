@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.PieceCont;
 import com.example.api.Containter.TileCont;
@@ -249,6 +250,7 @@ public class GameActivity extends AppCompatActivity
    private void add(PieceCont cont)
    {
       ImageButton newSpot = getImageButtonAt(cont.getX(), cont.getY());
+      addStatusIndicator(cont);
       newSpot.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
       change.getRemoved().stream()
             .filter(cont::equals)
@@ -256,6 +258,14 @@ public class GameActivity extends AppCompatActivity
             .ifPresent(cont1 -> {
                lastOrigin = getImageButtonAt(cont1.getX(), cont1.getY());
                lastNewSpot = newSpot;
+               markLastMove(R.drawable.lastmove);
+            });
+      change.getChanged().stream()
+            .filter(pieceCont -> pieceCont.equals(cont) && (pieceCont.getX() != cont.getX() || pieceCont.getY() != cont.getY()))
+            .findAny()
+            .ifPresent(pieceCont -> {
+               lastNewSpot = getImageButtonAt(pieceCont.getX(), pieceCont.getY());
+               lastOrigin = newSpot;
                markLastMove(R.drawable.lastmove);
             });
    }
