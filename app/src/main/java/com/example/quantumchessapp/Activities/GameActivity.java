@@ -152,7 +152,7 @@ public class GameActivity extends AppCompatActivity
                   change = (ChangeCont) evt.getNewValue();
 
                   change.getChanged().forEach(GameActivity.this::change);
-                  change.getRemoved().forEach(GameActivity.this::remove);
+                  remove(change.getRemoved());
                   change.getAdded().forEach(GameActivity.this::add);
 
                   if (GameManager.getModel().isGameWon())
@@ -283,21 +283,24 @@ public class GameActivity extends AppCompatActivity
    /**
     * Gets called when a piece wars removed
     *
-    * @param cont PieceCont that got removed
+    * @param conts PieceConts that got removed
     */
-   private void remove(PieceCont cont)
+   private void remove(List<PieceCont> conts)
    {
-      ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
-      imageButton.setImageDrawable(null);
-      if (allowQMove)
-      {
-         ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
-         progressBar.setVisibility(View.INVISIBLE);
-      }
-      if (!change.getAdded().contains(cont))
-      {
-         addToCapturedPieces(cont);
-      }
+      conts.forEach(cont -> {
+         ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
+         imageButton.setImageDrawable(null);
+         if (allowQMove)
+         {
+            ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
+            progressBar.setVisibility(View.INVISIBLE);
+         }
+      });
+
+      conts.stream()
+            .distinct()
+            .filter(cont -> !change.getAdded().contains(cont))
+            .forEach(this::addToCapturedPieces);
    }
 
    /**
