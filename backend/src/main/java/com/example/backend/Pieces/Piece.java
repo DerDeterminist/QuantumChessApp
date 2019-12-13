@@ -91,24 +91,39 @@ public abstract class Piece implements Cloneable
          }
          else
          {
-            newTile.getPiece().ifPresent(piece -> {
-               if (piece.getStatus() < MAX_STATUS)
+            if (status < MAX_STATUS)
+            {
+               if (measure())
                {
-                  piece.measure();
+                  moveToNewTile(newTile);
                }
-               else
-               {
-                  piece.removeFromOwner();
-               }
-            });
-            this.tile.setPiece(null);
-            this.tile = newTile;
-            newTile.setPiece(null);
-            newTile.setPiece(this);
+            }
+            else
+            {
+               moveToNewTile(newTile);
+            }
          }
          return true;
       }
       return false;
+   }
+
+   private void moveToNewTile(Tile newTile)
+   {
+      newTile.getPiece().ifPresent(piece -> {
+         if (piece.getStatus() < MAX_STATUS)
+         {
+            piece.measure();
+         }
+         else
+         {
+            piece.removeFromOwner();
+         }
+      });
+      this.tile.setPiece(null);
+      this.tile = newTile;
+      newTile.setPiece(null);
+      newTile.setPiece(this);
    }
 
    private void splitInstance(Tile newTile, double newStatus)
@@ -123,7 +138,7 @@ public abstract class Piece implements Cloneable
 //            clonedPiece.entangledPieces.addAll(entangledPieces);
    }
 
-   private void measure()
+   private boolean measure()
    {
       double random = Math.random() * MAX_STATUS;
       double counter = 0;
@@ -143,6 +158,7 @@ public abstract class Piece implements Cloneable
       Piece finalTheOne = theOne;
       instances.stream().filter(piece -> !piece.equals(finalTheOne)).forEach(Piece::discard);
       instances.clear();
+      return this.equals(theOne);
    }
 
    private void discard()
