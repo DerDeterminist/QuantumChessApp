@@ -89,7 +89,7 @@
                         android:id="@+id/_82"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#00FFFFFF"
+                        android:background="#00FFFFFF"
                         android:paddingHorizontal="0px"
                         android:paddingVertical="0px"
                         app:srcCompat="@drawable/blackknight"/>
@@ -1792,7 +1792,7 @@
                         android:id="@+id/_16"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:backgroundTint="#00FFFFFF"
+                        android:background="#00FFFFFF"
                         android:paddingHorizontal="0px"
                         android:paddingVertical="0px"
                         app:srcCompat="@drawable/whitebishop"/>
