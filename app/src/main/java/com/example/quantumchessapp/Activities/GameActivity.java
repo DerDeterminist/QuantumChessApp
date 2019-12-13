@@ -24,6 +24,7 @@ import com.example.quantumchessapp.Position;
 import com.example.quantumchessapp.R;
 
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -252,14 +253,23 @@ public class GameActivity extends AppCompatActivity
       ImageButton newSpot = getImageButtonAt(cont.getX(), cont.getY());
       addStatusIndicator(cont);
       newSpot.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
-      change.getRemoved().stream()
-            .filter(cont::equals)
-            .findAny()
-            .ifPresent(cont1 -> {
-               lastOrigin = getImageButtonAt(cont1.getX(), cont1.getY());
-               lastNewSpot = newSpot;
-               markLastMove(R.drawable.lastmove);
-            });
+      List<PieceCont> list = new ArrayList<>();
+      for (PieceCont pieceCont1 : change.getRemoved())
+      {
+         if (cont.equals(pieceCont1))
+         {
+            list.add(pieceCont1);
+         }
+      }
+      // when a Piece wars moved normally
+      if (list.size() == 1)
+      {
+         PieceCont cont1 = list.get(0);
+         lastOrigin = getImageButtonAt(cont1.getX(), cont1.getY());
+         lastNewSpot = newSpot;
+         markLastMove(R.drawable.lastmove);
+      }
+      // when a Piece wars split in 2
       change.getChanged().stream()
             .filter(pieceCont -> pieceCont.equals(cont) && (pieceCont.getX() != cont.getX() || pieceCont.getY() != cont.getY()))
             .findAny()
