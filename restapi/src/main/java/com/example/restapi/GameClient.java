@@ -1,6 +1,7 @@
 package com.example.restapi;
 
 import android.content.Context;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
@@ -15,12 +16,11 @@ import com.example.api.Request.Game.PieceOfActivePlayerRequest;
 import com.example.api.Request.Game.PossibleMovesRequest;
 import com.example.api.Request.Game.StartRequest;
 import com.example.api.Response.AbstractResponse;
-import com.example.api.Response.BoardResponse;
-import com.example.api.Response.ChangeResponse;
+import com.example.api.Response.GameStateResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 import com.google.gson.Gson;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -34,7 +34,7 @@ import java.util.function.Consumer;
  * @see com.example.api.Api
  * @see GameModel
  */
-public class GameClient
+public class GameClient //todo die logic sollte von der app ubeber consumer mit gegeben werden
 {
    private static Gson gson = new Gson();
    private static RequestQueue queue;
@@ -49,8 +49,8 @@ public class GameClient
    public void startGame()
    {
       final StartRequest startRequest = new StartRequest();
-      request(startRequest, StartResponse.class,
-            (Consumer<StartResponse>) startResponse -> model.setGameID(startResponse.getGameID()));
+      request(startRequest, GameStateResponse.class,
+            (Consumer<GameStateResponse>) gameStateResponse -> model.setGameID(gameStateResponse.getGameID()));
    }
 
    public void getPossibleMoves(String gameID, int xFrom, int yFrom, boolean qMove)
@@ -76,9 +76,9 @@ public class GameClient
       request.setXTo(xTo);
       request.setYTo(yTo);
       request.setQMove(qMove);
-      request(request, ChangeResponse.class, (Consumer<ChangeResponse>) changeResponse -> {
-         convertStatus(changeResponse.getStatus());
-         model.setChange(changeResponse.getChangeCont());
+      request(request, GameStateResponse.class, (Consumer<GameStateResponse>) gameStateResponse -> {
+         convertStatus(gameStateResponse.getStatus());
+         model.setChange(gameStateResponse.getChangeCont());
       });
    }
 
@@ -86,8 +86,8 @@ public class GameClient
    {
       BoardRequest request = new BoardRequest();
       request.setGameID(gameID);
-      request(request, BoardResponse.class, (Consumer<BoardResponse>) boardResponse -> {
-         BoardCont boardCont = boardResponse.getBoardCont();
+      request(request, GameStateResponse.class, (Consumer<GameStateResponse>) gameStateResponse -> {
+         BoardCont boardCont = gameStateResponse.getBoardCont();
          model.setHeight(boardCont.getHeight());
          model.setWight(boardCont.getWith());
          model.setMaxPieceStatus(boardCont.getMaxPieceStatus());

@@ -7,10 +7,8 @@ import com.example.api.Containter.PieceCont;
 import com.example.api.Containter.PieceType;
 import com.example.api.Containter.StatusCont;
 import com.example.api.Containter.TileCont;
-import com.example.api.Response.BoardResponse;
-import com.example.api.Response.ChangeResponse;
+import com.example.api.Response.GameStateResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 import com.example.backend.Game.Board;
 import com.example.backend.Game.Change;
@@ -31,12 +29,11 @@ public class LocaleAPI implements Api
    private static volatile GameManager gameManager = GameManager.getInstance();
 
    @Override
-   public StartResponse startGame()
+   public GameStateResponse startGame()
    {
       String gameID = gameManager.startGame();
-      StartResponse startResponse = new StartResponse();
-      startResponse.setGameID(gameID);
-      return startResponse;
+
+      return createGameStateResponse(gameID);
    }
 
    @Override
@@ -50,30 +47,17 @@ public class LocaleAPI implements Api
    }
 
    @Override
-   public ChangeResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
+   public GameStateResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove)
    {
       gameManager.movePiece(gameID, xFrom, yFrom, xTo, yTo, qMove);
-      StatusCont statusCont = new StatusCont(gameManager.getStatus(gameID));
-      Change change = gameManager.getChange(gameID);
 
-      ChangeResponse changeResponse = new ChangeResponse();
-      ChangeCont changeCont = new ChangeCont();
-      changeCont.setAdded(pieceToCont(change.getAdded()));
-      changeCont.setRemoved(pieceToCont(change.getRemoved()));
-      changeCont.setChanged(pieceToCont(change.getChanged()));
-      changeResponse.setChangeCont(changeCont);
-      changeResponse.setStatus(statusCont);
-      return changeResponse;
+      return createGameStateResponse(gameID);
    }
 
    @Override
-   public BoardResponse getCompleteBord(String gameID)
+   public GameStateResponse getCompleteBord(String gameID)
    {
-      Board board = gameManager.getBoard(gameID);
-      BoardResponse boardResponse = new BoardResponse();
-      boardResponse.setBoardCont(new BoardCont(board.getWith(), board.getHeight(), Piece.MAX_STATUS));
-      boardResponse.setStatus(new StatusCont(gameManager.getStatus(gameID)));
-      return boardResponse;
+      return createGameStateResponse(gameID);
    }
 
    @Override
@@ -83,6 +67,28 @@ public class LocaleAPI implements Api
       pieceOfActivePlayerResponse.setPieceOfActivePlayer(gameManager.isPieceOfActivePlayer(gameID, x, y));
       pieceOfActivePlayerResponse.setStatus(new StatusCont(gameManager.getStatus(gameID)));
       return pieceOfActivePlayerResponse;
+   }
+
+   private GameStateResponse createGameStateResponse(String gameID)
+   {
+      GameStateResponse response = new GameStateResponse();
+      response.setGameID(gameID);
+
+      Change change = gameManager.getChange(gameID);
+
+      ChangeCont changeCont = new ChangeCont();
+      changeCont.setAdded(pieceToCont(change.getAdded()));
+      changeCont.setRemoved(pieceToCont(change.getRemoved()));
+      changeCont.setChanged(pieceToCont(change.getChanged()));
+      response.setChangeCont(changeCont);
+
+      Board board = gameManager.getBoard(gameID);
+      response.setBoardCont(new BoardCont(board.getWith(), board.getHeight(), Piece.MAX_STATUS));
+
+      StatusCont statusCont = new StatusCont(gameManager.getStatus(gameID));
+      response.setStatus(statusCont);
+
+      return response;
    }
 
    private List<PieceCont> pieceToCont(List<Piece> pieces)

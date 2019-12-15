@@ -7,10 +7,8 @@ import com.example.api.Request.Game.MovePieceRequest;
 import com.example.api.Request.Game.PieceOfActivePlayerRequest;
 import com.example.api.Request.Game.PossibleMovesRequest;
 import com.example.api.Request.Game.StartRequest;
-import com.example.api.Response.BoardResponse;
-import com.example.api.Response.ChangeResponse;
+import com.example.api.Response.GameStateResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 
 import org.slf4j.Logger;
@@ -43,9 +41,9 @@ public class GameController
    }
 
    @PostMapping(value = "/start", consumes = MediaType.APPLICATION_JSON_VALUE)
-   public StartResponse startGame(@RequestBody StartRequest request)
+   public GameStateResponse startGame(@RequestBody StartRequest request)
    {
-      StartResponse response = api.startGame();
+      GameStateResponse response = api.startGame();
 
       logger.info("Started game: " + response.toString());
 
@@ -65,11 +63,11 @@ public class GameController
    }
 
    @PostMapping(value = "/movePiece", consumes = MediaType.APPLICATION_JSON_VALUE)
-   public ChangeResponse movePiece(@RequestBody MovePieceRequest request)
+   public GameStateResponse movePiece(@RequestBody MovePieceRequest request)
    {
       logger.info("movePiece request: " + request.toString());
 
-      ChangeResponse response =
+      GameStateResponse response =
             api.movePiece(request.getGameID(), request.getXFrom(), request.getYFrom(), request.getXTo(), request.getYTo(),
                   request.isQMove());
 
@@ -78,11 +76,11 @@ public class GameController
    }
 
    @PostMapping(value = "/completeBord", consumes = MediaType.APPLICATION_JSON_VALUE)
-   public BoardResponse getCompleteBord(@RequestBody BoardRequest request)
+   public GameStateResponse getCompleteBord(@RequestBody BoardRequest request)
    {
       logger.info("completeBord request: " + request.toString());
 
-      BoardResponse response = api.getCompleteBord(request.getGameID());
+      GameStateResponse response = api.getCompleteBord(request.getGameID());
 
       logger.info("completeBord response: " + response.toString());
       return response;

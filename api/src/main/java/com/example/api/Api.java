@@ -1,9 +1,7 @@
 package com.example.api;
 
-import com.example.api.Response.BoardResponse;
-import com.example.api.Response.ChangeResponse;
+import com.example.api.Response.GameStateResponse;
 import com.example.api.Response.PieceOfActivePlayerResponse;
-import com.example.api.Response.StartResponse;
 import com.example.api.Response.TileResponse;
 
 /**
@@ -16,9 +14,9 @@ public interface Api
    /**
     * Starts a new Game
     *
-    * @return the gameID
+    * @return the state of the game
     */
-   StartResponse startGame();
+   GameStateResponse startGame();
 
    /**
     * @param gameID id of the game
@@ -37,15 +35,15 @@ public interface Api
     * @param xTo new x
     * @param yTo new y
     * @param qMove is quantum move?
-    * @return everything that changed
+    * @return the state of the game
     */
-   ChangeResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove);
+   GameStateResponse movePiece(String gameID, int xFrom, int yFrom, int xTo, int yTo, boolean qMove);
 
    /**
     * @param gameID id of the game
-    * @return attributes of the board
+    * @return the state of the game
     */
-   BoardResponse getCompleteBord(String gameID);
+   GameStateResponse getCompleteBord(String gameID);
 
    PieceOfActivePlayerResponse isPieceOfActivePlayer(String gameID, int x, int y);
 }

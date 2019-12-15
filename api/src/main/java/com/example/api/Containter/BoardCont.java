@@ -1,9 +1,9 @@
 package com.example.api.Containter;
 
-import lombok.Data;
-
 import java.util.HashSet;
 import java.util.Set;
+
+import lombok.Data;
 
 @Data
 public class BoardCont
@@ -12,6 +12,11 @@ public class BoardCont
    private int height;
    private double maxPieceStatus;
    private Set<PieceCont> pieces;
+
+   // is necessary because the room lib dos not like lombok
+   public BoardCont()
+   {
+   }
 
    public BoardCont(int with, int height, double maxPieceStatus)
    {

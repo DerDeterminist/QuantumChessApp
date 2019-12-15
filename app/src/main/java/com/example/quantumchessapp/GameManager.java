@@ -1,14 +1,16 @@
 package com.example.quantumchessapp;
 
 import android.content.Context;
+
 import com.example.api.Api;
 import com.example.api.Containter.BoardCont;
 import com.example.api.Containter.ChangeCont;
 import com.example.api.Containter.StatusCont;
 import com.example.api.GameModel;
 import com.example.api.LocaleAPI;
-import com.example.api.Response.ChangeResponse;
+import com.example.api.Response.GameStateResponse;
 import com.example.api.Response.TileResponse;
+import com.example.quantumchessapp.persistance.PersistenceService;
 import com.example.restapi.GameClient;
 
 import java.beans.PropertyChangeListener;
@@ -76,11 +78,11 @@ public class GameManager
       switch (variant)
       {
          case OFFLINE:
-            ChangeResponse changeResponse =
+            GameStateResponse gameStateResponse =
                   api.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
                         convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
-            convertStatus(changeResponse.getStatus());
-            ChangeCont changeCont = changeResponse.getChangeCont();
+            convertStatus(gameStateResponse.getStatus());
+            ChangeCont changeCont = gameStateResponse.getChangeCont();
             changeCont.getAdded().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
             changeCont.getRemoved().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
             changeCont.getChanged().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));

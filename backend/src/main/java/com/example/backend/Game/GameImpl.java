@@ -74,7 +74,6 @@ public abstract class GameImpl implements Game
    @Override
    public Board getCompleteBord()
    {
-      lastResponseStatus = createStatus();
       return board;
    }
 
@@ -94,6 +93,10 @@ public abstract class GameImpl implements Game
    @Override
    public ResponseStatus getStatus()
    {
+      if (lastResponseStatus == null)
+      {
+         lastResponseStatus = createStatus();
+      }
       return lastResponseStatus;
    }
 
@@ -116,7 +119,6 @@ public abstract class GameImpl implements Game
    @Override
    public Change getChange()
    {
-      createStatus();
       return board.getChange();
    }
 }
