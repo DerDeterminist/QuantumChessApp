@@ -91,7 +91,7 @@ public abstract class Piece implements Cloneable
          }
          else
          {
-            if (status < MAX_STATUS)
+            if (status < MAX_STATUS && newTile.getPiece().isPresent())
             {
                if (measure())
                {
@@ -157,7 +157,8 @@ public abstract class Piece implements Cloneable
       theOne.tile.reportStatusChange();
       Piece finalTheOne = theOne;
       instances.stream().filter(piece -> !piece.equals(finalTheOne)).forEach(Piece::discard);
-      instances.clear();
+      finalTheOne.instances.clear();
+      finalTheOne.instances.add(finalTheOne);
       return this.equals(theOne);
    }
 
