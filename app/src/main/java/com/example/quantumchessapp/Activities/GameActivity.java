@@ -14,16 +14,14 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.example.api.Containter.ChangeCont;
-import com.example.api.Containter.PieceCont;
-import com.example.api.Containter.TileCont;
 import com.example.quantumchessapp.GameManager;
 import com.example.quantumchessapp.GameVariant;
 import com.example.quantumchessapp.PieceRenderer;
 import com.example.quantumchessapp.Position;
 import com.example.quantumchessapp.R;
+import com.example.quantumchessapp.conts.Change;
+import com.example.quantumchessapp.conts.Piece;
 
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -58,7 +56,7 @@ public class GameActivity extends AppCompatActivity
    private LinearLayout whiteCapturedPieces;
 
    //represents the changes to pieces in the last move
-   private ChangeCont change;
+   private Change change;
 
    //helps to indicate the last move
    private ImageButton lastOrigin;
@@ -78,7 +76,8 @@ public class GameActivity extends AppCompatActivity
 
       findViews();
 
-      GameManager.newGame(this, variant);
+      GameManager.newGame(this, variant, gameState -> {
+      });
 
       initListener();
    }
@@ -114,19 +113,20 @@ public class GameActivity extends AppCompatActivity
    /**
     * Sets up a StatusIndicator that shows how likely it is that the Piece will be found there
     *
-    * @param cont the Piece for which to show the StatusIndicator
+    * @param piece          the Piece for which to show the StatusIndicator
+    * @param maxPieceStatus the maximal status a piece can have
     */
-   private void addStatusIndicator(PieceCont cont)
+   private void addStatusIndicator(Piece piece, double maxPieceStatus)
    {
-      ProgressBar progressBar = getProgressBarAt(cont.getX(), cont.getY());
-      if (cont.getStatus() == GameManager.getModel().getMaxPieceStatus())
+      ProgressBar progressBar = getProgressBarAt(piece.getX(), piece.getY());
+      if (piece.getStatus() == maxPieceStatus)
       {
          progressBar.setVisibility(View.INVISIBLE);
       }
       else
       {
-         progressBar.setMax((int) GameManager.getModel().getMaxPieceStatus());
-         progressBar.setProgress((int) cont.getStatus());
+         progressBar.setMax((int) maxPieceStatus);
+         progressBar.setProgress((int) piece.getStatus());
          progressBar.setVisibility(View.VISIBLE);
          progressBar.invalidate();
       }
@@ -141,47 +141,41 @@ public class GameActivity extends AppCompatActivity
     */
    private void pieceOnClick(Position position, ImageButton piece, boolean qMove)
    {
-      if (!GameManager.getModel().isGameWon())
+      if (!GameManager.getStatus().isGameWon())
       {
          if (activePiece != null)
          {
-            PropertyChangeListener moveListener = evt -> {
-               if (GameManager.getModel().isLastMoveWasValid())
+            GameManager.movePiece(activePosition, position, this.qMove, state -> {
+               if (state.getStatus().isLastMoveValid())
                {
                   markLastMove(R.drawable.transparent);
-                  change = (ChangeCont) evt.getNewValue();
+                  change = state.getChange();
 
-                  change.getChanged().forEach(GameActivity.this::change);
+                  change.getChanged().forEach(piece1 -> change(piece1, state.getBoard().getMaxPieceStatus()));
                   remove(change.getRemoved());
-                  change.getAdded().forEach(GameActivity.this::add);
+                  change.getAdded().forEach(piece1 -> add(piece1, state.getBoard().getMaxPieceStatus()));
 
-                  if (GameManager.getModel().isGameWon())
+                  if (state.getStatus().isGameWon())
                   {
                      showWinner();
                      return;
                   }
                }
                deSelect();
-               GameManager.getModel().clearListeners();
-            };
-            GameManager.addPropertyChangeListener("move", moveListener);
-            GameManager.movePiece(activePosition, position, this.qMove);
+            });
          }
          else
          {
-            PropertyChangeListener changeListener = evt -> {
-               if (((boolean) evt.getNewValue()))
+            GameManager.isPieceOfActivePlayer(position, pieceOfActivePlayer -> {
+               if (pieceOfActivePlayer)
                {
                   setActivePiece(position, piece, qMove);
                }
                else
                {
                   deSelect();
-                  GameManager.getModel().clearListeners();
                }
-            };
-            GameManager.addPropertyChangeListener("pieceOfActivePlayer", changeListener);
-            GameManager.isPieceOfActivePlayer(position);
+            });
          }
       }
    }
@@ -194,18 +188,14 @@ public class GameActivity extends AppCompatActivity
       this.qMove = qMove;
       activePiece = piece;
       activePosition = position;
-      PropertyChangeListener possibleMovesListener = evt -> {
-         //noinspection unchecked
-         possiblePositions = ((List<TileCont>) evt.getNewValue()).stream().map(
-               tileCont -> GameManager.convertXYToPosition(tileCont.getX(), tileCont.getY())).collect(Collectors.toList());
+      GameManager.getPossibleMoves(position, qMove, tileStatus -> {
+         possiblePositions = tileStatus.getTiles().stream().map(
+               tile -> new Position(tile.getX(), tile.getY())).collect(Collectors.toList());
 
          possiblePositions.stream()
                .map(GameActivity.this::getImageButtonAt)
                .forEach(imageButton -> imageButton.setBackgroundResource(R.drawable.selected));
-         GameManager.getModel().clearListeners();
-      };
-      GameManager.addPropertyChangeListener("possibleMoves", possibleMovesListener);
-      GameManager.getPossibleMoves(position, qMove);
+      });
    }
 
    /**
@@ -223,7 +213,7 @@ public class GameActivity extends AppCompatActivity
     *
     * @param piece the piece to add
     */
-   private void addToCapturedPieces(PieceCont piece)
+   private void addToCapturedPieces(Piece piece)
    {
       ImageView imageView = new ImageView(this);
       imageView.setImageDrawable(PieceRenderer.getPieceDrawable(piece, this));
@@ -246,35 +236,36 @@ public class GameActivity extends AppCompatActivity
    /**
     * gets called when a piece wars added
     *
-    * @param cont PieceCont that got added
+    * @param piece          Piece that got added
+    * @param maxPieceStatus the maximal status a piece can have
     */
-   private void add(PieceCont cont)
+   private void add(Piece piece, double maxPieceStatus)
    {
-      ImageButton newSpot = getImageButtonAt(cont.getX(), cont.getY());
-      addStatusIndicator(cont);
-      newSpot.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
-      List<PieceCont> list = new ArrayList<>();
-      for (PieceCont pieceCont1 : change.getRemoved())
+      ImageButton newSpot = getImageButtonAt(piece.getX(), piece.getY());
+      addStatusIndicator(piece, maxPieceStatus);
+      newSpot.setImageDrawable(PieceRenderer.getPieceDrawable(piece, this));
+      List<Piece> list = new ArrayList<>();
+      for (Piece Piece1 : change.getRemoved())
       {
-         if (cont.equals(pieceCont1))
+         if (piece.equals(Piece1))
          {
-            list.add(pieceCont1);
+            list.add(Piece1);
          }
       }
       // when a Piece wars moved normally
       if (list.size() == 1)
       {
-         PieceCont cont1 = list.get(0);
+         Piece cont1 = list.get(0);
          lastOrigin = getImageButtonAt(cont1.getX(), cont1.getY());
          lastNewSpot = newSpot;
          markLastMove(R.drawable.lastmove);
       }
       // when a Piece wars split in 2
       change.getChanged().stream()
-            .filter(pieceCont -> pieceCont.equals(cont) && (pieceCont.getX() != cont.getX() || pieceCont.getY() != cont.getY()))
+            .filter(Piece -> Piece.equals(piece) && (Piece.getX() != piece.getX() || Piece.getY() != piece.getY()))
             .findAny()
-            .ifPresent(pieceCont -> {
-               lastNewSpot = getImageButtonAt(pieceCont.getX(), pieceCont.getY());
+            .ifPresent(Piece -> {
+               lastNewSpot = getImageButtonAt(Piece.getX(), Piece.getY());
                lastOrigin = newSpot;
                markLastMove(R.drawable.lastmove);
             });
@@ -283,9 +274,9 @@ public class GameActivity extends AppCompatActivity
    /**
     * Gets called when a piece wars removed
     *
-    * @param conts PieceConts that got removed
+    * @param conts Pieces that got removed
     */
-   private void remove(List<PieceCont> conts)
+   private void remove(List<Piece> conts)
    {
       conts.forEach(cont -> {
          ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
@@ -306,13 +297,14 @@ public class GameActivity extends AppCompatActivity
    /**
     * Gets called when a piece wars changed
     *
-    * @param cont PieceCont that got changed
+    * @param cont           Piece that got changed
+    * @param maxPieceStatus the maximal status a piece can have
     */
-   private void change(PieceCont cont)
+   private void change(Piece cont, double maxPieceStatus)
    {
       ImageButton imageButton = getImageButtonAt(cont.getX(), cont.getY());
       imageButton.setImageDrawable(PieceRenderer.getPieceDrawable(cont, this));
-      addStatusIndicator(cont);
+      addStatusIndicator(cont, maxPieceStatus);
    }
 
    /**

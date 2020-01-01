@@ -3,19 +3,15 @@ package com.example.quantumchessapp;
 import android.content.Context;
 
 import com.example.api.Api;
-import com.example.api.Containter.BoardCont;
-import com.example.api.Containter.ChangeCont;
-import com.example.api.Containter.StatusCont;
-import com.example.api.GameModel;
 import com.example.api.LocaleAPI;
 import com.example.api.Response.GameStateResponse;
 import com.example.api.Response.TileResponse;
-import com.example.quantumchessapp.persistance.PersistenceService;
+import com.example.quantumchessapp.conts.GameState;
+import com.example.quantumchessapp.conts.Status;
+import com.example.quantumchessapp.conts.TileStatus;
 import com.example.restapi.GameClient;
 
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.function.Consumer;
 
 /**
  * Manages the currently played game.
@@ -29,121 +25,108 @@ public class GameManager
 {
    private static Api api;
    private static GameClient client;
-   private static GameModel model;
+
    private static GameVariant variant;
 
-   public static void newGame(Context context, GameVariant variant)
+   private static String gameID;
+   private static int height;
+   private static Status status;
+
+   public static void newGame(Context context, GameVariant variant, Consumer<GameState> consumer)
    {
-      model = new GameModel();
       GameManager.variant = variant;
       switch (variant)
       {
          case OFFLINE:
             api = new LocaleAPI();
-            model.setPlayers(Collections.emptyList());
-            model.setGameID(api.startGame().getGameID());
-            BoardCont boardCont = api.getCompleteBord(model.getGameID()).getBoardCont();
-            model.setHeight(boardCont.getHeight());
-            model.setWight(boardCont.getWith());
-            model.setMaxPieceStatus(boardCont.getMaxPieceStatus());
+            GameStateResponse gameStateResponse1 = api.startGame();
+            consumeGameState(consumer, gameStateResponse1);
             break;
          case ONLINE:
-            client = new GameClient(context, model);
-            client.startGame();
-            model.addPropertyChangeListener("start", evt -> client.getCompleteBord((String) evt.getNewValue()));
+            client = new GameClient(context);
+            client.startGame(gameStateResponse -> consumeGameState(consumer, gameStateResponse));
             break;
       }
    }
 
-   public static void getPossibleMoves(Position startPosition, boolean qMove)
+   private static void consumeGameState(Consumer<GameState> consumer, GameStateResponse gameStateResponse)
+   {
+      gameID = gameStateResponse.getGameID();
+      GameState gameState = GameStateFactory.crateGameState(gameStateResponse);
+      status = gameState.getStatus();
+      height = gameState.getBoard().getHeight();
+      consumer.accept(gameState);
+   }
+
+   public static void getPossibleMoves(Position startPosition, boolean qMove, Consumer<TileStatus> consumer)
    {
       switch (variant)
       {
          case OFFLINE:
             TileResponse possibleMoves =
-                  api.getPossibleMoves(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  api.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
                         qMove);
-            convertStatus(possibleMoves.getStatus());
-            model.setPossibleMoves(new ArrayList<>(possibleMoves.getTiles()));
+            consumer.accept(TileStatusFactory.createTileStatus(possibleMoves));
             break;
          case ONLINE:
-            client.getPossibleMoves(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
-                  qMove);
+            client.getPossibleMoves(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  qMove, response -> consumer.accept(TileStatusFactory.createTileStatus(response)));
             break;
       }
    }
 
-   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove)
+   public static void movePiece(Position startPosition, Position toMoveToPosition, boolean qMove, Consumer<GameState> consumer)
    {
       switch (variant)
       {
          case OFFLINE:
             GameStateResponse gameStateResponse =
-                  api.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  api.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
                         convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
-            convertStatus(gameStateResponse.getStatus());
-            ChangeCont changeCont = gameStateResponse.getChangeCont();
-            changeCont.getAdded().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
-            changeCont.getRemoved().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
-            changeCont.getChanged().forEach(cont -> cont.setY(model.getHeight() - 1 - cont.getY()));
-            model.setChange(changeCont);
+            consumeGameState(consumer, gameStateResponse);
             break;
          case ONLINE:
-            client.movePiece(model.getGameID(), convertPositionWight(startPosition), convertPositionHeight(startPosition),
-                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove);
+            client.movePiece(gameID, convertPositionWight(startPosition), convertPositionHeight(startPosition),
+                  convertPositionWight(toMoveToPosition), convertPositionHeight(toMoveToPosition), qMove,
+                  gameStateResponse1 -> consumeGameState(consumer, gameStateResponse1));
             break;
       }
    }
 
-   public static void isPieceOfActivePlayer(Position position)
+   public static void isPieceOfActivePlayer(Position position, Consumer<Boolean> consumer)
    {
       switch (variant)
       {
          case OFFLINE:
-            model.setPieceOfActivePlayer(
-                  api.isPieceOfActivePlayer(model.getGameID(), convertPositionWight(position), convertPositionHeight(position))
-                        .isPieceOfActivePlayer());
+            boolean pieceOfActivePlayer =
+                  api.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position))
+                        .isPieceOfActivePlayer();
+            consumer.accept(pieceOfActivePlayer);
             break;
          case ONLINE:
-            client.isPieceOfActivePlayer(model.getGameID(), convertPositionWight(position), convertPositionHeight(position));
+            client.isPieceOfActivePlayer(gameID, convertPositionWight(position), convertPositionHeight(position),
+                  pieceOfActivePlayerResponse -> consumer.accept(pieceOfActivePlayerResponse.isPieceOfActivePlayer()));
             break;
       }
    }
 
-   private static void convertStatus(final StatusCont statusCont)
+   public static Status getStatus()
    {
-      model.setGameWon(statusCont.isGameWon());
-      model.setLastMoveWasValid(statusCont.isLastMoveValid());
+      return status;
    }
 
-   public static Position convertXYToPosition(int x, int y)
+   static int convertY(int y)
    {
-      return new Position(x, model.getHeight() - 1 - y);
+      return height - 1 - y;
    }
 
    private static int convertPositionHeight(Position position)
    {
-      return model.getHeight() - 1 - position.getY();
+      return height - 1 - position.getY();
    }
 
    private static int convertPositionWight(Position position)
    {
       return position.getX();
-   }
-
-   public static GameModel getModel()
-   {
-      return model;
-   }
-
-   public static void addPropertyChangeListener(String property, PropertyChangeListener listener)
-   {
-      model.addPropertyChangeListener(property, listener);
-   }
-
-   @SuppressWarnings("unused")
-   public static void removePropertyChangeListener(PropertyChangeListener listener)
-   {
-      model.removePropertyChangeListener(listener);
    }
 }

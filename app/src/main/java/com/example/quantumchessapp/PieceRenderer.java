@@ -3,8 +3,10 @@ package com.example.quantumchessapp;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.ContextCompat;
-import com.example.api.Containter.PieceColor;
+
 import com.example.api.Containter.PieceCont;
+import com.example.quantumchessapp.conts.Piece;
+import com.example.quantumchessapp.conts.PieceColor;
 
 /**
  * Maps the Piece form the api to a Drawable
@@ -13,7 +15,7 @@ import com.example.api.Containter.PieceCont;
  */
 public class PieceRenderer
 {
-   public static Drawable getPieceDrawable(PieceCont cont, Context context)
+   public static Drawable getPieceDrawable(Piece cont, Context context)
    {
       if (cont.getColor().equals(PieceColor.WHITE))
       {
