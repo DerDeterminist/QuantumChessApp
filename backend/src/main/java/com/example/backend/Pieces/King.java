@@ -28,7 +28,7 @@ public class King extends Piece
    {
       Set<Tile> tiles = oneMove(toGo, true);
       tiles.addAll(tiles.stream().flatMap(tile -> oneMove(tile, true).stream()).collect(Collectors.toList()));
-      return tiles;
+      return tiles.stream().filter(tile1 -> !tile1.getPiece().isPresent()).collect(Collectors.toSet());
    }
 
    @Override
